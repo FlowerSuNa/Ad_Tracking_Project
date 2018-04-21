@@ -36,8 +36,9 @@ ad_test['tot_prop'] = np.nan
 ad_test['tot_prop'] = ad_test[feat2].sum(axis=1)
 print(ad['tot_prop'].head(20))
 
-##
-ad_test.fillna(0, inplace=True)
+
+## Fill missing values of ip_attr_prop with mean of 
+ad_test['ip_attr_prop'].fillna(ad['ip_attr_prop'].mean(), inplace=True)
 
 
 ## Remove variable
