@@ -55,8 +55,8 @@ for d,d1,d2,d3 in zip(v,v1,v2,v3):
     print(ad[[d,d3]].head(20))
         
     ## Remove variable
-    ad.drop(d1, axis=1)
-    ad.drop(d2, axis=1)
+    del ad[d1]
+    del ad[d2]
 
 ad['tot_prop'] = np.nan
 ad['tot_prop'] = ad[v3].sum(axis=1)
@@ -64,8 +64,13 @@ print(ad['tot_prop'].head(20))
 
 
 ## Check correlation
-print(ad[['ip_attr_prop', 'app_attr_prop', 'device_attr_prop', 'os_attr_prop', 
-          'channel_attr_prop', 'hour_attr_prop', 'tot_prop', 'is_attributed']].corr(method='pearson'))
+feat = ['click_hour', 'ip_attr_prop', 'app_attr_prop', 'device_attr_prop', 'os_attr_prop', 
+        'channel_attr_prop', 'hour_attr_prop', 'tot_prop', 'is_attributed']
+
+pd.plotting.scatter_matrix(ad[feat], figsize=(15,15), alpha=.1)
+
+print(ad[feat].corr(method='pearson'))
+print(ad[feat].corr(method='spearman'))
 
     
 ## Save dataset
