@@ -27,8 +27,8 @@ print(ad[['click_time','click_hour']].head(10))
 
 
 ## Remove variable
-ad.drop('click_time', axis=1)
-ad.drop('attributed_time', axis=1)
+del ad['click_time']
+del ad['attributed_time']
 
 
 ## Make derived variable
