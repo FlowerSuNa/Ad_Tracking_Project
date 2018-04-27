@@ -954,78 +954,7 @@ scatter plot
 pd.plotting.scatter_matrix(ad[var1 + ['is_attributed']], figsize=(15,15), alpha=.1, cmap=ad.is_attributed, diagonal='kde')
 ```
 
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x000001B612B14908>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B616B11C18>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B616B25240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B613AD7F98>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B613B0FE80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B613B0FEB8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B613D3C240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B614211710>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61424E710>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B614286C50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6142BDCC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6142F5BE0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B614B6B160>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B614BA6160>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B614BDC0F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B614C171D0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B614B78DD8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6154D99B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B615511B00>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61554CB00>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B615A43B70>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B615A766A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B615AB06A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B615AE8710>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6164E07F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B615AB8390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61654E0F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6167271D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61675F1D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B616ACA240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B616CE2940>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B616D1C940>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B616D559B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61724DA20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B616D257B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6172BA320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6172F1400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61780E400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617846470>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61786EBE0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6178A7BE0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6178DDC50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617AA9D30>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617886320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617B18240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617B50390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617B8B390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617D63320>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B617D8AB70>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617DC6FD0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617E00FD0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B618645FD0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61867FA90>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6186B6B00>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6186F1A20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61872CA20>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B618710240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B618ADA6A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B618B126A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B618B4B630>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6191E6B70>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61921A0F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6192530F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61928E080>]], dtype=object)
-
-
-
-
-![png](output_23_1.png)
+![png](png/output_23_1.png)
 
 
 
@@ -1033,78 +962,7 @@ pd.plotting.scatter_matrix(ad[var1 + ['is_attributed']], figsize=(15,15), alpha=
 pd.plotting.scatter_matrix(ad[var2 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 ```
 
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x000001B619DB4B38>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A57D2B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A5A6B70>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A5BC358>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A60F5C0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A60F5F8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A673E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A6ACE80>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A6E3E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61A6CC6D8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B112A20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B14E9B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B1868D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B1A8748>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B525390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B55E400>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B598400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B5D2400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B5675F8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B633E10>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D7C9320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D800860>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D8276D8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D8668D0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D89EC50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D8D90F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D914BE0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D949390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D981390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61D9B9860>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61EBA3DA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61EBD2438>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61EF72390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61EFA9400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61EFE4400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F01F400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F045EF0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F082F60>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F0BDEF0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F774E10>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F7AC630>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F7E3630>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F81F6A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F8566A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61F891630>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FBF41D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FC2D240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FC68160>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FCA1160>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FCC9E10>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FEA3E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FEDEDA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620B34DA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61FEFE400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620CD7A20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620D0FA20>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B62100B940>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B621B03E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B621B374E0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B621B71400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62293C400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6229748D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62299BE10>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6229D9DA0>]], dtype=object)
-
-
-
-
-![png](output_24_1.png)
+![png](png/output_24_1.png)
 
 
 
@@ -1112,78 +970,7 @@ pd.plotting.scatter_matrix(ad[var2 + ['is_attributed']], figsize=(15,15), alpha=
 pd.plotting.scatter_matrix(ad[var3 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 ```
 
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x000001B621B5C860>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61B56B320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B617D974E0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B61676F0F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B60EADA518>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B60EADA4E0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B60140B160>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601436160>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B601464160>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601444940>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6014C3CC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6014FDCC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601536CC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601579240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6015A2780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6015DA780>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6020856A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6020BE6A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6015AD9B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B602120E10>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B60215BE80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B602196E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6021CDE80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6022038D0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B60223BDA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620417CC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62044FCC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6204838D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6204BD940>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6204F8940>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620530940>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6205027B8>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B62059E4E0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6205D9470>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620611470>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62064C9B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620675E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6206AEE80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6206E4E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62072B400>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B620751860>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620790780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6207CB780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620802CC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62080D9E8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620872320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6208AC320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6208E5860>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B62091E7F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62094ACC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62097FC50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6209BB0F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6209F5BE0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6209A9A58>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620A628D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620A9D8D0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B620AD67F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620B0FD30>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620B85240>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620BC01D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620BF90F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620C310F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620B714E0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B620EF58D0>]], dtype=object)
-
-
-
-
-![png](output_25_1.png)
+![png](png/output_25_1.png)
 
 
 
@@ -1191,50 +978,7 @@ pd.plotting.scatter_matrix(ad[var3 + ['is_attributed']], figsize=(15,15), alpha=
 pd.plotting.scatter_matrix(ad[var4 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 ```
 
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x000001B601FC0780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601FA7F28>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B602022C50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601AFB080>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601B4C6A0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601B4C6D8>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B601BADF60>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601BF2470>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601C2A9B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601B87160>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601C89F60>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601CC6FD0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B601D02FD0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601D3CFD0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601D6FA90>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601DA7B00>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601DE1B00>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601E1CB00>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B601E51780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601E897F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601EC57F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601EFD7F0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601ECE6D8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B601F6B390>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B625406390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6254412B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62694A2B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B626972CC0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6274FAD30>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B627536D30>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6286F1D30>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6275104A8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62911B780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B629155C50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62918FC50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B62BA2ABE0>]], dtype=object)
-
-
-
-
-![png](output_26_1.png)
+![png](png/output_26_1.png)
 
 
 
@@ -1242,50 +986,7 @@ pd.plotting.scatter_matrix(ad[var4 + ['is_attributed']], figsize=(15,15), alpha=
 pd.plotting.scatter_matrix(ad[var5 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 ```
 
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x000001B62E7504E0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630234208>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630255E48>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63028EE48>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6302CAE48>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6302CAE80>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6304E4828>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630521CF8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630A34278>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630A59E48>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630A98828>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630AD1898>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B630B0B898>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B630CF5898>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B631D58358>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B631D923C8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B631DCC3C8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B631E053C8>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B631E3C048>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6321A30B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6321DC0B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6323B80B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6323928D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B632418C18>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B632453C18>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63248AB38>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B632FDD9B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63302B588>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6330645F8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63309F5F8>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B63342A5F8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B633073550>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6336370B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6336710B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6336AB0B8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6336E4588>]], dtype=object)
-
-
-
-
-![png](output_27_1.png)
+![png](png/output_27_1.png)
 
 
 
@@ -1293,48 +994,5 @@ pd.plotting.scatter_matrix(ad[var5 + ['is_attributed']], figsize=(15,15), alpha=
 pd.plotting.scatter_matrix(ad[var6 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 ```
 
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x000001B634D77B00>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B635B9C1D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B635BBEDA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6360E8DA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B636123DA0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B636123DD8>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B63618F780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B636508C50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63654E1D0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B636571E48>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6365B2780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6365E97F0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B636C8BA20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B636CE0780>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6370532B0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63708B320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637267320>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63729F240>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6372CBA20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637634A20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B63766DA20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637854F60>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637867C50>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637D844E0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B637DBE400>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637DD3DD8>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637E31390>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B637E59E80>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B638364EF0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6383A0EF0>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x000001B6383D5EF0>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B6383BE710>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B638EF5A90>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B638F31A20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B638F6AA20>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x000001B638FA0F60>]], dtype=object)
-
-
-
-
-![png](output_28_1.png)
+![png](png/output_28_1.png)
 
