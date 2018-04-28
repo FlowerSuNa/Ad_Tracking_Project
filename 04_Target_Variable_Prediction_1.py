@@ -1,5 +1,5 @@
 
-## 4. Target Variable Prediction
+## 4. Target Variable Prediction - Linear Regression, Ridge, Logistic Regression
 ## Create functions
 def check_data(is_attributed):
     a1 = 0
@@ -114,7 +114,7 @@ print("y_test : ")
 print(y_test.value_counts())
 
 for a in [0.1,1,10]:
-    print("When alpha : %.1f ," %a)
+    print("When alpha=%.1f :" %a)
     
     ## Train a model
     ridge = Ridge(alpha=a)
@@ -141,7 +141,7 @@ print("y_test : ")
 print(y_test.value_counts())
 
 for c in [0.01,0.1,1,10,100]:
-    print("When C : %.2f :" %c)
+    print("When C=%.2f :" %c)
     
     ## Train a model
     logreg = LogisticRegression(C=c)

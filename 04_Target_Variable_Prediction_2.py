@@ -1,5 +1,5 @@
 
-## 5. Target Variable Prediction
+## 4. Target Variable Prediction - Decision Tree, Random Forest, Gradient Boosting
 ## Create functions
 def check_data(is_attributed):
     a1 = 0
@@ -85,7 +85,7 @@ print("y_test : ")
 print(y_test.value_counts())
 
 for d in [3,5,7,10]:
-    print("When max_depth : %d :" %d)
+    print("When max_depth=%d :" %d)
         
     ## Train a model
     tree = DecisionTreeClassifier(max_depth=d, random_state=1)
@@ -105,7 +105,7 @@ for d in [3,5,7,10]:
     is_attributed = examine_outlier(is_attributed)
 
     submission['is_attributed'] = is_attributed
-    submission.to_csv('sample_submission_tree_'+str(d)+'.csv', index=False)
+    submission.to_csv('10m_submission_tree_'+str(d)+'.csv', index=False)
 
 
 ## Make a model using Random Forest
@@ -116,45 +116,46 @@ print("y_test : ")
 print(y_test.value_counts())
     
 
-for d in [3,5,7,10]:
+for d in [3,5,7]:
     for e in [30,50,70,100]:
-        print("When max_depth : %d, n_estimators %d :" %(d,e))
-        
-        ## Train a model
-        forest = RandomForestClassifier(max_depth=d, n_estimators=e, random_state=1)
-        forest.fit(X_train,y_train)
-
-        ## predict is_attributed
-        p = forest.predict_proba(X_test)[:,1]
-        p = examine_outlier(p)
-        
-        ## Evaluate the model
-        print("feature : %s" % forest.feature_importances_)
-        print("coefficient of determination : %.5f" % forest.score(X_test,y_test))
-        print("AUC : %.5f" % roc_auc_score(y_test, p))
+        for f in [1,2,3,4]:
+            print("When max_depth=%d, n_estimators=%d, max_features=%d :" %(d,e,f))
+            
+            ## Train a model
+            forest = RandomForestClassifier(max_depth=d, n_estimators=e, max_features=f, random_state=1)
+            forest.fit(X_train,y_train)
     
-        ## Predict target variable
-        is_attributed = tree.predict_proba(ad_test[feat])[:,1]
-        is_attributed = examine_outlier(is_attributed)
+            ## predict is_attributed
+            p = forest.predict_proba(X_test)[:,1]
+            p = examine_outlier(p)
+            
+            ## Evaluate the model
+            print("feature : %s" % forest.feature_importances_)
+            print("coefficient of determination : %.5f" % forest.score(X_test,y_test))
+            print("AUC : %.5f" % roc_auc_score(y_test, p))
+        
+            ## Predict target variable
+            is_attributed = forest.predict_proba(ad_test[feat])[:,1]
+            is_attributed = examine_outlier(is_attributed)
+    
+            # submission['is_attributed'] = is_attributed
+            # submission.to_csv('sample_submission_forest_'+str(d)+'_'+str(e)+'.csv', index=False)
 
-        # submission['is_attributed'] = is_attributed
-        # submission.to_csv('sample_submission_forest_'+str(d)+'_'+str(e)+'.csv', index=False)
 
-
-## Make a model using Geadient Boosting Classifier
+## Make a model using Gradient Boosting Classifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import roc_auc_score
 
 print("y_test : ")
 print(y_test.value_counts())
     
-for d in [3,5,7]:
-    for l in [0.01,0.1,1,10]:
-        for e in [30,50,70]:
-            print("when max_depth=%d, learning_rate=%.2f, n_estimators=%d : " %(d,l,e))
+for d in [3,4,5]:
+    for e in [30,50]:
+        for l in [0.01,0.1,1,10]:
+            print("when max_depth=%d, n_estimators=%d, learning_rate=%.2f : " %(d,e,l))
     
             ## Train a model
-            gbrt = GradientBoostingClassifier(max_depth=d, learning_rate=l, n_estimators=e)
+            gbrt = GradientBoostingClassifier(max_depth=d, n_estimators=e, learning_rate=l)
             gbrt.fit(X_train,y_train)
 
             ## predict is_attributed
