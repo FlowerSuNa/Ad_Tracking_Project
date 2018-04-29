@@ -49,33 +49,26 @@ for v,v1 in zip(var,var1):
     
     print(ad_test[[v,v1]].head(20))
 
-for vv in ['time','app','channel']:      
-    prop = 'ip'+'_'+vv+'_prop'
+for v in ['ip','time']:
+    if v == 'time':
+        v1 = ['app','channel']
+    else:
+        v1 = ['time','app','channel']
     
-    temp = ad.groupby(['ip',vv])[prop].mean().reset_index(name='counts')
-    temp.columns = ['ip',vv,prop]
-    ad_test = ad_test.merge(temp, on=['ip',vv], how='left')
-    
-    if ad_test[prop].isnull().sum() != 0:
-        print('missing value of %s : %d' % (prop,ad_test[prop].isnull().sum()))
-        ad_test[prop].fillna(ad_test.loc[ad_test[prop].isnull(),'ip_attr_prop'].mean(), inplace=True)
-        print('missing value of %s : %d' % (prop,ad_test[prop].isnull().sum()))
-    
-    print(ad[['ip',vv,prop]].head(100))
-   
-for vv in ['app','channel']:      
-    prop = 'time'+'_'+vv+'_prop'
-    
-    temp = ad.groupby([v,vv])[prop].mean().reset_index(name='counts')
-    temp.columns = [v,vv,prop]
-    ad_test = ad_test.merge(temp, on=[v,vv], how='left')
-    
-    if ad_test[prop].isnull().sum() != 0:
-        print('missing value of %s : %d' % (prop,ad_test[prop].isnull().sum()))
-        ad_test[prop].fillna(ad_test.loc[ad_test[prop].isnull(),vv+'_attr_prop'].mean(), inplace=True)
-        print('missing value of %s : %d' % (prop,ad_test[prop].isnull().sum()))
-    
-    print(ad[['time',vv,prop]].head(20))
+    for vv in v1:      
+        prop = v+'_'+vv+'_prop'
+        
+        temp = ad.groupby([v,vv])[prop].mean().reset_index(name='counts')
+        temp.columns = [v,vv,prop]
+        ad_test = ad_test.merge(temp, on=[v,vv], how='left')
+        
+        ## Fill missing values with mean
+        if ad_test[prop].isnull().sum() != 0:
+            print('missing value of %s : %d' % (prop,ad_test[prop].isnull().sum()))
+            ad_test[prop].fillna(ad[prop].mean(), inplace=True)
+            print('missing value of %s : %d' % (prop,ad_test[prop].isnull().sum()))
+        
+        print(ad[[v,vv,prop]].head(20))
 
 ad_test['tot_attr_prop'] = np.nan
 ad_test['tot_attr_prop'] = ad_test[var1].sum(axis=1)

@@ -50,7 +50,7 @@ import numpy as np
 ad = pd.read_csv('ad_modify2_10m.csv')
 print(ad.columns)
 
-ad_test = pd.read_csv('adtest_modify_10m.csv')
+ad_test = pd.read_csv('adtest_modify_all.csv')
 print(ad_test.columns)
 
 submission = pd.read_csv('sample_submission.csv')

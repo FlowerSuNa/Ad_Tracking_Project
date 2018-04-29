@@ -1,5 +1,5 @@
 
-## 5. Target Variable Prediction
+## 4. Target Variable Prediction - K-Nearest Neighbors, Support Vector Machines
 ## Create functions
 def check_data(is_attributed):
     a1 = 0
@@ -87,23 +87,31 @@ print("y_test : ")
 print(y_test.value_counts())
 
 for i in range(2,21):
-    print("When n_neighbors : %d ," %i)
+    print("When n_neighbors=%d :" %i)
 
     ## Train a model
-    reg = KNeighborsRegressor(n_neighbors=i)
-    reg.fit(X_train,y_train)
+    knn = KNeighborsRegressor(n_neighbors=i)
+    knn.fit(X_train,y_train)
+
+    ## predict is_attributed
+    p = knn.predict(X_test)
+    p = examine_outlier(p)
 
     ## Evaluate the model  
-    print("coefficient of determination : %.5f" % reg.score(X_test,y_test))
-    print("AUC : %.5f" % roc_auc_score(y_test, reg.predict(X_test)))
+    print("coefficient of determination : %.5f" % knn.score(X_test,y_test))
+    print("AUC : %.5f" % roc_auc_score(y_test,p))
+
+    ## Predict target variable
+    is_attributed = knn.predict(ad_test[feat])
+    is_attributed = examine_outlier(is_attributed)
 
 
 ## Make a model using Support Vector Machines
 from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
 
-for c in [100]:
-    for g in [1]:
+for c in [0.1,1,10,100,1000]:
+    for g in [0.1,1,10]:
         print("when C=%.1f , gamma=%.1f :" % (c,g))
     
         ## Train a model
