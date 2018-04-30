@@ -27,10 +27,11 @@ def check_data(is_attributed):
             a00 += 1
             
     print(a00,a0,a03,a05,a07,a09,a1)
+    return str(a00) + ' ' + str(a0) + ' ' + str(a03) + ' ' + str(a05) + ' ' + str(a07) + ' ' + str(a09) + ' ' + str(a1)
 
     
 def examine_outlier(is_attributed):
-    check_data(is_attributed)
+    r = check_data(is_attributed)
     
     if (is_attributed.min() < 0) | (is_attributed.max() > 1):
         for i in range(len(is_attributed)):
@@ -38,14 +39,13 @@ def examine_outlier(is_attributed):
                 is_attributed[i] = 0
             if is_attributed[i] > 1:
                 is_attributed[i] = 1
-        check_data(is_attributed)
+        r = check_data(is_attributed)
             
-    return is_attributed
+    return is_attributed, r 
 
 
 ## Import library and data
 import pandas as pd
-import numpy as np
 
 ad = pd.read_csv('ad_modify2_10m.csv')
 print(ad.columns)
@@ -57,13 +57,28 @@ submission = pd.read_csv('sample_submission.csv')
 print(submission.columns)
 
 
-## Check correlation
-feat = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop',
-        'channel_attr_prop','tot_attr_prop',
-        'ip_time_prop','ip_app_prop','ip_channel_prop','time_app_prop',
-        'time_channel_prop','tot_vv_prop']
+## Make a result DataFrame
+from pandas import DataFrame
 
-print(ad[feat + ['is_attributed']].corr(method='pearson'))
+i = 0
+colnames = ['name','param', 'auc','train','test']
+result = pd.DataFrame(columns=colnames)
+
+
+## Check correlation
+feat1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop',
+         'channel_attr_prop','tot_attr_prop']
+
+feat2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','time_app_prop',
+         'time_channel_prop','tot_vv_prop']
+
+feat3 = feat1 + feat2
+
+print(ad[feat3 + ['is_attributed']].corr(method='pearson'))
+
+
+## Select features
+feat = feat3
 
 
 ## Divid data
@@ -93,16 +108,28 @@ for d in [3,5,7,10]:
 
     ## predict is_attributed
     p = tree.predict_proba(X_test)[:,1]
-    p = examine_outlier(p)
+    p, train = examine_outlier(p)
 
     ## Evaluate the model
+    score = tree.score(X_test,y_test)
+    auc = roc_auc_score(y_test, p)
+    
     print("feature : %s" % tree.feature_importances_)
-    print("coefficient of determination : %.5f" % tree.score(X_test,y_test))
-    print("AUC : %.5f" % roc_auc_score(y_test, p))
+    print("coefficient of determination : %.5f" % score)
+    print("AUC : %.5f" % auc)
 
     ## Predict target variable
     is_attributed = tree.predict_proba(ad_test[feat])[:,1]
-    is_attributed = examine_outlier(is_attributed)
+    is_attributed, test = examine_outlier(is_attributed)
+
+    ## Save result
+    r = pd.DataFrame({'name':'tree',
+                      'param':str(d),
+                      'auc':auc,
+                      'train':train,
+                      'test':test}, columns=colnames, index=[i])
+    result = pd.concat([result, r], ignore_index=True)
+    i+=1  
 
     submission['is_attributed'] = is_attributed
     submission.to_csv('10m_submission_tree_'+str(d)+'.csv', index=False)
@@ -116,7 +143,7 @@ print("y_test : ")
 print(y_test.value_counts())
     
 
-for d in [3,5,7]:
+for d in [3,5,7,10]:
     for e in [30,50,70,100]:
         for f in [1,2,3,4]:
             print("When max_depth=%d, n_estimators=%d, max_features=%d :" %(d,e,f))
@@ -127,19 +154,31 @@ for d in [3,5,7]:
     
             ## predict is_attributed
             p = forest.predict_proba(X_test)[:,1]
-            p = examine_outlier(p)
+            p, train = examine_outlier(p)
             
             ## Evaluate the model
+            score = forest.score(X_test,y_test)
+            auc = roc_auc_score(y_test, p)
+            
             print("feature : %s" % forest.feature_importances_)
-            print("coefficient of determination : %.5f" % forest.score(X_test,y_test))
-            print("AUC : %.5f" % roc_auc_score(y_test, p))
+            print("coefficient of determination : %.5f" % score)
+            print("AUC : %.5f" % auc)
         
             ## Predict target variable
             is_attributed = forest.predict_proba(ad_test[feat])[:,1]
-            is_attributed = examine_outlier(is_attributed)
+            is_attributed, test = examine_outlier(is_attributed)
+
+            ## Save result
+            r = pd.DataFrame({'name':'forest',
+                              'param':str(d) + '_' + str(e) + '_' + str(f),
+                              'auc':auc,
+                              'train':train,
+                              'test':test}, columns=colnames, index=[i])
+            result = pd.concat([result, r], ignore_index=True)
+            i+=1
     
-            # submission['is_attributed'] = is_attributed
-            # submission.to_csv('sample_submission_forest_'+str(d)+'_'+str(e)+'.csv', index=False)
+            submission['is_attributed'] = is_attributed
+            submission.to_csv('10m_submission_forest_'+str(d)+'_'+str(e)+'_'+str(f)+'.csv', index=False)
 
 
 ## Make a model using Gradient Boosting Classifier
@@ -155,21 +194,37 @@ for d in [3,4,5]:
             print("when max_depth=%d, n_estimators=%d, learning_rate=%.2f : " %(d,e,l))
     
             ## Train a model
-            gbrt = GradientBoostingClassifier(max_depth=d, n_estimators=e, learning_rate=l)
+            gbrt = GradientBoostingClassifier(max_depth=d, n_estimators=e, learning_rate=l, random_state=1)
             gbrt.fit(X_train,y_train)
 
             ## predict is_attributed
             p = gbrt.predict_proba(X_test)[:,1]
-            p = examine_outlier(p)
+            p, train = examine_outlier(p)
     
             ## Evaluate the model
+            score = gbrt.score(X_test,y_test)
+            auc = roc_auc_score(y_test, p)
+            
             print("feature : %s" % gbrt.feature_importances_)
-            print("coefficient of determination : %.5f" % gbrt.score(X_test,y_test))
-            print("AUC : %.5f" % roc_auc_score(y_test, p))
+            print("coefficient of determination : %.5f" % score)
+            print("AUC : %.5f" % auc)
     
             ## Predict target variable
             is_attributed = gbrt.predict_proba(ad_test[feat])[:,1]
-            is_attributed = examine_outlier(is_attributed)
+            is_attributed, test = examine_outlier(is_attributed)
+
+            ## Save result
+            r = pd.DataFrame({'name':'gbrt',
+                              'param':str(d) + '_' + str(e) + '_' + str(l),
+                              'auc':auc,
+                              'train':train,
+                              'test':test}, columns=colnames, index=[i])
+            result = pd.concat([result, r], ignore_index=True)
+            i+=1
 
             submission['is_attributed'] = is_attributed
-            submission.to_csv('sample_submission_gbrt_'+str(d)+'_'+str(l) +'_'+str(e)+'.csv', index=False)
+            submission.to_csv('sample_submission_gbrt_'+str(d)+'_'+str(e) +'_'+str(l)+'.csv', index=False)
+
+
+## Save resultset
+result.to_csv('result.csv', index=False)
