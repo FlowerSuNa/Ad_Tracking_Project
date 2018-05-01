@@ -3,6 +3,7 @@
 ## Import library and data
 import pandas as pd
 import numpy as np
+import gc
 
 ad = pd.read_csv("train_sample.csv", parse_dates=['click_time'])
 print(ad.shape)
@@ -12,9 +13,11 @@ print(ad.columns)
 ## Make derived variables : hour, time
 ad['hour'] = np.nan
 ad['hour'] = ad['click_time'].dt.hour
+gc.collect()
 
 ad['time'] = np.nan
 ad['time'] = ad['hour'] // 4
+gc.collect()
 
 print(ad[['click_time','hour','time']].head(20))
 
@@ -22,6 +25,7 @@ print(ad[['click_time','hour','time']].head(20))
 ## Remove variables
 del ad['click_time']
 del ad['attributed_time']
+gc.collect()
 
 
 ## Make derived variables
@@ -46,12 +50,14 @@ for v,v1,v2,v3 in zip(var,var1,var2,var3):
 
     ad[v3] = np.nan
     ad[v3] = ad[v2] / ad[v1]
+    gc.collect()
     
     print(ad[[v,v1,v2,v3]].head(20))
 
 ad['tot_attr_prop'] = np.nan
 ad['tot_attr_prop'] = ad[var3].sum(axis=1)
 print(ad['tot_attr_prop'].head(20))
+gc.collect()
 
 ## 'v'_'vv'_cnt : frequency by 'v' and 'vv'
 ## 'v'_'vv'_attr : the number of download by 'v' and 'vv'
@@ -82,12 +88,14 @@ for v in ['ip','time']:
         
         ad[prop]= np.nan
         ad[prop] = ad[attr] / ad[cnt]
+        gc.collect()
         
         print(ad[[v,vv,cnt,attr,prop]].head(20))
         
 ad['tot_vv_prop'] = np.nan
 ad['tot_vv_prop'] = ad[var6].sum(axis=1)
-print(ad['tot_vv_prop'].head(20))       
+print(ad['tot_vv_prop'].head(20)) 
+gc.collect()      
         
 
 ## Check correlation
@@ -107,12 +115,8 @@ pd.plotting.scatter_matrix(ad[var6 + ['is_attributed']], figsize=(15,15), alpha=
 ## Reomve variables
 for v in var1+var2+var4+var5:
     del ad[v]
+    gc.collect()
 
 
 ## Save dataset
 ad.to_csv('ad_modify_10m.csv', index=False)
-
-
-## Check saved dataset
-ad = pd.read_csv('ad_modify_10m.csv')
-print(ad.columns)
