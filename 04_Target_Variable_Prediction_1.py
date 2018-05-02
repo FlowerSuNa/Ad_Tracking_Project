@@ -78,6 +78,8 @@ print(ad[feat3 + ['is_attributed']].corr(method='pearson'))
 
 
 ## Select features
+# feat = feat1
+# feat = fear2
 feat = feat3
 
 

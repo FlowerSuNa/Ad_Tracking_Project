@@ -78,6 +78,8 @@ print(ad[feat3 + ['is_attributed']].corr(method='pearson'))
 
 
 ## Select features
+# feat = feat1
+# feat = fear2
 feat = feat3
 
 
@@ -142,7 +144,6 @@ from sklearn.metrics import roc_auc_score
 print("y_test : ")
 print(y_test.value_counts())
     
-
 for d in [3,5,7,10]:
     for e in [30,50,70,100]:
         for f in [1,2,3,4]:
