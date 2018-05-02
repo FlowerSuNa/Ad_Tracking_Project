@@ -75,7 +75,7 @@ feat2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','time_app_prop',
 feat3 = feat1 + feat2
 
 feat4 = ['app_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop',
-         'channel_attr_prop']
+         'channel_attr_prop','tot_attr_prop']
 
 feat5 = ['time_app_prop','time_channel_prop','tot_vv_prop']
 
