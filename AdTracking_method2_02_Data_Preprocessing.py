@@ -188,8 +188,11 @@ for n in [10000000, 20000000,30000000,40000000,50000000]:
     sample = ad.iloc[idx]
     gc.collect()
 
-del idx
-gc.collect()
+    del idx
+    gc.collect()
 
-n = n / 1000000
-ad.to_csv('train_modify_' + str(n) + 'm.csv', index=False)
+    n = n / 1000000
+    sample.to_csv('train_modify_' + str(n) + 'm.csv', index=False)
+    
+    del sample
+    gc.collect()
