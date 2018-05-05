@@ -121,11 +121,12 @@ feat4 = ['app_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','chan
 feat5 = feat1 + feat2
 feat6 = feat1 + feat2 + feat3
 feat7 = feat4 + ['hour_app_prop','hour_channel_prop']
+feat8 = feat7 + ['app_attr_tot_prop','device_attr_tot_prop','os_attr_tot_prop','channel_attr_tot_prop','hour_attr_tot_prop']
 
 target = 'is_attributed'
-feat = [feat1, feat2, feat3, feat4, feat5, feat6, feat7]
-ft = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5', 'feat6', 'feat7']
-sample = ['10m','20m','30m','40m','50m']
+feat = [feat1, feat2, feat3, feat4, feat5, feat6, feat7, feat8]
+ft = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5', 'feat6', 'feat7', 'feat8']
+sample = ['10m','20m','30m','40m','50m','all']
 
 ## Import test data
 ad_test = pd.read_csv('test_modify.csv')
