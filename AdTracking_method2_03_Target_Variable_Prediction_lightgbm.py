@@ -116,7 +116,8 @@ result = pd.DataFrame(columns=colnames)
 ## Compose features
 feat1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop','tot_attr_prop']
 feat2 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop','tot_vv_prop']
-feat3 = ['ip_attr_tot_prop','app_attr_tot_prop','device_attr_tot_prop','os_attr_tot_prop','channel_attr_tot_prop','hour_attr_tot_prop','tot_attr_tot_prop']
+feat3 = ['ip_attr_tot_prop','app_attr_tot_prop','device_attr_tot_prop','os_attr_tot_prop','channel_attr_tot_prop',
+         'hour_attr_tot_prop','tot_attr_tot_prop']
 feat4 = ['app_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop']
 feat5 = feat1 + feat2
 feat6 = feat1 + feat2 + feat3
