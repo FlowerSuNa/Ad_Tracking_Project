@@ -159,6 +159,7 @@ for s in sample:
     ## Remove dataset
     del ad_train
     del ad_test
+    gc.collect()
 
 
 ## Save result dataset
