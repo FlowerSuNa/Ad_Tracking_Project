@@ -5,24 +5,20 @@ import pandas as pd
 import numpy as np
 import gc
 
-ad = pd.read_csv('ad_modify_all.csv')
+ad = pd.read_csv('train_modify1.csv')
 print(ad.columns)
 
 ad_test = pd.read_csv('test.csv', parse_dates=['click_time'])
 print(ad_test.columns)
 
 
-## Make derived variables of test data : hour,time
+## Make a derived variable of test data : hour
 ad_test['hour'] = np.nan
 ad_test['hour'] = ad_test['click_time'].dt.hour
 gc.collect()
 
-ad_test['time'] = np.nan
-ad_test['time'] = ad_test['hour'] // 4
-gc.collect()
-
-print(ad_test[['click_time','hour','time']].head(10))
-print(ad_test[['click_time','hour','time']].tail(10))
+print(ad_test[['click_time','hour']].head(10))
+print(ad_test[['click_time','hour']].tail(10))
 
 
 ## Remove variables
@@ -33,13 +29,9 @@ gc.collect()
 
 ## Make derived variables of test data
 ## 'v'_attr_prop : the proporation of download by 'v'
-## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
 ## tot_attr_prop : the total of 'v'_attr_prop
-## tot_vv_prop : the total of 'v'_'vv'_prop
-var = ['ip','app','device','os','channel','hour','time']
-var1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop',
-        'channel_attr_prop','hour_attr_prop','time_attr_prop']
-var2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','time_app_prop','time_channel_prop']
+var = ['ip','app','device','os','channel','hour']
+var1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop']
 
 for v,v1 in zip(var,var1):    
     temp = ad.groupby(v)[v1].mean().reset_index(name='counts')
@@ -55,6 +47,18 @@ for v,v1 in zip(var,var1):
     
     print(ad_test[[v,v1]].head(10))
     print(ad_test[[v,v1]].tail(10))
+    
+ad_test['tot_attr_prop'] = np.nan
+ad_test['tot_attr_prop'] = ad_test[var1].sum(axis=1)
+gc.collect()
+
+print(ad_test['tot_attr_prop'].head(10))
+print(ad_test['tot_attr_prop'].tail(10))
+
+
+## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
+## tot_vv_prop : the total of 'v'_'vv'_prop
+var2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
 
 for v in ['ip','time']:
     if v == 'time':
@@ -79,20 +83,13 @@ for v in ['ip','time']:
         print(ad_test[[v,vv,prop]].head(10))
         print(ad_test[[v,vv,prop]].tail(10))
 
-ad_test['tot_attr_prop'] = np.nan
-ad_test['tot_attr_prop'] = ad_test[var1].sum(axis=1)
-gc.collect()
-
-print(ad_test['tot_attr_prop'].head(10))
-print(ad_test['tot_attr_prop'].tail(10))
-
 ad_test['tot_vv_prop'] = np.nan
 ad_test['tot_vv_prop'] = ad_test[var2].sum(axis=1)
 gc.collect()
 
-print(ad_test['tot_vv_prop'].head(10))
-print(ad_test['tot_vv_prop'].tail(10))
+print(ad['tot_vv_prop'].head(10))
+print(ad['tot_vv_prop'].tail(10))
 
 
 ## Save dataset
-ad_test.to_csv('adtest_modify_all.csv', index=False)
+ad_test.to_csv('test_modify1.csv', index=False)

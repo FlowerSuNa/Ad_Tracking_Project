@@ -9,13 +9,13 @@ import gc
 ## Extract a sample
 import random
 
-ad = pd.read_csv("train.csv", parse_dates=['click_time'])
+ad = pd.read_csv("train.csv")
 gc.collect()
 
 print(ad.shape)
 print(ad.columns)
 
-for n in [10000000, 20000000,30000000,40000000,50000000]:
+for n in [10000000, 20000000,30000000]:
     idx = random.sample(range(len(ad)),n)
     sample = ad.iloc[idx]
     gc.collect()
@@ -24,7 +24,7 @@ for n in [10000000, 20000000,30000000,40000000,50000000]:
     gc.collect()
 
     n = n / 1000000
-    sample.to_csv('train_modify_' + str(n) + 'm.csv', index=False)
+    sample.to_csv('train_' + str(n) + 'm.csv', index=False)
     
     del sample
     gc.collect()
@@ -34,6 +34,9 @@ gc.collect
 
 
 ## Import data
+# ad = pd.read_csv("train_10m.csv", parse_dates=['click_time'])
+# ad = pd.read_csv("train_20m.csv", parse_dates=['click_time'])
+# ad = pd.read_csv("train_30m.csv", parse_dates=['click_time'])
 ad = pd.read_csv("train.csv", parse_dates=['click_time'])
 gc.collect()
 
@@ -41,17 +44,13 @@ print(ad.shape)
 print(ad.columns)
 
 
-## Make derived variables : hour, time
+## Make a derived variable : hour
 ad['hour'] = np.nan
 ad['hour'] = ad['click_time'].dt.hour
 gc.collect()
 
-ad['time'] = np.nan
-ad['time'] = ad['hour'] // 4
-gc.collect()
-
-print(ad[['click_time','hour','time']].head(10))
-print(ad[['click_time','hour','time']].tail(10))
+print(ad[['click_time','hour']].head(10))
+print(ad[['click_time','hour']].tail(10))
 
 
 ## Remove variables
@@ -85,8 +84,12 @@ for v,v1,v2,v3 in zip(var,var1,var2,var3):
     ad[v3] = ad[v2] / ad[v1]
     gc.collect()
     
-    print(ad[[v,v1,v2,v3]].head(10))
-    print(ad[[v,v1,v2,v3]].tail(10))
+    del ad[v1]
+    del ad[v2]
+    gc.collect()    
+    
+    print(ad[[v,v3]].head(10))
+    print(ad[[v,v3]].tail(10))
 
 ad['tot_attr_prop'] = np.nan
 ad['tot_attr_prop'] = ad[var3].sum(axis=1)
@@ -100,9 +103,7 @@ print(ad['tot_attr_prop'].tail(10))
 ## 'v'_'vv'_attr : the number of download by 'v' and 'vv'
 ## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
 ## tot_vv_prop : The total of 'v'_'vv'_prop
-var4 = ['ip_hour_cnt','ip_app_cnt','ip_channel_cnt','hour_app_cnt','hour_channel_cnt']
-var5 = ['ip_hour_attr','ip_app_attr','ip_channel_attr','hour_app_attr','hour_channel_attr']
-var6 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
+var4 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
 
 for v in ['ip','hour']:
     if v == 'hour':
@@ -127,13 +128,17 @@ for v in ['ip','hour']:
         
         ad[prop]= np.nan
         ad[prop] = (ad[attr] / ad[cnt])
-        gc.collect()        
+        gc.collect()    
         
-        print(ad[[v,vv,cnt,attr,prop]].head(10))
-        print(ad[[v,vv,cnt,attr,prop]].tail(10))
+        del ad[cnt]
+        del ad[attr]
+        gc.collect()
+        
+        print(ad[[v,vv,prop]].head(10))
+        print(ad[[v,vv,prop]].tail(10))
         
 ad['tot_vv_prop'] = np.nan
-ad['tot_vv_prop'] = ad[var6].sum(axis=1)
+ad['tot_vv_prop'] = ad[var4].sum(axis=1)
 gc.collect()
 
 print(ad['tot_vv_prop'].head(10))
@@ -141,24 +146,15 @@ print(ad['tot_vv_prop'].tail(10))
         
 
 ## Check correlation
-feat = var1 + var2 + var3 + var4 + var5 + var6 + ['is_attributed']
-
+feat = var3 + var4 + ['is_attributed']
 print(ad[feat].corr(method='pearson'))
-print(ad[feat].corr(method='spearman'))
 
-pd.plotting.scatter_matrix(ad[var1 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
-pd.plotting.scatter_matrix(ad[var2 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 pd.plotting.scatter_matrix(ad[var3 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 pd.plotting.scatter_matrix(ad[var4 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
-pd.plotting.scatter_matrix(ad[var5 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
-pd.plotting.scatter_matrix(ad[var6 + ['is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
-
-
-## Reomve variables
-for v in var1+var2+var4+var5:
-    del ad[v]
-    gc.collect()
 
 
 ## Save dataset
-ad.to_csv('ad_modify_all.csv', index=False)
+# ad.to_csv('train_10m_modify1.csv', index=False)
+# ad.to_csv('train_20m_modify1.csv', index=False)
+# ad.to_csv('train_30m_modify1.csv', index=False)
+ad.to_csv('train_modify1.csv', index=False)
