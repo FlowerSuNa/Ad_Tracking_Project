@@ -87,8 +87,8 @@ ad_test['tot_vv_prop'] = np.nan
 ad_test['tot_vv_prop'] = ad_test[var2].sum(axis=1)
 gc.collect()
 
-print(ad['tot_vv_prop'].head(10))
-print(ad['tot_vv_prop'].tail(10))
+print(ad_test['tot_vv_prop'].head(10))
+print(ad_test['tot_vv_prop'].tail(10))
 
 
 ## Save dataset
