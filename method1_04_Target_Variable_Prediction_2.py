@@ -174,7 +174,7 @@ for f,n in zip(feat,name):
                 is_attributed, test = examine_outlier(is_attributed)
     
                 ## Save result
-                param = '_'.join([d,e,f])
+                param = '_'.join(str(x) for x in [d,e,f])
                 r = pd.DataFrame({'model':'forest',
                                   'param':param,
                                   'feat':n,
@@ -216,7 +216,7 @@ for f,n in zip(feat,name):
                 is_attributed, test = examine_outlier(is_attributed)
     
                 ## Save result
-                param = '_'.join([d,e,l])
+                param = '_'.join(str(x) for x in [d,e,l])
                 r = pd.DataFrame({'model':'gbrt',
                                   'param':param,
                                   'feat':n,
