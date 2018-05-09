@@ -60,11 +60,11 @@ print(ad_test['tot_attr_prop'].tail(10))
 ## tot_vv_prop : the total of 'v'_'vv'_prop
 var2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
 
-for v in ['ip','time']:
-    if v == 'time':
+for v in ['ip','hour']:
+    if v == 'hour':
         v1 = ['app','channel']
     else:
-        v1 = ['time','app','channel']
+        v1 = ['hour','app','channel']
     
     for vv in v1:      
         prop = v+'_'+vv+'_prop'
