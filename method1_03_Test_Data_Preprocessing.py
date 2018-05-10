@@ -58,7 +58,7 @@ print(ad_test['tot_attr_prop'].tail(10))
 
 ## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
 ## tot_vv_prop : the total of 'v'_'vv'_prop
-var2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
+var2 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
 
 for v in ['ip','hour']:
     if v == 'hour':

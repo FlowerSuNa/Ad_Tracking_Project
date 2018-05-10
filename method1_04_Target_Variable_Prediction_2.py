@@ -67,7 +67,7 @@ def examine_outlier(is_attributed):
 ad = pd.read_csv('train_modify1.csv')
 print(ad.columns)
 
-ad_test = pd.read_csv('test_modify.csv')
+ad_test = pd.read_csv('test_modify1.csv')
 print(ad_test.columns)
 
 submission = pd.read_csv('sample_submission.csv')
@@ -82,7 +82,7 @@ result = pd.DataFrame(columns=colnames)
 
 ## Create features to use a model
 feat1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop','tot_attr_prop']
-feat2 = ['ip_time_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop','tot_vv_prop']
+feat2 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop','tot_vv_prop']
 feat3 = feat1 + feat2
 feat4 = ['ip_attr_prop','app_attr_prop','channel_attr_prop','tot_attr_prop']
 feat5 = feat4 + feat2
@@ -92,6 +92,10 @@ feat6 = ['app_attr_prop','channel_attr_prop','hour_app_prop','hour_channel_prop'
 ## Predict a target variable
 feat = [feat1,feat2,feat3,feat4,feat5,feat6]
 name = ['feat1','feat2','feat3','feat4','feat5','feat6']
+# sample = '10m_'
+# sample = '20m_'
+# sample = '30m_'
+sample = ''
 
 for f,n in zip(feat,name):
     print("feat = %s" %n)
@@ -105,14 +109,14 @@ for f,n in zip(feat,name):
     print("y_test : " + str(y_test.shape))
  
     print("y_test : ")
-    print(y_test.value_counts() + '\n')
+    print(y_test.value_counts())
 
     
     ## Make a model using Decision Tree    
     for d in [3,4,5]:
         print("When max_depth=%d :" %d)
             
-        ## Train a model
+        ## Train the model
         tree = DecisionTreeClassifier(max_depth=d, random_state=1)
         tree.fit(X_train,y_train)
     
@@ -142,9 +146,9 @@ for f,n in zip(feat,name):
         result = pd.concat([result, r], ignore_index=True)
         i+=1  
     
-        # submission['is_attributed'] = is_attributed
-        # submission.to_csv('submission1_tree_' + str(d) + '_' + n + '.csv', index=False)
-        print("save complete..." + '\n')
+        submission['is_attributed'] = is_attributed
+        submission.to_csv(sample + 'submission1_tree_' + str(d) + '_' + n + '.csv', index=False)
+        print("save complete...\n")
     
     
     ## Make a model using Random Forest
@@ -153,7 +157,7 @@ for f,n in zip(feat,name):
             for f in [1,2,3]:
                 print("When max_depth=%d, n_estimators=%d, max_features=%d :" %(d,e,f))
                 
-                ## Train a model
+                ## Train the model
                 forest = RandomForestClassifier(max_depth=d, n_estimators=e, max_features=f, random_state=1)
                 forest.fit(X_train,y_train)
         
@@ -184,9 +188,9 @@ for f,n in zip(feat,name):
                 result = pd.concat([result, r], ignore_index=True)
                 i+=1
         
-                # submission['is_attributed'] = is_attributed
-                # submission.to_csv('submission1_forest_' + param + '_' + n + '.csv', index=False)
-                print("save complete..." + '\n')
+                submission['is_attributed'] = is_attributed
+                submission.to_csv(sample + 'submission1_forest_' + param + '_' + n + '.csv', index=False)
+                print("save complete...\n")
     
     
     ## Make a model using Gradient Boosting Classifier      
@@ -195,7 +199,7 @@ for f,n in zip(feat,name):
             for l in [0.01,0.1,1,10]:
                 print("when max_depth=%d, n_estimators=%d, learning_rate=%.2f : " %(d,e,l))
         
-                ## Train a model
+                ## Train the model
                 gbrt = GradientBoostingClassifier(max_depth=d, n_estimators=e, learning_rate=l, random_state=1)
                 gbrt.fit(X_train,y_train)
     
@@ -226,10 +230,10 @@ for f,n in zip(feat,name):
                 result = pd.concat([result, r], ignore_index=True)
                 i+=1
     
-                # submission['is_attributed'] = is_attributed
-                # submission.to_csv('submission1_gbrt_' + param + '_' + n + '.csv', index=False)
-                print("save complete..." + '\n')
+                submission['is_attributed'] = is_attributed
+                submission.to_csv(sample + 'submission1_gbrt_' + param + '_' + n + '.csv', index=False)
+                print("save complete...\n")
 
 
-## Save resultset
-result.to_csv('result.csv', index=False)
+    ## Save resultset
+    result.to_csv(sample + 'result.csv', index=False)
