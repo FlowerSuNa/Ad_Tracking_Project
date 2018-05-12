@@ -12,7 +12,7 @@ ad_test = pd.read_csv('test.csv', parse_dates=['click_time'])
 print(ad_test.columns)
 
 
-## Make a derived variable of test data : hour
+## Make a derived variable 'hour'
 ad_test['hour'] = np.nan
 ad_test['hour'] = ad_test['click_time'].dt.hour
 gc.collect()
@@ -28,7 +28,7 @@ gc.collect()
 
 
 ## Make derived variables of test data
-## 'v'_attr_prop : the proporation of download by 'v'
+## 'v'_attr_prop : download proportion by 'v'
 ## tot_attr_prop : the total of 'v'_attr_prop
 var = ['ip','app','device','os','channel','hour']
 var1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop']
@@ -56,7 +56,7 @@ print(ad_test['tot_attr_prop'].head(10))
 print(ad_test['tot_attr_prop'].tail(10))
 
 
-## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
+## 'v'_'vv'_prop : download proportion by 'v' and 'vv'
 ## tot_vv_prop : the total of 'v'_'vv'_prop
 var2 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
 
