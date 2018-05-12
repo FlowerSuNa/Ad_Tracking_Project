@@ -156,12 +156,19 @@ gc.collect()
 
 print(ad['tot_vv_prop'].head(10)) 
 print(ad['tot_vv_prop'].tail(10))      
- 
+
+
+## Separate dataset
+ad_train = ad.iloc[:train_len,]
+ad_test = ad.iloc[train_len:,]
+del ad
+gc.collect()
+
 
 ## Check correlation
 feat = var3 + ['tot_attr_prop'] + var4 + ['tot_attr_tot_prop'] + var5 + ['tot_vv_prop','is_attributed']
 
-print(ad[feat].corr(method='pearson'))
+print(ad_train[feat].corr(method='pearson'))
 
 pd.plotting.scatter_matrix(ad[var3 + ['tot_attr_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 pd.plotting.scatter_matrix(ad[var4 + ['tot_attr_tot_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
@@ -169,11 +176,6 @@ pd.plotting.scatter_matrix(ad[var5 + ['tot_vv_prop','is_attributed']], figsize=(
        
 
 ## Save dataset
-ad_train = ad.iloc[:train_len,]
-ad_test = ad.iloc[train_len:,]
-del ad
-gc.collect()
-
 ad_train.to_csv('train_modify2.csv', index=False)
 ad_test.to_csv('test_modify2.csv', index=False)
 del ad_test
