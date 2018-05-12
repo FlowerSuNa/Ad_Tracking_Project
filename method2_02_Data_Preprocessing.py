@@ -184,7 +184,7 @@ gc.collect()
 import random
 
 for n in [10000000, 20000000,30000000,40000000,50000000]:
-    idx = random.sample(range(train_len),n)
+    idx = random.sample(range(len(ad_train)),n)
     sample = ad.iloc[idx]
     gc.collect()
 
@@ -195,4 +195,3 @@ for n in [10000000, 20000000,30000000,40000000,50000000]:
     sample.to_csv('train_' + str(n) + 'm_modify2.csv', index=False)
     
     del sample
-    gc.collect()
