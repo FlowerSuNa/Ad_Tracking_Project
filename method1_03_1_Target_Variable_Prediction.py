@@ -1,5 +1,5 @@
 
-## 4. Target Variable Prediction - Linear Regression, Ridge, Logistic Regression
+## 3-1. Target Variable Prediction - Linear Regression, Ridge, Logistic Regression
 ## Import library
 import pandas as pd
 from sklearn.model_selection import train_test_split

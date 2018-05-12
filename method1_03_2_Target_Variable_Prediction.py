@@ -1,5 +1,5 @@
 
-## 4. Target Variable Prediction - Decision Tree, Random Forest, Gradient Boosting
+## 3-2. Target Variable Prediction - Decision Tree, Random Forest, Gradient Boosting
 ## Import library
 import pandas as pd
 from sklearn.model_selection import train_test_split

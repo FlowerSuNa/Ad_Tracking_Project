@@ -1,5 +1,5 @@
 
-## 3. Test Data Preprocessing
+## 2-2. Test Data Preprocessing
 ## Import library and data
 import pandas as pd
 import numpy as np
