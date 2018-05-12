@@ -60,9 +60,9 @@ gc.collect()
 
 
 ## Make derived variables
-## 'v'_cnt : the frequency of 'v'
+## 'v'_cnt : frequency of 'v'
 ## 'v'_attr : the number of download by 'v'
-## 'v'_attr_prop : the proporation of download by 'v'
+## 'v'_attr_prop : download proportion by 'v'
 ## tot_attr_prop : the total of 'v'_attr_prop
 var = ['ip','app','device','os','channel','hour']
 var1 = ['ip_cnt','app_cnt','device_cnt','os_cnt','channel_cnt','hour_cnt']
@@ -101,8 +101,8 @@ print(ad['tot_attr_prop'].tail(10))
 
 ## 'v'_'vv'_cnt : frequency by 'v' and 'vv'
 ## 'v'_'vv'_attr : the number of download by 'v' and 'vv'
-## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
-## tot_vv_prop : The total of 'v'_'vv'_prop
+## 'v'_'vv'_prop : download proportion by 'v' and 'vv'
+## tot_vv_prop : the total of 'v'_'vv'_prop
 var4 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
 
 for v in ['ip','hour']:
