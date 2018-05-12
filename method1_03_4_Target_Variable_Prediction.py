@@ -147,7 +147,7 @@ for s in sample:
     print(ad_train.columns)    
     
     for f,n in zip(feat,name):
-        print('features : %s' % f)
+        print('feat : %s' % n)
         
         ## train the model and predict target variable
         is_attributed, test = lgbm(ad_train, ad_test, f, target)
