@@ -20,7 +20,7 @@ del ad_test['click_id']
 gc.collect()
 
 
-## Fill 'is_attributed' variable in test data with the proporation of download in train data
+## Make and fill variable 'is_attributed' in test data
 train_len = len(ad_train)
 ad_test['is_attributed'] = ad_train.is_attributed.sum() / train_len
 gc.collect()
@@ -31,8 +31,8 @@ print(ad_test['is_attributed'].tail(10))
 
 ## Merge train data and test data
 ad = pd.concat([ad_train, ad_test])
-gc.collect()
 print(ad.shape)
+gc.collect()
 
 
 ## Remove datasets
@@ -56,10 +56,8 @@ gc.collect()
 
 
 ## Make derived variables
-## 'v'_cnt : the frequency of 'v'
-## 'v'_attr : the number of download by 'v'
-## 'v'_attr_prop : the proporation of download by 'v'
-## 'v'_attr_tot_prop : the proporation (total) of download by 'v'
+## 'v'_attr_prop : download proportion by 'v'
+## 'v'_attr_tot_prop : download proportion among download by 'v'
 ## tot_attr_prop : the total of 'v'_attr_prop
 ## tot_attr_tot_prop : the total of 'v'_attr_tot_prop
 
@@ -113,9 +111,8 @@ gc.collect()
 print(ad['tot_attr_tot_prop'].head(10))
 print(ad['tot_attr_tot_prop'].tail(10))
 
-## 'v'_'vv'_cnt : the frequency by 'v' and 'vv'
-## 'v'_'vv'_attr : the number of download by 'v' and 'vv'
-## 'v'_'vv'_prop : the proporation of download by 'v' and 'vv'
+
+## 'v'_'vv'_prop : download proportion by 'v' and 'vv'
 ## tot_vv_prop : the total of 'v'_'vv'_prop
 
 var5 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop']
