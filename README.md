@@ -12,4 +12,4 @@
 
 ### Method2
 [2. Data Preprocessing](method2_02_Data_Preprocessing.py) <br>
-[3. Target Variable Prediction : LightGBM](method2_03_Target_Variable_Prediction_lightgbm.py) <br>
+[3. Target Variable Prediction : LightGBM](method2_03_Target_Variable_Prediction.py) <br>
