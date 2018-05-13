@@ -166,9 +166,7 @@ gc.collect()
 
 
 ## Check correlation
-feat = var3 + ['tot_attr_prop'] + var4 + ['tot_attr_tot_prop'] + var5 + ['tot_vv_prop','is_attributed']
-
-print(ad_train[feat].corr(method='pearson'))
+print(ad_train.corr(method='pearson'))
 
 pd.plotting.scatter_matrix(ad[var3 + ['tot_attr_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
 pd.plotting.scatter_matrix(ad[var4 + ['tot_attr_tot_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
