@@ -154,8 +154,8 @@ for f,n in zip(feat,name):
     ## Make a model using Random Forest
     for d in [3,4,5]:
         for e in [30,50,70]:
-            for f in [1,2,3]:
-                print("When max_depth=%d, n_estimators=%d, max_features=%d :" %(d,e,f))
+            for mf in [1,2,3]:
+                print("When max_depth=%d, n_estimators=%d, max_features=%d :" %(d,e,mf))
                 
                 ## Train the model
                 forest = RandomForestClassifier(max_depth=d, n_estimators=e, max_features=f, random_state=1)
@@ -178,7 +178,7 @@ for f,n in zip(feat,name):
                 is_attributed, test = examine_outlier(is_attributed)
     
                 ## Save result
-                param = '_'.join(str(x) for x in [d,e,f])
+                param = '_'.join(str(x) for x in [d,e,mf])
                 r = pd.DataFrame({'model':'forest',
                                   'param':param,
                                   'feat':n,
