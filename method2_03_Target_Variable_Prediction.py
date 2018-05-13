@@ -2,6 +2,7 @@
 ## 3. Target Variable Prediction - LightGBM
 ## Import library
 import pandas as pd
+from pandas import DataFrame
 from sklearn.model_selection import train_test_split
 import lightgbm as lgb
 import gc
@@ -9,32 +10,38 @@ import gc
 
 ## Create functions
 def check_data(is_attributed):
-    a1 = 0
-    a09 = 0
-    a07 = 0
-    a05 = 0
-    a03 = 0
-    a0 = 0
-    a00 = 0
+    count = [0,0,0,0,0,0,0,0,0,0,0,0]
     
     for i in range(len(is_attributed)):
         if is_attributed[i] > 1:
-            a1 += 1
+            count[11] += 1
         elif is_attributed[i] > 0.9:
-            a09 += 1
+            count[10] += 1
+        elif is_attributed[i] > 0.8:
+            count[9] += 1
         elif is_attributed[i] > 0.7:
-            a07 += 1
+            count[8] += 1
+        elif is_attributed[i] > 0.6:
+            count[7] += 1
         elif is_attributed[i] > 0.5:
-            a05 += 1
+            count[6] += 1
+        elif is_attributed[i] > 0.4:
+            count[5] += 1
         elif is_attributed[i] > 0.3:
-            a03 += 1
+            count[4] += 1
+        elif is_attributed[i] > 0.2:
+            count[3] += 1
+        elif is_attributed[i] > 0.1:
+            count[2] += 1
         elif is_attributed[i] >= 0:
-            a0 += 1
+            count[1] += 1
         else:
-            a00 += 1
-            
-    print(a00,a0,a03,a05,a07,a09,a1)
-    return str(a00) + ' ' + str(a0) + ' ' + str(a03) + ' ' + str(a05) + ' ' + str(a07) + ' ' + str(a09) + ' ' + str(a1)
+            count[0] += 1
+         
+    count = ' '.join(str(x) for x in count)
+    print(count)
+    
+    return count
 
     
 def examine_outlier(is_attributed):
@@ -46,6 +53,7 @@ def examine_outlier(is_attributed):
                 is_attributed[i] = 0
             if is_attributed[i] > 1:
                 is_attributed[i] = 1
+                
         r = check_data(is_attributed)
             
     return is_attributed, r 
@@ -93,74 +101,65 @@ def lgbm(train_data, test_data, feat, target):
                     verbose_eval=True,
                     feval=None)
     
-    ## Check result
+    ## Save result
     is_attributed = bst.predict(test_data[feat], num_iteration=bst.best_iteration)
     is_attributed, test_result = examine_outlier(is_attributed)
     
     return is_attributed, test_result
 
 
-## Import submission dataset
+## Import submission data
 submission = pd.read_csv('sample_submission.csv')
 print(submission.shape)
 print(submission.columns)
 
+ad_test = pd.read_csv('test_modify2.csv')
+print(ad_test.shape)
+print(ad_test.columns)
+
 
 ## Make a result DataFrame
 i = 0
-colnames = ['sample','features', 'test']
+colnames = ['sample','feat', 'test']
 result = pd.DataFrame(columns=colnames)
 
 
-## Make a model using lightgbm
-## Compose features
+## Create features to use a model
 feat1 = ['ip_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop','tot_attr_prop']
 feat2 = ['ip_hour_prop','ip_app_prop','ip_channel_prop','hour_app_prop','hour_channel_prop','tot_vv_prop']
-feat3 = ['ip_attr_tot_prop','app_attr_tot_prop','device_attr_tot_prop','os_attr_tot_prop','channel_attr_tot_prop',
-         'hour_attr_tot_prop','tot_attr_tot_prop']
-feat4 = ['app_attr_prop','app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop']
-feat5 = feat1 + feat2
-feat6 = feat1 + feat2 + feat3
-feat7 = feat4 + ['hour_app_prop','hour_channel_prop']
-feat8 = feat7 + ['app_attr_tot_prop','device_attr_tot_prop','os_attr_tot_prop','channel_attr_tot_prop','hour_attr_tot_prop']
+feat3 = feat1 + feat2
+feat4 = ['ip_attr_prop','app_attr_prop','channel_attr_prop','tot_attr_prop']
+feat5 = feat4 + feat2
+feat6 = feat5 + ['app_attr_tot_prop','channel_attr_tot_prop']
+feat7 = ['app_attr_prop','channel_attr_prop','hour_app_prop','hour_channel_prop']
+feat8 = feat7 + ['app_attr_tot_prop','channel_attr_tot_prop']
 
+
+## Make a model using lightgbm
 target = 'is_attributed'
 feat = [feat1, feat2, feat3, feat4, feat5, feat6, feat7, feat8]
-ft = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5', 'feat6', 'feat7', 'feat8']
-sample = ['10m','20m','30m','40m','50m','all']
-
-## Import test data
-ad_test = pd.read_csv('test_modify.csv')
-print(ad_test.columns)
+name = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5', 'feat6', 'feat7', 'feat8']
+sample = ['10m','20m','30m','40m','50m']
 
 for s in sample:
     print('sample : %s' % s)
     
-    ## Import train data
-    ad_train = pd.read_csv('train_modify_'+ s + '.csv')
+    ## Import data
+    ad_train = pd.read_csv('train_'+ s + '_modify2.csv')
     print(ad_train.columns)    
     
-    for f,t in zip(feat,ft):
-        print('features : %s' % f)
+    for f,n in zip(feat,name):
+        print('feat : %s' % n)
         
-        ## Train a model
         is_attributed, test = lgbm(ad_train, ad_test, f, target)
         gc.collect()
         
-        ## Append result data
-        r = pd.DataFrame({'sample':s,'features':t, 'test':test}, columns=colnames, index=[i])
+        r = pd.DataFrame({'sample':s,'feat':n, 'test':test}, columns=colnames, index=[i])
         result = pd.concat([result, r], ignore_index=True)
         i+=1
         
-        ## Save submission dataset
         submission['is_attributed'] = is_attributed
-        submission.to_csv(s + '_submission_gbm_' + t + '.csv', index=False)
+        submission.to_csv(s + '_submission_gbm_' + n+ '.csv', index=False)
     
-    ## Remove dataset
     del ad_train
-    del ad_test
-    gc.collect()
-
-
-## Save result dataset
-result.to_csv('result.csv', index=False)
+    result.to_csv('result.csv', index=False)
