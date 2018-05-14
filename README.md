@@ -1,6 +1,13 @@
 # Kaggle - TalkingData AdTracking Fraud Detection Challenge
 
 [1. Data Exporation](01_Data_Exporation.py) <br>
+[ - Check the number of downloads over time](sample_timeplot.png) <br>
+[ - Check click count, download count, download rate per hour](sample_barplot_hour.png) <br>
+[ - Check click count, download count, download rate by app](sample_barplot_app.png) <br>
+[ - Check click count, download count, download rate by device](sample_barplot_device.png) <br>
+[ - Check click count, download count, download rate by os](sample_barplot_os.png) <br>
+[ - Check click count, download count, download rate by channel](sample_barplot_channel.png) <br>
+[ - Check correlation](sample_scatterplot.png) <br>
 
 ### Method1
 [2-1. Train Data Preprocessing](method1_02_1_Train_Data_Preprocessing.py) <br>
