@@ -3,7 +3,7 @@
 [1. Data Exporation](01_Data_Exporation.py) <br>
 - Check the number of downloads over time <br>
   [timeplot](graph/sample_timeplot.png) <br>
-- Check click count, download count, download rate :
+- Check click count, download count, download rate : <br>
   [per hour](graph/sample_barplot_hour.png) <br>
   [by app](graph/sample_barplot_app.png) <br>
   [by device](graph/sample_barplot_device.png) <br>
