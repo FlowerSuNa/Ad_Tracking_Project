@@ -61,7 +61,11 @@ def examine_outlier(is_attributed):
 
 def lgbm(train_data, test_data, feat, target):
     ## Divid data    
-    X_train, X_test, y_train, y_test = train_test_split(train_data[feat], train_data[target], random_state=1)    
+    X_train, X_test, y_train, y_test = train_test_split(train_data[feat], train_data[target], random_state=1)
+    
+    # feat = feat + ['app','channel']
+    # X_train, X_test, y_train, y_test = train_test_split(train_data[feat], train_data[target], random_state=1)
+    
     print("X_train : " + str(X_train.shape))
     print("X_test : " + str(X_test.shape))
     print("y_train : " + str(y_train.shape))
@@ -69,6 +73,9 @@ def lgbm(train_data, test_data, feat, target):
     
     train = lgb.Dataset(X_train.values, label=y_train.values, feature_name=feat)
     valid = lgb.Dataset(X_test.values, label=y_test.values, feature_name=feat)
+    
+    # train = lgb.Dataset(X_train.values, label=y_train.values, feature_name=feat, categorical_feature=['app','channel'])
+    # valid = lgb.Dataset(X_test.values, label=y_test.values, feature_name=feat, categorical_feature=['app','channel'])
     
     ## train a model
     params = {
