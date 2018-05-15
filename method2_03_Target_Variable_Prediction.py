@@ -133,12 +133,15 @@ feat5 = feat4 + feat2
 feat6 = feat5 + ['app_attr_tot_prop','channel_attr_tot_prop']
 feat7 = ['app_attr_prop','channel_attr_prop','hour_app_prop','hour_channel_prop']
 feat8 = feat7 + ['app_attr_tot_prop','channel_attr_tot_prop']
+feat9 = ['app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop']
+feat10 = feat9 + ['hour_app_prop','hour_channel_prop']
+feat11 = feat10 + ['app_attr_tot_prop','channel_attr_tot_prop']
 
 
 ## Make a model using lightgbm
 target = 'is_attributed'
-feat = [feat1, feat2, feat3, feat4, feat5, feat6, feat7, feat8]
-name = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5', 'feat6', 'feat7', 'feat8']
+feat = [feat1, feat2, feat3, feat4, feat5, feat6, feat7, feat8, feat9, feat10, feat11]
+name = ['feat1', 'feat2', 'feat3', 'feat4', 'feat5', 'feat6', 'feat7', 'feat8', 'feat9', 'feat10', 'feat11']
 sample = ['10m','20m','30m','40m','50m']
 
 for s in sample:
