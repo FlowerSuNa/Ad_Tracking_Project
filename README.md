@@ -2,12 +2,12 @@
 
 [1. Data Exporation](01_Data_Exporation.py) <br>
 - Check the number of downloads over time : [timeplot](graph/sample_timeplot.png) <br>
-- Check click count, download count, download rate : <br>
-                  [per hour](graph/sample_barplot_hour.png) <br>
-                  [by app](graph/sample_barplot_app.png) <br>
-                  [by device](graph/sample_barplot_device.png) <br>
-                  [by os](graph/sample_barplot_os.png) <br>
-                  [by channel](graph/sample_barplot_channel.png) <br>
+- Check click count, download count, download rate <br>
+emsp; emsp; emsp; emsp; emsp; emsp; emsp; [per hour](graph/sample_barplot_hour.png) <br>
+emsp; emsp; emsp; emsp; emsp; emsp; emsp; [by app](graph/sample_barplot_app.png) <br>
+emsp; emsp; emsp; emsp; emsp; emsp; emsp; [by device](graph/sample_barplot_device.png) <br>
+emsp; emsp; emsp; emsp; emsp; emsp; emsp; [by os](graph/sample_barplot_os.png) <br>
+emsp; emsp; emsp; emsp; emsp; emsp; emsp; [by channel](graph/sample_barplot_channel.png) <br>
 - Check correlation : [scatterplot](graph/sample_scatterplot.png) <br>
 
 ### Method1
