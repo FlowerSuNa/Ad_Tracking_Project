@@ -92,8 +92,8 @@ feat8 = feat7 + ['hour_app_prop','hour_channel_prop']
 
 
 ## Predict a target variable
-feat = [feat1,feat2,feat3,feat4,feat5,feat6]
-name = ['feat1','feat2','feat3','feat4','feat5','feat6']
+feat = [feat1,feat2,feat3,feat4,feat5,feat6,feat7,feat8]
+name = ['feat1','feat2','feat3','feat4','feat5','feat6','feat7','feat8']
 # sample = '10m_'
 # sample = '20m_'
 # sample = '30m_'
