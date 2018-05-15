@@ -87,7 +87,7 @@ from sklearn.metrics import roc_auc_score
 print("y_test : ")
 print(y_test.value_counts())
 
-for i in range(2,21):
+for i in range(3,22,2):
     print("When n_neighbors=%d :" %i)
 
     ## Train the model
