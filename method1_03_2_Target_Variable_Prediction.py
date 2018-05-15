@@ -87,13 +87,11 @@ feat3 = feat1 + feat2
 feat4 = ['ip_attr_prop','app_attr_prop','channel_attr_prop','tot_attr_prop']
 feat5 = feat4 + feat2
 feat6 = ['app_attr_prop','channel_attr_prop','hour_app_prop','hour_channel_prop']
-feat7 = ['app_attr_prop','device_attr_prop','os_attr_prop','channel_attr_prop','hour_attr_prop']
-feat8 = feat7 + ['hour_app_prop','hour_channel_prop']
 
 
 ## Predict a target variable
-feat = [feat1,feat2,feat3,feat4,feat5,feat6,feat7,feat8]
-name = ['feat1','feat2','feat3','feat4','feat5','feat6','feat7','feat8']
+feat = [feat1,feat2,feat3,feat4,feat5,feat6]
+name = ['feat1','feat2','feat3','feat4','feat5','feat6']
 # sample = '10m_'
 # sample = '20m_'
 # sample = '30m_'
@@ -160,7 +158,7 @@ for f,n in zip(feat,name):
                 print("When max_depth=%d, n_estimators=%d, max_features=%d :" %(d,e,mf))
                 
                 ## Train the model
-                forest = RandomForestClassifier(max_depth=d, n_estimators=e, max_features=f, random_state=1)
+                forest = RandomForestClassifier(max_depth=d, n_estimators=e, max_features=mf, random_state=1)
                 forest.fit(X_train,y_train)
         
                 ## predict is_attributed
