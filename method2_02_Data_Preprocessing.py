@@ -185,7 +185,7 @@ import random
 
 for n in [10000000, 20000000,30000000,40000000,50000000]:
     idx = random.sample(range(len(ad_train)),n)
-    sample = ad.iloc[idx]
+    sample = ad_train.iloc[idx]
     gc.collect()
 
     del idx
