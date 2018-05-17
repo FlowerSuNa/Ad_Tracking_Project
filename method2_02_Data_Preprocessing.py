@@ -74,11 +74,13 @@ for v,v1,v2,v3,v4 in zip(var,var1,var2,var3,var4):
     temp = ad[v].value_counts().reset_index(name='counts')
     temp.columns = [v,v1]
     ad = ad.merge(temp, on=v, how='left')
+    del temp
     gc.collect()
 
     temp = ad.groupby(v)['is_attributed'].sum().reset_index(name='counts')
     temp.columns = [v,v2]
     ad = ad.merge(temp, on=v, how='left')
+    del temp
     gc.collect()    
 
     ad[v3] = np.nan
@@ -92,11 +94,11 @@ for v,v1,v2,v3,v4 in zip(var,var1,var2,var3,var4):
     ## Remove variables
     del ad[v1]
     del ad[v2]
+    gc.collect()
     
     print(ad[[v,v3,v4]].head(10))
     print(ad[[v,v3,v4]].tail(10))
-    gc.collect()
-
+    
 ad['tot_attr_prop'] = np.nan
 ad['tot_attr_prop'] = ad[var3].sum(axis=1)
 gc.collect()
@@ -131,11 +133,13 @@ for v in ['ip','hour']:
         temp = ad.groupby([v,vv])['is_attributed'].count().reset_index(name='counts')
         temp.columns = [v,vv,cnt]
         ad = ad.merge(temp, on=[v,vv], how='left')
+        del temp
         gc.collect()
         
         temp = ad.groupby([v,vv])['is_attributed'].sum().reset_index(name='counts')
         temp.columns = [v,vv,attr]
         ad = ad.merge(temp, on=[v,vv], how='left')
+        del temp
         gc.collect()
         
         ad[prop]= np.nan
