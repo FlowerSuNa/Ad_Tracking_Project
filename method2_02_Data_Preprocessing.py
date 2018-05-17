@@ -168,9 +168,9 @@ gc.collect()
 ## Check correlation
 print(ad_train.corr(method='pearson'))
 
-pd.plotting.scatter_matrix(ad[var3 + ['tot_attr_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
-pd.plotting.scatter_matrix(ad[var4 + ['tot_attr_tot_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
-pd.plotting.scatter_matrix(ad[var5 + ['tot_vv_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
+pd.plotting.scatter_matrix(ad_train[var3 + ['tot_attr_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
+pd.plotting.scatter_matrix(ad_train[var4 + ['tot_attr_tot_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
+pd.plotting.scatter_matrix(ad_train[var5 + ['tot_vv_prop','is_attributed']], figsize=(15,15), alpha=.1, diagonal='kde')
        
 
 ## Save dataset
@@ -185,7 +185,7 @@ import random
 
 for n in [10000000, 20000000,30000000,40000000,50000000]:
     idx = random.sample(range(len(ad_train)),n)
-    sample = ad.iloc[idx]
+    sample = ad_train.iloc[idx]
     gc.collect()
 
     del idx
