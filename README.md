@@ -27,5 +27,5 @@
 [3. Target Variable Prediction : LightGBM](method3_03_Target_Variable_Prediction.py) <br>
 
 ### organization
-[summary](TalkingData AdTracking.pdf) <br>
+[summary](TalkingData%20AdTracking.pdf) <br>
 performance evaluation...
