@@ -21,3 +21,10 @@
 ### Method2
 [2. Data Preprocessing](method2_02_Data_Preprocessing.py) <br>
 [3. Target Variable Prediction : LightGBM](method2_03_Target_Variable_Prediction.py) <br>
+
+### Method3
+[2. Data Preprocessing](method3_02_Data_Preprocessing.py) <br>
+[3. Target Variable Prediction : LightGBM](method3_03_Target_Variable_Prediction.py) <br>
+
+summary
+
