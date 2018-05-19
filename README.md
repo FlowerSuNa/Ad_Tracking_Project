@@ -26,5 +26,6 @@
 [2. Data Preprocessing](method3_02_Data_Preprocessing.py) <br>
 [3. Target Variable Prediction : LightGBM](method3_03_Target_Variable_Prediction.py) <br>
 
-summary
-
+### organization
+[summary...](TalkingData AdTracking.pdf) <br>
+performance evaluation...
