@@ -2,7 +2,8 @@
 
 ♣ : source code
 
-1. Data Exporation{: .no-style } [♣](01_Data_Exporation.py) <br>
+1. Data Exporation [♣](01_Data_Exporation.py) 
+{: .no-style } <br>
 - Check the number of downloads over time - [timeplot](graph/sample_timeplot.png) <br>
 - Check click count, download count, download rate <br>
 &emsp;&emsp;&emsp;&emsp;&emsp; per hour : [barplot](graph/sample_barplot_hour.png) <br>
