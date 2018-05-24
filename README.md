@@ -2,14 +2,14 @@
 
 ♣ : source code
 
-1. Data Exporation [♣](01_Data_Exporation.py) <br>
+1. Data Exporation{: .no-style } [♣](01_Data_Exporation.py) <br>
 - Check the number of downloads over time - [timeplot](graph/sample_timeplot.png) <br>
 - Check click count, download count, download rate <br>
-  &emsp;&emsp;&emsp;&emsp;&emsp; per hour : [barplot](graph/sample_barplot_hour.png) <br>
-  &emsp;&emsp;&emsp;&emsp;&emsp; by app : [barplot](graph/sample_barplot_app.png) <br>
-  &emsp;&emsp;&emsp;&emsp;&emsp; by device : [barplot](graph/sample_barplot_device.png) <br>
-  &emsp;&emsp;&emsp;&emsp;&emsp; by os : [barplot](graph/sample_barplot_os.png) <br>
-  &emsp;&emsp;&emsp;&emsp;&emsp; by channel : [barplot](graph/sample_barplot_channel.png) <br>
+&emsp;&emsp;&emsp;&emsp;&emsp; per hour : [barplot](graph/sample_barplot_hour.png) <br>
+&emsp;&emsp;&emsp;&emsp;&emsp; by app : [barplot](graph/sample_barplot_app.png) <br>
+&emsp;&emsp;&emsp;&emsp;&emsp; by device : [barplot](graph/sample_barplot_device.png) <br>
+&emsp;&emsp;&emsp;&emsp;&emsp; by os : [barplot](graph/sample_barplot_os.png) <br>
+&emsp;&emsp;&emsp;&emsp;&emsp; by channel : [barplot](graph/sample_barplot_channel.png) <br>
 - Check correlation : [scatterplot](graph/sample_scatterplot.png) <br>
 
 ### Method1
