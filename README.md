@@ -1,6 +1,24 @@
 # Kaggle - TalkingData AdTracking Fraud Detection Challenge
 
-TalkingData, China’s largest independent big data service platform, covers over 70% of active mobile devices nationwide. They handle 3 billion clicks per day, of which 90% are potentially fraudulent. The goal of the competition is to create an algorithm that predicts whether a user will download an app after clicking a mobile app ad.
+#### Description
+TalkingData, China’s largest independent big data service platform, covers over 70% of active mobile device
+s nationwide. They handle 3 billion clicks per day, of which 90% are potentially fraudulent. The goal of the
+competition is <b>to create an algorithm that predicts whether a user will download an app after clicking a
+mobile app ad</b>.
+
+#### Evalution
+Submissions are evaluated on <b>area under the ROC curve</b> between the predicted probability and the
+observed target.
+
+#### Variable
+* ip : ip address of click
+* app : app id for marketing
+* device : device type id of user mobile phone
+* os : os version id of user mobile phone
+* channel : channel id of mobile ad publisher
+* click_time : timestamp of click (UTC)
+* attributed_time : if user download the app for after clicking an ad, this is the time of the app download
+* is_attributed : the target that is to be predicted, indicating the app was download
 
 ---
 
@@ -11,17 +29,14 @@ TalkingData, China’s largest independent big data service platform, co
 ---
 
 ## Contents Table
-♣ : source code
+♣ : source code <br>
+★ : view
 
-1. Data Exporation [♣](01_Data_Exporation.py) <br>
-&ensp; - Check the number of downloads over time : [timeplot](graph/sample_timeplot.png) <br>
-&ensp; - Check click count, download count, download rate <br>
-&emsp;&emsp;&emsp;&emsp;&emsp; per hour : [barplot](graph/sample_barplot_hour.png) <br>
-&emsp;&emsp;&emsp;&emsp;&emsp; by app : [barplot](graph/sample_barplot_app.png) <br>
-&emsp;&emsp;&emsp;&emsp;&emsp; by device : [barplot](graph/sample_barplot_device.png) <br>
-&emsp;&emsp;&emsp;&emsp;&emsp; by os : [barplot](graph/sample_barplot_os.png) <br>
-&emsp;&emsp;&emsp;&emsp;&emsp; by channel : [barplot](graph/sample_barplot_channel.png) <br>
-&ensp; - Check correlation : [scatterplot](graph/sample_scatterplot.png) <br>
+1. EDA [♣](01_EDA.py) [★](01_EDA.md) <br>
+2. Preprocessing
+3. Modeling
+
+---
 
 ### Method1
 2. Data Preprocessing <br>
