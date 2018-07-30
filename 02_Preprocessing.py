@@ -11,11 +11,13 @@ import gc
 
 
 ## Load data
-data = pd.read_csv("merge.csv", parse_dates=['click_time'])
+data = pd.read_csv("data/merge.csv", parse_dates=['click_time'])
 ip = pd.read_csv("blacklist/ip_download.csv")
 app = pd.read_csv("blacklist/app_download.csv")
 device = pd.read_csv("blacklist/device_download.csv")
 os = pd.read_csv("blacklist/os_download.csv")
+channel = pd.read_csv("blacklist/channel_download.csv")
+hour = pd.read_csv("blacklist/hour_download.csv")
 gc.collect()
 
 print(data.head())
@@ -31,98 +33,124 @@ def merge_black(df, black, feat):
     
     print(df.head())
     return df
+
+def merge_gap(df, gap, feat):
+    temp = gap[[feat, 'gap']]
+    df = df.merge(temp, on=feat, how='left')
+    df.rename(columns={'gap':'gap_'+feat}, inplace = True)
+    gc.collect()
+    
+    print(df.head())
+    return df
     
 data = merge_black(data, ip, 'ip')
 data = merge_black(data, app, 'app')
 data = merge_black(data, device, 'device')
 data = merge_black(data, os, 'os')
-data.to_csv('merge_gap_black.csv', index=False)
+data = merge_gap(data, channel, 'channel')
+data = merge_gap(data, hour, 'hour')
+data.to_csv('data/merge_gap_black.csv', index=False)
+
+
+# Make a derived variable : click_gap
+data['click_gap'] = np.nan
+
+for ip in data.ip.value_counts().index:
+    temp = data.loc[data['ip'] == ip, 'click_time'].reset_index()
+    temp.sort_values(ascending=True, by='click_time', inplace=True)
+    
+    value = []
+    value = list(temp['click_time'].iloc[:-1])
+    value.insert(0, temp['click_time'].iloc[0])
+    value = pd.to_datetime(value)
+    
+    time = []
+    time = list(temp['click_time'])
+    time = pd.to_datetime(time)
+    
+    temp['click_gap'] = np.nan
+    temp['click_gap'] = value
+    temp['click_time'] = time
+    temp['click_gap'] = temp['click_time'] - temp['click_gap']
+    temp['click_gap'] = temp['click_gap'].astype('timedelta64[s]')
+    
+    data.loc[list(temp['index']), 'click_gap'] = list(temp['click_gap'])
+    gc.collect()
+
+data.head()
+data.to_csv('merged_click_gap.csv', index=False)
+
+
+## Divid data
+del data['click_time']
+gc.collect()
+
+train = data.loc[data['click_id'].isnull()]
+test = data.loc[data['click_id'].notnull()]
+
+del data
+del train['click_id']
+gc.collect()
+
+train.to_csv('train_modify.csv', index=False)
+test.to_csv('test_modify.csv', index=False)
+
+del test
+gc.collect()
+
+
+## Extract a sample
+import random
+
+for n in [10000000, 20000000,30000000,40000000,50000000]:
+    idx = random.sample(range(len(train)),n)
+    sample = train.iloc[idx]
+    gc.collect()
+
+    n = n / 1000000
+    sample.to_csv('train_modify_' + str(n) + 'm.csv', index=False)
+    
+    del sample
 
 
 ##
 def scatter_plot(feat, file_name):
-    temp = data[feat].loc[data['click_id'].isnull()]
+    temp = train[feat]
     
-    plt.figure(figsize=(20,20))
-    sns.pairplot(temp, 
-                 hue='is_attributed', 
-                 palette="husl",
-                 plot_kws={'alpha':0.1})
-    plt.xticks(rotation=90, fontsize="small")
+    g = sns.pairplot(temp, 
+                     hue='is_attributed', 
+                     palette="husl",
+                     plot_kws={'alpha':0.1})
+    
+    for ax in g.axes.flat:
+        for label in ax.get_xticklabels():
+            label.set_rotation(90)
+    
+    g.fig.set_size_inches(20,17)
     plt.savefig('graph/'+file_name+'.png')
     plt.show()
     gc.collect()
 
-
 feat = ['is_attributed', 'gap_ip', 'black_ip']
 scatter_plot(feat, 'scatter_plot_gap_black_ip')
 
-
-
-feat = ['is_attributed', 'gap_ip', 'black_ip']
-temp = data[feat].loc[data['click_id'].isnull()]
-
-plt.figure(figsize=(20,20))
-sns.pairplot(temp, 
-             hue='is_attributed', 
-             palette="husl",
-             plot_kws={'alpha':0.1})
-plt.savefig('graph/scatter_plot_gap_black_ip.png')
-plt.show()
-gc.collect()
-
-
-##
-
 feat = ['is_attributed', 'gap_app', 'black_app']
-plt.figure(figsize=(20,20))
+scatter_plot(feat, 'scatter_plot_gap_black_app')
 
-sns.pairplot(data[feat].loc[data['click_id'].isnull()], 
-                  hue='is_attributed', 
-                  palette="husl", 
-                  diag_kind="kde",
-                  plot_kws={'alpha':0.1})
+feat = ['is_attributed', 'gap_device', 'black_device']
+scatter_plot(feat, 'scatter_plot_gap_black_device')
 
-plt.savefig('graph/scatter_plot_gap_black_app.png')
+feat = ['is_attributed', 'gap_os', 'black_os']
+scatter_plot(feat, 'scatter_plot_gap_black_os')
+
+feat = ['is_attributed', 'gap_channel', 'gap_hour']
+scatter_plot(feat, 'scatter_plot_gap_channel_hour')
+
+
+## check correlation
+corr = round(train.corr(method='pearson'), 2)
+plt.figure(figsize=(20,17))
+sns.heatmap(corr, vmin=-1, vmax=1, annot=True)
+plt.savefig('graph/heatmap.png')
 plt.show()
 gc.collect()
-    
-    
-##
-feat = ['is_attributed', 'gap_ip', 'black_ip', 'gap_app', 'black_app', 'gap_device', 'black_device', 'gap_os', 'black_os']
-plt.figure(figsize=(20,20))
-sns.pairplot(data[feat].loc[data['click_id'].isnull()], palette="husl", alpha=.2)
-plt.savefig('graph/scatter_plot_gap_black.png')
-plt.show()
-gc.collect()    
-    
-
-
-# Make a derived variable : click_gap
-train = pd.read_csv('train.csv')
-for ip in train.ip.value_counts().index:
-    temp = train.loc[train['ip'] == ip, 'click_time']
-    temp.sort_values(ascending=False, inplace=True)
-    
-    temp['click_gap'] = np.nan
-    temp[1:].loc['click_gap'] = temp[:-1].loc['click_time']
-    temp['click_gap'] = temp['click_gap'] - temp['click_time']
-
-temp = train.loc[train['ip'] == 10, 'click_time'].reset_index()
-temp.sort_values(ascending=True, by='click_time', inplace=True)
-
-temp['click_gap'] = np.nan
-temp['click_gap'] = temp['click_time']
-temp['click_gap'].iloc[1:] = temp['click_time']
-
-
-temp[1:].loc['click_gap'] = temp[0:len(temp) - 1].loc['click_time']
-temp['click_gap'] = temp['click_gap'] - temp['click_time']
-    
-    
-a = train['click_time'].iloc[1] - train['click_time'].iloc[0]
-
-
-
-
-

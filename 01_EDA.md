@@ -8,10 +8,10 @@
 <br>
 
 * train data columns : <br>
-ip, app, device, os, chennel, click_time, attributed_time, is_attributed <br>
+ip, app, device, os, channel, click_time, attributed_time, is_attributed <br>
 
 * test data columns : <br>
-click_id, ip, app, device, os, chennel, click_time <br>
+click_id, ip, app, device, os, channel, click_time <br>
 
 <br>
 
@@ -23,8 +23,8 @@ click_id, ip, app, device, os, chennel, click_time <br>
 <br>
 
 ### Check download frequency
-0 : 18,447,044 <br>
-1 : 456,846 <br>
+* 0 : 18,447,044 <br>
+* 1 : 456,846 <br>
 
 <br>
 
@@ -90,7 +90,7 @@ temp = temp.resample('10T').count()
 plt.figure(figsize=(10,5))
 plt.title('click time (10 minute bins) of test data')
 plt.plot(temp.index, temp, 'g')
-plt.xticks(rotation=60, fontsize="small")
+plt.xticks(rotation=30, fontsize="small")
 plt.savefig('graph/test_click_time.png')
 plt.show()
 gc.collect()
@@ -254,7 +254,7 @@ ip = make_black_list('ip')
 app = make_black_list('app')
 device = make_black_list('device')
 os = make_black_list('os')
-chennel = make_black_list('channel')
+channel = make_black_list('channel')
 hour = make_black_list('hour')
 ```
 
@@ -262,7 +262,7 @@ hour = make_black_list('hour')
 * app black list : 178 <br>
 * device black list : 62 <br>
 * os black list : 170 <br>
-* chennel black list : 0 <br>
+* channel black list : 0 <br>
 * hour black list : 0 <br>
 
 <br>
@@ -338,11 +338,11 @@ barplot(os, 'os')
 ![png](graph/os_download_rate.png)
 
 ```python
-chennel.sort_values(ascending=False, by='count', inplace=True)
-barplot(chennel, 'chennel')
+channel.sort_values(ascending=False, by='count', inplace=True)
+barplot(channel, 'channel')
 ```
 
-![png](graph/chennel_download_rate.png)
+![png](graph/channel_download_rate.png)
 
 <br>
 
@@ -395,11 +395,11 @@ scatter_plot(feat, 'scatter_plot_os')
 ![png](graph/scatter_plot_os.png)
 
 ```python
-feat = ['is_attributed', 'chennel']
-scatter_plot(feat, 'scatter_plot_chennel')
+feat = ['is_attributed', 'channel']
+scatter_plot(feat, 'scatter_plot_channel')
 ```
 
-![png](graph/scatter_plot_chennel.png)
+![png](graph/scatter_plot_channel.png)
 
 ```python
 feat = ['is_attributed', 'hour']

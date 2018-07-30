@@ -85,7 +85,7 @@ temp = temp.resample('10T').count()
 plt.figure(figsize=(10,5))
 plt.title('click time (10 minute bins) of test data')
 plt.plot(temp.index, temp, 'g')
-plt.xticks(rotation=60, fontsize="small")
+plt.xticks(rotation=30, fontsize="small")
 plt.savefig('graph/test_click_time.png')
 plt.show()
 gc.collect()
@@ -232,7 +232,7 @@ ip = make_black_list('ip')              # count : 34,770
 app = make_black_list('app')            # count : 178
 device = make_black_list('device')      # count : 62
 os = make_black_list('os')              # count : 170
-chennel = make_black_list('channel')    # count : 0
+channel = make_black_list('channel')    # count : 0
 hour = make_black_list('hour')          # count : 0
 
 
@@ -288,8 +288,8 @@ barplot(device, 'device')
 os.sort_values(ascending=False, by='count', inplace=True)
 barplot(os, 'os')
 
-chennel.sort_values(ascending=False, by='count', inplace=True)
-barplot(chennel, 'chennel')
+channel.sort_values(ascending=False, by='count', inplace=True)
+barplot(channel, 'channel')
 
 
 ## Draw scatter plots
@@ -322,8 +322,8 @@ scatter_plot(feat, 'scatter_plot_device')
 feat = ['is_attributed', 'os']
 scatter_plot(feat, 'scatter_plot_os')
 
-feat = ['is_attributed', 'chennel']
-scatter_plot(feat, 'scatter_plot_chennel')
+feat = ['is_attributed', 'channel']
+scatter_plot(feat, 'scatter_plot_channel')
 
 feat = ['is_attributed', 'hour']
 scatter_plot(feat, 'scatter_plot_hour')
