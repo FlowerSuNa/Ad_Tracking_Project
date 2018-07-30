@@ -2,47 +2,65 @@
 # 1. EDA
 [source code](01_EDA.py)
 ### Explor data
-train data shape : (184903890, 8) <br>
-test data shape : (18790469, 7) <br>
+* train data shape : (184903890, 8)
+* test data shape : (18790469, 7)
 
-train data columns : <br>
+<br>
+
+* train data columns : <br>
 ip, app, device, os, chennel, click_time, attributed_time, is_attributed <br>
 
-test data columns : <br>
+* test data columns : <br>
 click_id, ip, app, device, os, chennel, click_time <br>
 
-train data info. : <br>
+<br>
+
+* train data info. : <br>
 
 
-test data info. : <br>
+* test data info. : <br>
 
+<br>
 
 ### Check download frequency
-train data download frequency : <br>
 0 : 18,447,044 <br>
 1 : 456,846 <br>
 
+<br>
+
 ### Check 'click_time'
-year count of train data : <br>
+* year count of train data : <br>
 2017 : 184,903,890 <br>
 
-month count of train data : <br>
+<br>
+
+* month count of train data : <br>
 11 : 184,903,890 <br>
 
-day count of train data : <br>
+<br>
+
+* day count of train data : <br>
 6 : 9,308,568 <br>
 7 : 59,633,310 <br>
 8 : 62,945,075 <br>
 9 : 53,016,937 <br>
 
-year count of test data : <br>
+<br>
+
+* year count of test data : <br>
 2017 : 18,790,469 <br>
 
-momth count of test data : <br>
+<br>
+
+* momth count of test data : <br>
 11 : 18,790,469 <br>
 
-day count of test data : <br>
+<br>
+
+* day count of test data : <br>
 10 : 18,790,469 <br>
+
+<br>
 
 ### Draw time series of train data click time
 ```python
@@ -61,6 +79,8 @@ gc.collect()
 
 ![png](graph/train_click_time.png)
 
+<br>
+
 ### Draw time series of test data click time
 ```python
 temp = test['click_time']
@@ -70,12 +90,15 @@ temp = temp.resample('10T').count()
 plt.figure(figsize=(10,5))
 plt.title('click time (10 minute bins) of test data')
 plt.plot(temp.index, temp, 'g')
+plt.xticks(rotation=60, fontsize="small")
 plt.savefig('graph/test_click_time.png')
 plt.show()
 gc.collect()
 ```
 
 ![png](graph/test_click_time.png)
+
+<br>
 
 ### Draw time series of click time and attributed time
 ```python
@@ -99,6 +122,8 @@ gc.collect()
 
 ![png](graph/train_click_download.png)
 
+<br>
+
 ### Make a derived variable : hour
 ```python
 train['hour'] = np.nan
@@ -108,6 +133,8 @@ test['hour'] = np.nan
 test['hour'] = test['click_time'].dt.hour
 gc.collect()
 ```
+
+<br>
 
 ### Draw hour bar graphs
 ```python
@@ -127,6 +154,8 @@ gc.collect()
 ```
 
 ![png](graph/hour_click_count.png)
+
+<br>
 
 ### Draw hour and download bar graphs
 ```python
@@ -151,6 +180,8 @@ gc.collect()
 
 ![png](graph/hour_download_rate.png)
 
+<br>
+
 ### Merge trian data and test data
 ```python
 del train['attributed_time']
@@ -162,7 +193,9 @@ del test
 gc.collect()
 ```
 
-merged data shape : (203694359, 9) <br>
+merged data shape : (203694359, 9)
+
+<br>
 
 ### Make black list
 ```python
@@ -225,12 +258,14 @@ chennel = make_black_list('channel')
 hour = make_black_list('hour')
 ```
 
-ip black list : 34,770 <br>
-app black list : 178 <br>
-device black list : 62 <br>
-os black list : 170 <br>
-chennel black list : 0 <br>
-hour black list : 0 <br>
+* ip black list : 34,770 <br>
+* app black list : 178 <br>
+* device black list : 62 <br>
+* os black list : 170 <br>
+* chennel black list : 0 <br>
+* hour black list : 0 <br>
+
+<br>
 
 ### Draw bar graphs
 ```python
@@ -308,6 +343,8 @@ barplot(chennel, 'chennel')
 ```
 
 ![png](graph/chennel_download_rate.png)
+
+<br>
 
 ### Draw scatter plots
 ```python
