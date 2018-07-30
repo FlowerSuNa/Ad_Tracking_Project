@@ -11,8 +11,8 @@ import gc
 
 
 ## Load data
-train = pd.read_csv("train.csv", parse_dates=['click_time', 'attributed_time'])
-test = pd.read_csv('test.csv', parse_dates=['click_time'])
+train = pd.read_csv("data/train.csv", parse_dates=['click_time', 'attributed_time'])
+test = pd.read_csv('data/test.csv', parse_dates=['click_time'])
 gc.collect()
 
 
@@ -36,11 +36,11 @@ print('test data head : \n', test.head(10))
 ## Check download frequency
 freq = train['is_attributed'].value_counts(sort=False)
 print('train data download frequency : \n', freq)
-# --- 0 : 18447044
-# --- 1 : 456846
+# --- 0 : 18,447,044
+# --- 1 : 456,846
 
 
-##
+## Check 'click_time'
 print('year count of train data : \n', train['click_time'].dt.year.value_counts())
 # --- 2017 : 184,903,890
 
@@ -63,7 +63,7 @@ print('day count of test data : \n', test['click_time'].dt.day.value_counts())
 # --- 10  :18,790,469
 
 
-## Check train data click time
+## Draw time series of train data click time
 temp = train['click_time']
 temp.index = train['click_time']
 temp = temp.resample('10T').count()
@@ -77,7 +77,7 @@ plt.show()
 gc.collect()
 
 
-## Check test data click time
+## Draw time series of test data click time
 temp = test['click_time']
 temp.index = test['click_time']
 temp = temp.resample('10T').count()
@@ -85,12 +85,13 @@ temp = temp.resample('10T').count()
 plt.figure(figsize=(10,5))
 plt.title('click time (10 minute bins) of test data')
 plt.plot(temp.index, temp, 'g')
+plt.xticks(rotation=60, fontsize="small")
 plt.savefig('graph/test_click_time.png')
 plt.show()
 gc.collect()
 
 
-## Check click time and attributed time
+## Draw time series of click time and attributed time
 temp1 = train['is_attributed']
 temp1.index = train['click_time']
 temp1 = temp1.resample('10T').sum()
@@ -124,7 +125,7 @@ print(test[['click_time', 'hour']].head(10))
 print(test[['click_time', 'hour']].tail(10))
 
 
-##
+## Draw hour bar graphs
 plt.figure(figsize=(15,10))
 
 plt.subplot(2,1,1)
@@ -135,12 +136,12 @@ plt.subplot(2,1,2)
 plt.title('click count per hour in test data')
 sns.countplot('hour', data=test, linewidth=0)
 
-plt.savefig('graph/hour_cilck_count.png')
+plt.savefig('graph/hour_click_count.png')
 plt.show()
 gc.collect()
 
 
-##
+## Draw hour and download bar graphs
 plt.figure(figsize=(15,15))
 
 plt.subplot(3,1,1)
@@ -162,7 +163,6 @@ gc.collect()
 
 ## Merge train data and test data
 del train['attributed_time']
-
 test['is_attributed'] = 0
 data = pd.concat([train, test])
 
@@ -172,7 +172,7 @@ print(data.head(10))
 del train
 del test
 gc.collect()
-data.to_csv('merge.csv', index=False)
+data.to_csv('data/merge.csv', index=False)
 
 
 ## Make black list
@@ -236,7 +236,7 @@ chennel = make_black_list('channel')    # count : 0
 hour = make_black_list('hour')          # count : 0
 
 
-## Draw barplots
+## Draw bar graphs
 def barplot(data, v):
     temp1 = data.head(30)
     temp2 = data.tail(30)
@@ -296,12 +296,16 @@ barplot(chennel, 'chennel')
 def scatter_plot(feat, file_name):
     temp = data[feat].loc[data['click_id'].isnull()]
     
-    plt.figure(figsize=(20,20))
-    sns.pairplot(temp, 
-                 hue='is_attributed', 
-                 palette="husl",
-                 plot_kws={'alpha':0.1})
-    plt.xticks(rotation=90, fontsize="small")
+    g = sns.pairplot(temp, 
+                     hue='is_attributed', 
+                     palette="husl",
+                     plot_kws={'alpha':0.1})
+    
+    for ax in g.axes.flat:
+        for label in ax.get_xticklabels():
+            label.set_rotation(90)
+            
+    g.fig.set_size_inches(10,10)
     plt.savefig('graph/'+file_name+'.png')
     plt.show()
     gc.collect()
