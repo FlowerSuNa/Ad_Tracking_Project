@@ -36,21 +36,53 @@ data = merge_black(data, ip, 'ip')
 data = merge_black(data, app, 'app')
 data = merge_black(data, device, 'device')
 data = merge_black(data, os, 'os')
+data.to_csv('merge_gap_black.csv', index=False)
 
 
 ##
+def scatter_plot(feat, file_name):
+    temp = data[feat].loc[data['click_id'].isnull()]
+    
+    plt.figure(figsize=(20,20))
+    sns.pairplot(temp, 
+                 hue='is_attributed', 
+                 palette="husl",
+                 plot_kws={'alpha':0.1})
+    plt.xticks(rotation=90, fontsize="small")
+    plt.savefig('graph/'+file_name+'.png')
+    plt.show()
+    gc.collect()
+
+
 feat = ['is_attributed', 'gap_ip', 'black_ip']
+scatter_plot(feat, 'scatter_plot_gap_black_ip')
+
+
+
+feat = ['is_attributed', 'gap_ip', 'black_ip']
+temp = data[feat].loc[data['click_id'].isnull()]
+
 plt.figure(figsize=(20,20))
-sns.pairplot(data[feat].loc[data['click_id'].isnull()], hue='is_attributed', palette="husl", alpha=.2)
+sns.pairplot(temp, 
+             hue='is_attributed', 
+             palette="husl",
+             plot_kws={'alpha':0.1})
 plt.savefig('graph/scatter_plot_gap_black_ip.png')
 plt.show()
 gc.collect()
 
 
 ##
+
 feat = ['is_attributed', 'gap_app', 'black_app']
 plt.figure(figsize=(20,20))
-sns.pairplot(data[feat].loc[data['click_id'].isnull()], hue='is_attributed', palette="husl", alpha=.2)
+
+sns.pairplot(data[feat].loc[data['click_id'].isnull()], 
+                  hue='is_attributed', 
+                  palette="husl", 
+                  diag_kind="kde",
+                  plot_kws={'alpha':0.1})
+
 plt.savefig('graph/scatter_plot_gap_black_app.png')
 plt.show()
 gc.collect()
@@ -79,8 +111,12 @@ for ip in train.ip.value_counts().index:
 temp = train.loc[train['ip'] == 10, 'click_time'].reset_index()
 temp.sort_values(ascending=True, by='click_time', inplace=True)
 
-temp['click_time'] = np.nan
-temp[1:].loc['click_gap'] = temp[:-1].loc['click_time']
+temp['click_gap'] = np.nan
+temp['click_gap'] = temp['click_time']
+temp['click_gap'].iloc[1:] = temp['click_time']
+
+
+temp[1:].loc['click_gap'] = temp[0:len(temp) - 1].loc['click_time']
 temp['click_gap'] = temp['click_gap'] - temp['click_time']
     
     

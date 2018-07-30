@@ -172,7 +172,7 @@ print(data.head(10))
 del train
 del test
 gc.collect()
-
+data.to_csv('merge.csv', index=False)
 
 
 ## Make black list
@@ -292,5 +292,34 @@ chennel.sort_values(ascending=False, by='count', inplace=True)
 barplot(chennel, 'chennel')
 
 
-## Save dataset
-data.to_csv('merge.csv', index=False)
+## Draw scatter plots
+def scatter_plot(feat, file_name):
+    temp = data[feat].loc[data['click_id'].isnull()]
+    
+    plt.figure(figsize=(20,20))
+    sns.pairplot(temp, 
+                 hue='is_attributed', 
+                 palette="husl",
+                 plot_kws={'alpha':0.1})
+    plt.xticks(rotation=90, fontsize="small")
+    plt.savefig('graph/'+file_name+'.png')
+    plt.show()
+    gc.collect()
+    
+feat = ['is_attributed', 'ip']
+scatter_plot(feat, 'scatter_plot_ip')
+
+feat = ['is_attributed', 'app']
+scatter_plot(feat, 'scatter_plot_app')
+
+feat = ['is_attributed', 'device']
+scatter_plot(feat, 'scatter_plot_device')
+
+feat = ['is_attributed', 'os']
+scatter_plot(feat, 'scatter_plot_os')
+
+feat = ['is_attributed', 'chennel']
+scatter_plot(feat, 'scatter_plot_chennel')
+
+feat = ['is_attributed', 'hour']
+scatter_plot(feat, 'scatter_plot_hour')
