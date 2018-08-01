@@ -53,10 +53,9 @@ data.to_csv('data/merge_gap_black.csv', index=False)
 
 
 # Make a derived variable : click_gap
-data['click_gap'] = np.nan
-
-for ip in data.ip.value_counts().index:
-    temp = data.loc[data['ip'] == ip, 'click_time'].reset_index()
+def click_gap(x):
+    print(x, ' start...')
+    temp = data.loc[data['ip'] == x, 'click_time'].reset_index()
     temp.sort_values(ascending=True, by='click_time', inplace=True)
     
     value = []
@@ -75,7 +74,22 @@ for ip in data.ip.value_counts().index:
     temp['click_gap'] = temp['click_gap'].astype('timedelta64[s]')
     
     data.loc[list(temp['index']), 'click_gap'] = list(temp['click_gap'])
+    gaps = list(temp['click_gap'])
+    print(x, ' complete...')
     gc.collect()
+    return gaps
+
+index = data.ip.value_counts().reset_index()
+data['click_gap'] = np.nan
+
+print('count 1 : ', sum(index['ip'] == 1))  # 52,035
+ones = index.loc[index['ip'] == 1]
+index = index.loc[index['ip'] != 1]
+
+
+gaps = index['index'].apply(lambda x: click_gap(x))
+data.loc[list(ones['index']), 'click_gap'] = 0
+
 
 data.head()
 data.to_csv('merged_click_gap.csv', index=False)
@@ -126,8 +140,8 @@ def scatter_plot(feat, file_name):
         for label in ax.get_xticklabels():
             label.set_rotation(90)
     
-    g.fig.set_size_inches(20,17)
-    plt.savefig('graph/'+file_name+'.png')
+    g.fig.set_size_inches(10,7)
+    plt.savefig('graph/'+file_name+'2.png')
     plt.show()
     gc.collect()
 
