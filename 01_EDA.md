@@ -236,11 +236,13 @@ def make_black_list(v):
     print(temp.tail(30))
     print()
 
-    black_boundary = temp['count'].median() + 10
-    print('black list boundary : ', black_boundary)
+    count_boundary = temp['count'].median() + 10
+    rate_boundary = temp['rate'].mean()
+    print('count boundary : ', count_boundary)
+    print('rate boundary : ', rate_boundary)
 
     temp['black_' + v] = 0
-    temp.loc[(temp['count'] > black_boundary) & (temp['rate'] == 0), 'black_' + v] = 1
+    temp.loc[(temp['count'] > count_boundary) & (temp['rate'] < rate_boundary), 'black_' + v] = 1
     temp.sort_values(by=v, inplace=True)
 
     print('check black list')
@@ -258,12 +260,12 @@ channel = make_black_list('channel')
 hour = make_black_list('hour')
 ```
 
-* ip black list : 34,770 <br>
-* app black list : 178 <br>
-* device black list : 62 <br>
-* os black list : 170 <br>
-* channel black list : 0 <br>
-* hour black list : 0 <br>
+* ip black list : 132,723 <br>
+* app black list : 267 <br>
+* device black list : 544 <br>
+* os black list : 252 <br>
+* channel black list : 98 <br>
+* hour black list : 7 <br>
 
 <br>
 

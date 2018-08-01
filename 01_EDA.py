@@ -175,6 +175,12 @@ gc.collect()
 data.to_csv('data/merge.csv', index=False)
 
 
+## Separate and save each variable
+for feat in data.columns:
+    temp = data[feat].reset_index()
+    temp.to_csv('data/merge_' + feat + '.csv', index=False, columns=['index',feat])
+    
+
 ## Make black list
 def make_black_list(v):
     temp = data[v].value_counts().reset_index()
@@ -213,11 +219,13 @@ def make_black_list(v):
     print(temp.tail(30))
     print()
     
-    black_boundary = temp['count'].median() + 10
-    print('black list boundary : ', black_boundary)
+    count_boundary = temp['count'].median() + 10
+    rate_boundary = temp['rate'].mean()
+    print('count boundary : ', count_boundary)
+    print('rate boundary : ', rate_boundary)
     
     temp['black_' + v] = 0
-    temp.loc[(temp['count'] > black_boundary) & (temp['rate'] == 0), 'black_' + v] = 1
+    temp.loc[(temp['count'] > count_boundary) & (temp['rate'] < rate_boundary), 'black_' + v] = 1
     temp.sort_values(by=v, inplace=True)
     
     print('check black list')
@@ -225,15 +233,15 @@ def make_black_list(v):
     print(temp.tail(30))
     print('count : ', temp['black_' + v].sum())
     
-    temp.to_csv('blacklist/' + v + '_download.csv', index=False)
+    temp.to_csv('blacklist/' + v + '_black.csv', index=False)
     return temp
 
-ip = make_black_list('ip')              # count : 34,770
-app = make_black_list('app')            # count : 178
-device = make_black_list('device')      # count : 62
-os = make_black_list('os')              # count : 170
-channel = make_black_list('channel')    # count : 0
-hour = make_black_list('hour')          # count : 0
+ip = make_black_list('ip')              # count : 132,723
+app = make_black_list('app')            # count : 267
+device = make_black_list('device')      # count : 544
+os = make_black_list('os')              # count : 252
+channel = make_black_list('channel')    # count : 98
+hour = make_black_list('hour')          # count : 7
 
 
 ## Draw bar graphs
@@ -293,8 +301,17 @@ barplot(channel, 'channel')
 
 
 ## Draw scatter plots
-def scatter_plot(feat, file_name):
-    temp = data[feat].loc[data['click_id'].isnull()]
+def scatter_plot(feat):
+    x = pd.read_csv('data/merge_' + feat + '.csv')
+    y = pd.read_csv('data/merge_is_attributed.csv')
+    
+    temp = x.merge(y, on='index', how='left')
+    temp = temp.iloc[:184903890]
+    
+    del x
+    del y
+    del temp['index']
+    gc.collect()
     
     g = sns.pairplot(temp, 
                      hue='is_attributed', 
@@ -303,27 +320,16 @@ def scatter_plot(feat, file_name):
     
     for ax in g.axes.flat:
         for label in ax.get_xticklabels():
-            label.set_rotation(90)
-            
-    g.fig.set_size_inches(10,10)
-    plt.savefig('graph/'+file_name+'.png')
+            label.set_rotation(60)
+    
+    g.fig.set_size_inches(10,8)
+    plt.savefig('graph/scatter_plot_'+feat+'.png')
     plt.show()
     gc.collect()
     
-feat = ['is_attributed', 'ip']
-scatter_plot(feat, 'scatter_plot_ip')
-
-feat = ['is_attributed', 'app']
-scatter_plot(feat, 'scatter_plot_app')
-
-feat = ['is_attributed', 'device']
-scatter_plot(feat, 'scatter_plot_device')
-
-feat = ['is_attributed', 'os']
-scatter_plot(feat, 'scatter_plot_os')
-
-feat = ['is_attributed', 'channel']
-scatter_plot(feat, 'scatter_plot_channel')
-
-feat = ['is_attributed', 'hour']
-scatter_plot(feat, 'scatter_plot_hour')
+scatter_plot('ip')
+scatter_plot('app')
+scatter_plot('device')
+scatter_plot('os')
+scatter_plot('channel')
+scatter_plot('hour')

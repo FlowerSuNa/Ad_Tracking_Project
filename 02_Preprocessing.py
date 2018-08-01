@@ -12,44 +12,44 @@ import gc
 
 ## Load data
 data = pd.read_csv("data/merge.csv", parse_dates=['click_time'])
-ip = pd.read_csv("blacklist/ip_download.csv")
-app = pd.read_csv("blacklist/app_download.csv")
-device = pd.read_csv("blacklist/device_download.csv")
-os = pd.read_csv("blacklist/os_download.csv")
-channel = pd.read_csv("blacklist/channel_download.csv")
-hour = pd.read_csv("blacklist/hour_download.csv")
+ip = pd.read_csv("blacklist/ip_black.csv")
+app = pd.read_csv("blacklist/app_black.csv")
+device = pd.read_csv("blacklist/device_black.csv")
+os = pd.read_csv("blacklist/os_black.csv")
+channel = pd.read_csv("blacklist/channel_black.csv")
+hour = pd.read_csv("blacklist/hour_black.csv")
 gc.collect()
 
 print(data.head())
 print(data.tail())
 
 
-##
-def merge_black(df, black, feat):
-    temp = black[[feat, 'gap','black_'+feat]]
+##    
+def merge_black(feat):
+    df = pd.read_csv('data/merge_' + feat + '.csv')
+    df. head()
+    
+    black = pd.read_csv('blacklist/' + feat + '_black.csv')
+    black.head()
+    temp = black[[feat, 'gap','black_'+feat, 'rate']]
     df = df.merge(temp, on=feat, how='left')
+    df.head()
     df.rename(columns={'gap':'gap_'+feat}, inplace = True)
+    df.rename(columns={'rate':'rate_'+feat}, inplace = True)
+    df.columns
     gc.collect()
     
-    print(df.head())
-    return df
-
-def merge_gap(df, gap, feat):
-    temp = gap[[feat, 'gap']]
-    df = df.merge(temp, on=feat, how='left')
-    df.rename(columns={'gap':'gap_'+feat}, inplace = True)
-    gc.collect()
+    for name in ['gap_' + feat, 'black_' + feat, 'rate_' + feat]:
+        temp = df[name].reset_index()
+        temp.to_csv('data/merge_' + name + '.csv', index=False, columns=['index', name])
+        temp.head()
     
-    print(df.head())
-    return df
-    
-data = merge_black(data, ip, 'ip')
-data = merge_black(data, app, 'app')
-data = merge_black(data, device, 'device')
-data = merge_black(data, os, 'os')
-data = merge_gap(data, channel, 'channel')
-data = merge_gap(data, hour, 'hour')
-data.to_csv('data/merge_gap_black.csv', index=False)
+merge_black('ip')
+merge_black('app')
+merge_black('device')
+merge_black('os')
+merge_black('channel')
+merge_black('hour')
 
 
 # Make a derived variable : click_gap
@@ -138,9 +138,9 @@ def scatter_plot(feat, file_name):
     
     for ax in g.axes.flat:
         for label in ax.get_xticklabels():
-            label.set_rotation(90)
+            label.set_rotation(60)
     
-    g.fig.set_size_inches(10,7)
+    g.fig.set_size_inches(10,8)
     plt.savefig('graph/'+file_name+'2.png')
     plt.show()
     gc.collect()
