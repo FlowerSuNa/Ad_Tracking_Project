@@ -236,12 +236,19 @@ def make_black_list(v):
     temp.to_csv('blacklist/' + v + '_black.csv', index=False)
     return temp
 
-ip = make_black_list('ip')              # count : 132,723
-app = make_black_list('app')            # count : 267
-device = make_black_list('device')      # count : 544
-os = make_black_list('os')              # count : 252
-channel = make_black_list('channel')    # count : 98
-hour = make_black_list('hour')          # count : 7
+ip = make_black_list('ip')              # black list count : 132,723
+app = make_black_list('app')            # black list count : 267
+device = make_black_list('device')      # black list count : 544
+os = make_black_list('os')              # black list count : 252
+channel = make_black_list('channel')    # black list count : 98
+hour = make_black_list('hour')          # black list count : 7
+
+print('ip count : ', len(ip))           # 333,168
+print('app count : ', len(app))         # 730
+print('device count : ', len(device))   # 3,799
+print('os count : ', len(os))           # 856
+print('channel count : ', len(channel)) # 202
+print('hour count : ', len(hour))       # 24
 
 
 ## Draw bar graphs

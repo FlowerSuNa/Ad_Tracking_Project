@@ -10,20 +10,6 @@ import matplotlib.pyplot as plt
 import gc
 
 
-## Load data
-data = pd.read_csv("data/merge.csv", parse_dates=['click_time'])
-ip = pd.read_csv("blacklist/ip_black.csv")
-app = pd.read_csv("blacklist/app_black.csv")
-device = pd.read_csv("blacklist/device_black.csv")
-os = pd.read_csv("blacklist/os_black.csv")
-channel = pd.read_csv("blacklist/channel_black.csv")
-hour = pd.read_csv("blacklist/hour_black.csv")
-gc.collect()
-
-print(data.head())
-print(data.tail())
-
-
 ##    
 def merge_black(feat):
     df = pd.read_csv('data/merge_' + feat + '.csv')
@@ -43,13 +29,9 @@ def merge_black(feat):
         temp = df[name].reset_index()
         temp.to_csv('data/merge_' + name + '.csv', index=False, columns=['index', name])
         temp.head()
-    
-merge_black('ip')
-merge_black('app')
-merge_black('device')
-merge_black('os')
-merge_black('channel')
-merge_black('hour')
+
+for feat in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
+    merge_black(feat)    
 
 
 # Make a derived variable : click_gap
@@ -95,6 +77,10 @@ data.head()
 data.to_csv('merged_click_gap.csv', index=False)
 
 
+##
+
+
+
 ## Divid data
 del data['click_time']
 gc.collect()
@@ -128,10 +114,29 @@ for n in [10000000, 20000000,30000000,40000000,50000000]:
 
 
 ##
-def scatter_plot(feat, file_name):
-    temp = train[feat]
+def scatter_plot(feat):
+    x = pd.read_csv('data/merge_gap_' + feat + '.csv')
+    y = pd.read_csv('data/merge_black_' + feat + '.csv')
+    z = pd.read_csv('data/merge_rate_' + feat + '.csv')
+    h = pd.read_csv('data/merge_is_attributed.csv')
     
-    g = sns.pairplot(temp, 
+    temp = x.merge(y, on='index', how='left')
+    del x
+    
+    temp = temp.merge(z, on='index', how='left')
+    del y
+    
+    temp = temp.merge(h, on='index', how='left')
+    del z
+    
+    temp = temp.iloc[:184903890]
+    del temp['index']
+    
+    gc.collect()
+    
+    name = ['gap_' + feat, 'black_' + feat, 'rate_' + feat]
+    g = sns.pairplot(temp,
+                     vars=name,
                      hue='is_attributed', 
                      palette="husl",
                      plot_kws={'alpha':0.1})
@@ -141,24 +146,12 @@ def scatter_plot(feat, file_name):
             label.set_rotation(60)
     
     g.fig.set_size_inches(10,8)
-    plt.savefig('graph/'+file_name+'2.png')
+    plt.savefig('graph/scatter_plot_blck_'+feat+'.png')
     plt.show()
     gc.collect()
 
-feat = ['is_attributed', 'gap_ip', 'black_ip']
-scatter_plot(feat, 'scatter_plot_gap_black_ip')
-
-feat = ['is_attributed', 'gap_app', 'black_app']
-scatter_plot(feat, 'scatter_plot_gap_black_app')
-
-feat = ['is_attributed', 'gap_device', 'black_device']
-scatter_plot(feat, 'scatter_plot_gap_black_device')
-
-feat = ['is_attributed', 'gap_os', 'black_os']
-scatter_plot(feat, 'scatter_plot_gap_black_os')
-
-feat = ['is_attributed', 'gap_channel', 'gap_hour']
-scatter_plot(feat, 'scatter_plot_gap_channel_hour')
+for f in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
+    scatter_plot(f)
 
 
 ## check correlation
