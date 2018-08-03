@@ -1,9 +1,29 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 1. EDA
-[source code](01_EDA.py)
+[source code](01_EDA.py) <br>
+
+### Import library and Load datasets
+```python
+import pandas as pd
+import numpy as np
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+import gc
+
+train = pd.read_csv("data/train.csv", parse_dates=['click_time', 'attributed_time'])
+test = pd.read_csv('data/test.csv', parse_dates=['click_time'])
+gc.collect()
+```
+
+<br>
+
 ### Explor data
 * train data shape : (184903890, 8)
 * test data shape : (18790469, 7)
+
+##### The data is very large!!!
 
 <br>
 
@@ -15,16 +35,25 @@ click_id, ip, app, device, os, channel, click_time <br>
 
 <br>
 
-* train data info. : <br>
+* train data head : <br>
 
+* test data head : <br>
 
-* test data info. : <br>
+<br>
+
+* train data missing value : <br>
+attributed_time - if not downloaded <br>
+
+* test data missing value : <br>
+Empty <br>
 
 <br>
 
 ### Check download frequency
 * 0 : 18,447,044 <br>
 * 1 : 456,846 <br>
+
+##### There were not many downloads.
 
 <br>
 
@@ -62,7 +91,7 @@ click_id, ip, app, device, os, channel, click_time <br>
 
 <br>
 
-### Draw time series of train data click time
+### Draws a time series of train data click time
 ```python
 temp = train['click_time']
 temp.index = train['click_time']
@@ -78,10 +107,11 @@ gc.collect()
 ```
 
 ![png](graph/train_click_time.png)
+##### There is a constant time zone with a high number of clicks.
 
 <br>
 
-### Draw time series of test data click time
+### Draws a time series of test data click time
 ```python
 temp = test['click_time']
 temp.index = test['click_time']
@@ -97,10 +127,11 @@ gc.collect()
 ```
 
 ![png](graph/test_click_time.png)
+##### Test data is the data from 4 o'clock to 15 o'clock.
 
 <br>
 
-### Draw time series of click time and attributed time
+### Draws a time series of downloaded click time and attributed time
 ```python
 temp1 = train['is_attributed']
 temp1.index = train['click_time']
@@ -197,6 +228,8 @@ merged data shape : (203694359, 9)
 
 <br>
 
+### Separate and save each variable
+
 ### Make black list
 ```python
 def make_black_list(v):
@@ -251,7 +284,9 @@ def make_black_list(v):
     print('count : ', temp['black_' + v].sum())
 
     return temp
+```
 
+```python
 ip = make_black_list('ip')
 app = make_black_list('app')
 device = make_black_list('device')

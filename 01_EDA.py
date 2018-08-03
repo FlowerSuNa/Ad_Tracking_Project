@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import gc
 
 
-## Load data
+## Load datasets
 train = pd.read_csv("data/train.csv", parse_dates=['click_time', 'attributed_time'])
 test = pd.read_csv('data/test.csv', parse_dates=['click_time'])
 gc.collect()
@@ -63,7 +63,7 @@ print('day count of test data : \n', test['click_time'].dt.day.value_counts())
 # --- 10  :18,790,469
 
 
-## Draw time series of train data click time
+## Draws a time series of train data click time
 temp = train['click_time']
 temp.index = train['click_time']
 temp = temp.resample('10T').count()
@@ -77,7 +77,7 @@ plt.show()
 gc.collect()
 
 
-## Draw time series of test data click time
+## Draws a time series of test data click time
 temp = test['click_time']
 temp.index = test['click_time']
 temp = temp.resample('10T').count()
@@ -91,7 +91,7 @@ plt.show()
 gc.collect()
 
 
-## Draw time series of click time and attributed time
+## Draws a time series of downloaded click time and attributed time
 temp1 = train['is_attributed']
 temp1.index = train['click_time']
 temp1 = temp1.resample('10T').sum()
@@ -237,18 +237,22 @@ def make_black_list(v):
     return temp
 
 ip = make_black_list('ip')              # black list count : 132,723
-app = make_black_list('app')            # black list count : 267
-device = make_black_list('device')      # black list count : 544
-os = make_black_list('os')              # black list count : 252
-channel = make_black_list('channel')    # black list count : 98
-hour = make_black_list('hour')          # black list count : 7
+print('ip levels count : ', len(ip))           # 333,168
 
-print('ip count : ', len(ip))           # 333,168
-print('app count : ', len(app))         # 730
-print('device count : ', len(device))   # 3,799
-print('os count : ', len(os))           # 856
-print('channel count : ', len(channel)) # 202
-print('hour count : ', len(hour))       # 24
+app = make_black_list('app')            # black list count : 267
+print('app levels count : ', len(app))         # 730
+
+device = make_black_list('device')      # black list count : 544
+print('device levels count : ', len(device))   # 3,799
+
+os = make_black_list('os')              # black list count : 252
+print('os levels count : ', len(os))           # 856
+
+channel = make_black_list('channel')    # black list count : 98
+print('channel levels count : ', len(channel)) # 202
+
+hour = make_black_list('hour')          # black list count : 7
+print('hour levels count : ', len(hour))       # 24
 
 
 ## Draw bar graphs
@@ -313,7 +317,7 @@ def scatter_plot(feat):
     y = pd.read_csv('data/merge_is_attributed.csv')
     
     temp = x.merge(y, on='index', how='left')
-    temp = temp.iloc[:184903890]
+    temp = temp.iloc[:184903889]
     
     del x
     del y
