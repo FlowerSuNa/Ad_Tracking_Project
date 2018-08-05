@@ -20,18 +20,18 @@ gc.collect()
 <br>
 
 ### Explor data
+
 * train data shape : (184903890, 8)
+
 * test data shape : (18790469, 7)
 
-##### The data is very large!!!
+> ##### The data is very large!!!
 
 <br>
 
-* train data columns : <br>
-ip, app, device, os, channel, click_time, attributed_time, is_attributed <br>
+* train data columns : ip, app, device, os, channel, click_time, attributed_time, is_attributed <br>
 
-* test data columns : <br>
-click_id, ip, app, device, os, channel, click_time <br>
+* test data columns : click_id, ip, app, device, os, channel, click_time <br>
 
 <br>
 
@@ -42,10 +42,38 @@ click_id, ip, app, device, os, channel, click_time <br>
 <br>
 
 * train data missing value : <br>
-attributed_time - if not downloaded <br>
 
 * test data missing value : <br>
-Empty <br>
+
+<br>
+
+* ip level size in train data :
+
+* ip level size in test data :
+
+<br>
+
+* app level size in train data :
+
+* app level size in test data :
+
+<br>
+
+* device level size in train data :
+
+* device level size in test data :
+
+<br>
+
+* os level size in train data :
+
+* os level size in test data :
+
+<br>
+
+* channel size in train data :
+
+* channel size in test data :
 
 <br>
 
@@ -53,7 +81,7 @@ Empty <br>
 * 0 : 18,447,044 <br>
 * 1 : 456,846 <br>
 
-##### There were not many downloads.
+> ##### Have very few downloads.
 
 <br>
 

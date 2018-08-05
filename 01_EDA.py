@@ -23,14 +23,26 @@ print('test data shape : ', test.shape)     # (18790469, 7)
 print('train data columns : \n', train.columns)
 print('test data columns : \n', test.columns)
 
-print('train data info. : \n', train.info())
-print('test data info. : \n', test.info())
-
-print('train data describe : \n', train.describe())
-print('test data describe : \n', test.describe())
-
 print('train data head : \n', train.head(10))
 print('test data head : \n', test.head(10))
+
+print('train data missing values : \n', train.isnull().sum())
+print('test data missing values : \n', test.isnull().sum())
+
+print('ip level size in train data : \n', len(train['ip'].value_counts()))
+print('ip level size in test data : \n', len(test['ip'].value_counts()))
+
+print('app level size in train data : \n', len(train['app'].value_counts()))
+print('app level size in test data : \n', len(test['app'].value_counts()))
+
+print('device level size in train data : \n', len(train['device'].value_counts()))
+print('device level size in test data : \n', len(test['device'].value_counts()))
+
+print('os level size in train data : \n', len(train['os'].value_counts()))
+print('os level size in test data : \n', len(test['os'].value_counts()))
+
+print('channel level size in train data : \n', len(train['channel'].value_counts()))
+print('channel level size in test data : \n', len(test['channel'].value_counts()))
 
 
 ## Check download frequency
