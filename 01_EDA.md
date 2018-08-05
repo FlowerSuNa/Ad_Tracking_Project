@@ -25,7 +25,7 @@ gc.collect()
 
 * test data shape : (18790469, 7)
 
-> ##### The data is very large!!!
+> The data is very large!!!
 
 <br>
 
@@ -47,79 +47,54 @@ gc.collect()
 
 <br>
 
-* ip level size in train data :
+### Check level size of variable
 
-* ip level size in test data :
+| data | ip | app | device | os | channel |
+|------|----|-----|--------|----|---------|
+| train |  |  |  |  |  |
+| test |  |  |  |  |  |
 
-<br>
-
-* app level size in train data :
-
-* app level size in test data :
-
-<br>
-
-* device level size in train data :
-
-* device level size in test data :
-
-<br>
-
-* os level size in train data :
-
-* os level size in test data :
-
-<br>
-
-* channel size in train data :
-
-* channel size in test data :
+> There are too many levels.
 
 <br>
 
 ### Check download frequency
-* 0 : 18,447,044 <br>
-* 1 : 456,846 <br>
 
-> ##### Have very few downloads.
+| Target | Count |
+|--------|-------|
+| Not Download | 18,447,044 |
+| Download | 456,846 |
+
+> Have very few downloads.
 
 <br>
 
 ### Check 'click_time'
-* year count of train data : <br>
-2017 : 184,903,890 <br>
+
+| Data | Year | Count|
+|------|------|------|
+| Train | 2017 | 184,903,890 |
+| Test | 2017 | 18,790,469 |
+
+| Data | Month | Count |
+|------|-------|-------|
+| Train | 11 | 184,903,890 |
+| Test | 11 | 18,790,469 |
+
+| Data | Day | Count |
+|------|-----|-------|
+| Train | 6 | 9,308,568 |
+| Train | 7 | 59,633,310 |
+| Train | 8 | 62,945,075 |
+| Train | 9 | 53,016,937 |
+| Test | 10 | 18,790,469 |
 
 <br>
 
-* month count of train data : <br>
-11 : 184,903,890 <br>
-
-<br>
-
-* day count of train data : <br>
-6 : 9,308,568 <br>
-7 : 59,633,310 <br>
-8 : 62,945,075 <br>
-9 : 53,016,937 <br>
-
-<br>
-
-* year count of test data : <br>
-2017 : 18,790,469 <br>
-
-<br>
-
-* momth count of test data : <br>
-11 : 18,790,469 <br>
-
-<br>
-
-* day count of test data : <br>
-10 : 18,790,469 <br>
-
-<br>
+---
 
 ### Draws a time series of train data click time
+
 ```python
 temp = train['click_time']
 temp.index = train['click_time']
@@ -135,11 +110,13 @@ gc.collect()
 ```
 
 ![png](graph/train_click_time.png)
-##### There is a constant time zone with a high number of clicks.
+
+> There is a constant time zone with a high number of clicks.
 
 <br>
 
 ### Draws a time series of test data click time
+
 ```python
 temp = test['click_time']
 temp.index = test['click_time']
@@ -155,11 +132,13 @@ gc.collect()
 ```
 
 ![png](graph/test_click_time.png)
-##### Test data is the data from 4 o'clock to 15 o'clock.
+
+> Test data is the data from 4 o'clock to 15 o'clock.
 
 <br>
 
 ### Draws a time series of downloaded click time and attributed time
+
 ```python
 temp1 = train['is_attributed']
 temp1.index = train['click_time']
@@ -184,6 +163,7 @@ gc.collect()
 <br>
 
 ### Make a derived variable : hour
+
 ```python
 train['hour'] = np.nan
 train['hour'] = train['click_time'].dt.hour
@@ -196,6 +176,7 @@ gc.collect()
 <br>
 
 ### Draw hour bar graphs
+
 ```python
 plt.figure(figsize=(15,10))
 
@@ -241,7 +222,10 @@ gc.collect()
 
 <br>
 
+---
+
 ### Merge trian data and test data
+
 ```python
 del train['attributed_time']
 test['is_attributed'] = 0
@@ -258,7 +242,18 @@ merged data shape : (203694359, 9)
 
 ### Separate and save each variable
 
+```python
+for feat in data.columns:
+    temp = data[feat].reset_index()
+    temp.to_csv('data/merge_' + feat + '.csv', index=False, columns=['index',feat])
+```
+
+<br>
+
+---
+
 ### Make black list
+
 ```python
 def make_black_list(v):
     temp = data[v].value_counts().reset_index()
@@ -323,16 +318,21 @@ channel = make_black_list('channel')
 hour = make_black_list('hour')
 ```
 
-* ip black list : 132,723 <br>
-* app black list : 267 <br>
-* device black list : 544 <br>
-* os black list : 252 <br>
-* channel black list : 98 <br>
-* hour black list : 7 <br>
+| Variable | Black List Count |
+|----------|------------------|
+| ip | 132,723 |
+| app | 267 |
+| device | 544 |
+| os | 252 |
+| channel | 98 |
+| hour | 7 |
 
 <br>
 
+---
+
 ### Draw bar graphs
+
 ```python
 def barplot(data, v):
     temp1 = data.head(30)
@@ -411,7 +411,10 @@ barplot(channel, 'channel')
 
 <br>
 
+---
+
 ### Draw scatter plots
+
 ```python
 def scatter_plot(feat, file_name):
     temp = data[feat].loc[data['click_id'].isnull()]
