@@ -71,15 +71,22 @@ gc.collect()
 
 ### Check 'click_time'
 
+* Year
+
 | Data | Year | Count|
 |------|------|------|
 | Train | 2017 | 184,903,890 |
 | Test | 2017 | 18,790,469 |
 
+* Month
+
 | Data | Month | Count |
 |------|-------|-------|
 | Train | 11 | 184,903,890 |
 | Test | 11 | 18,790,469 |
+
+* Day
+<center>
 
 | Data | Day | Count |
 |------|-----|-------|
@@ -89,6 +96,7 @@ gc.collect()
 | Train | 9 | 53,016,937 |
 | Test | 10 | 18,790,469 |
 
+</center>
 <br>
 
 ---
