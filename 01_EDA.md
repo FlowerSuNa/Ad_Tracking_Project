@@ -1,6 +1,10 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 1. EDA
-[source code](01_EDA.py) <br>
+[source code](01_EDA.py)
+
+<br>
+
+---
 
 ## Import library and Load datasets
 ```python
@@ -21,7 +25,7 @@ gc.collect()
 
 ## Explor data
 
-##### Data Shape
+#### Data Shape
 
 | Data | Col | Row |
 |------|-----|-----|
@@ -32,7 +36,7 @@ gc.collect()
 
 <br>
 
-##### Data Columns
+#### Data Columns
 
 | Data | Columns |
 |------|---------|
@@ -41,12 +45,16 @@ gc.collect()
 
 <br>
 
-##### Data Head
+#### Data Head
 
 
 <br>
 
-##### Missing Values
+## Check missing values
+
+#### Train
+
+#### Test
 
 
 <br>
@@ -62,7 +70,7 @@ gc.collect()
 
 <br>
 
-### Check download frequency
+## Check download frequency
 
 | Target | Count |
 |--------|-------|
@@ -103,7 +111,9 @@ gc.collect()
 
 ---
 
-### Draws a time series of train data click time
+<br>
+
+## Draws a time series of train data click time
 
 ```python
 temp = train['click_time']
@@ -125,7 +135,7 @@ gc.collect()
 
 <br>
 
-### Draws a time series of test data click time
+## Draws a time series of test data click time
 
 ```python
 temp = test['click_time']
@@ -147,7 +157,7 @@ gc.collect()
 
 <br>
 
-### Draws a time series of downloaded click time and attributed time
+## Draws a time series of downloaded click time and attributed time
 
 ```python
 temp1 = train['is_attributed']
@@ -172,7 +182,7 @@ gc.collect()
 
 <br>
 
-### Make a derived variable : hour
+## Make a derived variable : hour
 
 ```python
 train['hour'] = np.nan
@@ -185,7 +195,7 @@ gc.collect()
 
 <br>
 
-### Draw hour bar graphs
+## Draw hour bar graphs
 
 ```python
 plt.figure(figsize=(15,10))
@@ -207,7 +217,7 @@ gc.collect()
 
 <br>
 
-### Draw hour and download bar graphs
+## Draw hour and download bar graphs
 ```python
 plt.figure(figsize=(15,15))
 
@@ -234,7 +244,9 @@ gc.collect()
 
 ---
 
-### Merge trian data and test data
+<br>
+
+## Merge trian data and test data
 
 ```python
 del train['attributed_time']
@@ -250,7 +262,7 @@ merged data shape : (203694359, 9)
 
 <br>
 
-### Separate and save each variable
+## Separate and save each variable
 
 ```python
 for feat in data.columns:
@@ -262,7 +274,9 @@ for feat in data.columns:
 
 ---
 
-### Make black list
+<br>
+
+## Make black list
 
 ```python
 def make_black_list(v):
@@ -341,7 +355,9 @@ hour = make_black_list('hour')
 
 ---
 
-### Draw bar graphs
+<br>
+
+## Draw bar graphs
 
 ```python
 def barplot(data, v):
@@ -423,7 +439,9 @@ barplot(channel, 'channel')
 
 ---
 
-### Draw scatter plots
+<br>
+
+## Draw scatter plots
 
 ```python
 def scatter_plot(feat, file_name):
@@ -485,3 +503,9 @@ scatter_plot(feat, 'scatter_plot_hour')
 ```
 
 ![png](graph/scatter_plot_hour.png)
+
+<br>
+
+---
+
+[Contents](README.md)
