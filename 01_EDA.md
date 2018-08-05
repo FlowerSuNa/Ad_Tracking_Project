@@ -2,7 +2,7 @@
 # 1. EDA
 [source code](01_EDA.py) <br>
 
-### Import library and Load datasets
+## Import library and Load datasets
 ```python
 import pandas as pd
 import numpy as np
@@ -19,35 +19,39 @@ gc.collect()
 
 <br>
 
-### Explor data
+## Explor data
 
-* train data shape : (184903890, 8)
+##### Data Shape
 
-* test data shape : (18790469, 7)
+| Data | Col | Row |
+|------|-----|-----|
+| Train | 8 | 184,903,890 |
+| Test | 7 | 18,790,469 |
 
 > The data is very large!!!
 
 <br>
 
-* train data columns : ip, app, device, os, channel, click_time, attributed_time, is_attributed <br>
+##### Data Columns
 
-* test data columns : click_id, ip, app, device, os, channel, click_time <br>
-
-<br>
-
-* train data head : <br>
-
-* test data head : <br>
+| Data | Columns |
+|------|---------|
+| Train | ip, app, device, os, channel, click_time, attributed_time, is_attributed |
+| Test | click_id, ip, app, device, os, channel, click_time |
 
 <br>
 
-* train data missing value : <br>
+##### Data Head
 
-* test data missing value : <br>
 
 <br>
 
-### Check level size of variable
+##### Missing Values
+
+
+<br>
+
+## Check level size of variable
 
 | data | ip | app | device | os | channel |
 |------|----|-----|--------|----|---------|
@@ -71,22 +75,21 @@ gc.collect()
 
 ### Check 'click_time'
 
-* Year
+##### Year
 
 | Data | Year | Count|
 |------|------|------|
 | Train | 2017 | 184,903,890 |
 | Test | 2017 | 18,790,469 |
 
-* Month
+##### Month
 
 | Data | Month | Count |
 |------|-------|-------|
 | Train | 11 | 184,903,890 |
 | Test | 11 | 18,790,469 |
 
-* Day
-<center>
+##### Day
 
 | Data | Day | Count |
 |------|-----|-------|
@@ -96,7 +99,6 @@ gc.collect()
 | Train | 9 | 53,016,937 |
 | Test | 10 | 18,790,469 |
 
-</center>
 <br>
 
 ---
