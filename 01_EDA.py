@@ -122,7 +122,7 @@ plt.show()
 gc.collect()
 
 
-## Make a derived variable : hour
+## Makes a feature : hour
 train['hour'] = np.nan
 train['hour'] = train['click_time'].dt.hour
 
@@ -137,42 +137,6 @@ print(test[['click_time', 'hour']].head(10))
 print(test[['click_time', 'hour']].tail(10))
 
 
-## Draw hour bar graphs
-plt.figure(figsize=(15,10))
-
-plt.subplot(2,1,1)
-plt.title('click count per hour in train data')
-sns.countplot('hour', data=train, linewidth=0)
-
-plt.subplot(2,1,2)
-plt.title('click count per hour in test data')
-sns.countplot('hour', data=test, linewidth=0)
-
-plt.savefig('graph/hour_click_count.png')
-plt.show()
-gc.collect()
-
-
-## Draw hour and download bar graphs
-plt.figure(figsize=(15,15))
-
-plt.subplot(3,1,1)
-plt.title('click count per hour in train data')
-sns.countplot('hour', data=train)
-
-plt.subplot(3,1,2)
-plt.title('download count per hour')
-sns.barplot('hour', 'is_attributed', data=train, estimator=sum, ci=None)
-
-plt.subplot(3,1,3)
-plt.title('download rate by per hour')
-sns.barplot('hour', 'is_attributed', data=train, ci=None)
-
-plt.savefig('graph/hour_download_rate.png')
-plt.show()
-gc.collect()
-
-
 ## Merge train data and test data
 del train['attributed_time']
 test['is_attributed'] = 0
@@ -184,22 +148,21 @@ print(data.head(10))
 del train
 del test
 gc.collect()
+
 data.to_csv('data/merge.csv', index=False)
-
-
-## Separate and save each variable
-for feat in data.columns:
-    temp = data[feat].reset_index()
-    temp.to_csv('data/merge_' + feat + '.csv', index=False, columns=['index',feat])
+del data
+gc.collect()
     
 
 ## Make black list
 def make_black_list(v):
-    temp = data[v].value_counts().reset_index()
+    x = pd.read_csv('data/merge.csv', usecols=[v, 'is_attributed'])
+    
+    temp = x[v].value_counts().reset_index()
     temp.columns = [v,'count']
     temp.sort_values(ascending=False, by='count', inplace=True)
     
-    temp2 = data.groupby(v)['is_attributed'].sum().reset_index()
+    temp2 = x.groupby(v)['is_attributed'].sum().reset_index()
     temp2.columns = [v,'download']
     temp = temp.merge(temp2, on=v, how='left')
     
@@ -249,110 +212,71 @@ def make_black_list(v):
     return temp
 
 ip = make_black_list('ip')              # black list count : 132,723
-print('ip levels count : ', len(ip))           # 333,168
-
 app = make_black_list('app')            # black list count : 267
-print('app levels count : ', len(app))         # 730
-
 device = make_black_list('device')      # black list count : 544
-print('device levels count : ', len(device))   # 3,799
-
 os = make_black_list('os')              # black list count : 252
-print('os levels count : ', len(os))           # 856
-
 channel = make_black_list('channel')    # black list count : 98
-print('channel levels count : ', len(channel)) # 202
-
 hour = make_black_list('hour')          # black list count : 7
+
+print('ip levels count : ', len(ip))           # 333,168
+print('app levels count : ', len(app))         # 730
+print('device levels count : ', len(device))   # 3,799
+print('os levels count : ', len(os))           # 856
+print('channel levels count : ', len(channel)) # 202
 print('hour levels count : ', len(hour))       # 24
 
 
-## Draw bar graphs
-def barplot(data, v):
-    temp1 = data.head(30)
-    temp2 = data.tail(30)
-    plt.figure(figsize=(20,15))
+## Draw bar graphs    
+def bar(x, v):
+    order = x.sort_values(ascending=False, by='count')
+    order = order[v].iloc[:30].tolist()
     
-    plt.subplot(3,2,1)
-    plt.title('click count per ' + v + ' (top)')
-    sns.barplot(v, 'count', data=temp1, linewidth=0)
-    plt.xticks(rotation=90, fontsize="small")
+    sns.set(rc={'figure.figsize':(15,15)})
     
-    plt.subplot(3,2,2)
-    plt.title('(bottom)')
-    sns.barplot(v, 'count', data=temp2, linewidth=0)
-    plt.xticks(rotation=90, fontsize="small")
+    plt.subplot(3,1,1)
+    plt.title('Click Count per ' + v + ' (Top 30)')
+    sns.barplot(v, 'count', data=x, linewidth=0, order=order)
+    plt.xticks(rotation=30, fontsize="small")
+    plt.xlabel('')
     
-    plt.subplot(3,2,3)
-    plt.title('download count per ' + v + ' (top)')
-    sns.barplot(v, 'download', data=temp1, linewidth=0, estimator=sum, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
-    
-    plt.subplot(3,2,4)
-    plt.title('(bottom)')
-    sns.barplot(v, 'download', data=temp2, linewidth=0, estimator=sum, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
-        
-    plt.subplot(3,2,5)
-    plt.title('download rate per ' + v + ' (top)')
-    sns.barplot(v, 'rate', data=temp1, linewidth=0, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
-    
-    plt.subplot(3,2,6)
-    plt.title('(bottom)')
-    sns.barplot(v, 'rate', data=temp2, linewidth=0, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
-    
-    plt.savefig('graph/' + v + '_download_rate.png')
+    plt.subplot(3,1,2)
+    plt.title('Gap per ' + v + ' (Top 30)')
+    sns.barplot(v, 'gap', data=x, linewidth=0, order=order)
+    plt.xticks(rotation=30, fontsize="small")
+    plt.xlabel('')
+
+    plt.subplot(3,1,3)
+    plt.title('Download per ' + v + ' (Top 30)')
+    sns.barplot(v, 'download', data=x, linewidth=0, order=order)
+    plt.xticks(rotation=30, fontsize="small")
+
+    plt.savefig('graph/bar_' + v + '.png', bbox_inches='tight')
     plt.show()
     gc.collect()
     
-ip.sort_values(ascending=False, by='count', inplace=True)
-barplot(ip, 'ip')
-
-app.sort_values(ascending=False, by='count', inplace=True)
-barplot(app, 'app')
-
-device.sort_values(ascending=False, by='count', inplace=True)
-barplot(device, 'device')
-
-os.sort_values(ascending=False, by='count', inplace=True)
-barplot(os, 'os')
-
-channel.sort_values(ascending=False, by='count', inplace=True)
-barplot(channel, 'channel')
+bar(ip, 'ip')
+bar(app, 'app')
+bar(device, 'device')
+bar(os, 'os')
+bar(channel, 'channel')
+bar(hour, 'hour')
 
 
-## Draw scatter plots
-def scatter_plot(feat):
-    x = pd.read_csv('data/merge_' + feat + '.csv')
-    y = pd.read_csv('data/merge_is_attributed.csv')
+## Draw distribution
+def dist(a):
+    df = pd.read_csv('data/train.csv', usecols=[a, 'is_attributed'])
     
-    temp = x.merge(y, on='index', how='left')
-    temp = temp.iloc[:184903889]
+    g =  sns.FacetGrid(df, hue='is_attributed', height=7, palette='husl')
+    g = g.map(sns.distplot, a, hist_kws={'alpha':0.2})
     
-    del x
-    del y
-    del temp['index']
-    gc.collect()
-    
-    g = sns.pairplot(temp, 
-                     hue='is_attributed', 
-                     palette="husl",
-                     plot_kws={'alpha':0.1})
-    
-    for ax in g.axes.flat:
-        for label in ax.get_xticklabels():
-            label.set_rotation(60)
-    
-    g.fig.set_size_inches(10,8)
-    plt.savefig('graph/scatter_plot_'+feat+'.png')
+    plt.xticks(rotation=30, fontsize="small")
+    plt.legend(loc='upper right').set_title('is_attributed')
+    plt.savefig('graph/dist_' + a + '.png', bbox_inches='tight')
     plt.show()
     gc.collect()
-    
-scatter_plot('ip')
-scatter_plot('app')
-scatter_plot('device')
-scatter_plot('os')
-scatter_plot('channel')
-scatter_plot('hour')
+
+dist('ip')
+dist('app')
+dist('device')
+dist('os')
+dist('channel')

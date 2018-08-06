@@ -10,20 +10,21 @@ from sklearn.metrics import roc_auc_score
 
 
 ## Load data
-data = pd.read_csv("merge_gap_black.csv", parse_dates=['click_time'])
-submission = pd.read_csv('sample_submission.csv')
+submission = pd.read_csv('submission/sample_submission.csv')
 gc.collect()
 
 
 ## Divid data
-def divid_data(df, feat):
-    X_train, X_valid, y_train, y_valid = train_test_split(df[feat], df['is_attributed'], 
+def divid_data(feat):
+    train = pd.read_csv("data/train_add_features_20m.csv", usecols=feat + ['is_attributed'])
+    
+    X_train, X_valid, y_train, y_valid = train_test_split(train[feat], train['is_attributed'], 
                                                           random_state=0, test_size=0.2)
     
-    print("X_train : " + str(X_train.shape))
-    print("X_valid : " + str(X_valid.shape))
-    print("y_train : " + str(y_train.shape))
-    print("y_valid : " + str(y_valid.shape) + '\n')
+    print("X_train : ", X_train.shape)
+    print("X_valid : ", X_valid.shape)
+    print("y_train : ", y_train.shape)
+    print("y_valid : ", y_valid.shape)
     
     print("download frequency of y_train : ")
     print(y_train.value_counts())
@@ -33,29 +34,19 @@ def divid_data(df, feat):
     
     return X_train, X_valid, y_train, y_valid
 
-train = data.loc[data['click_id'].isnull()]
-test = data.loc[data['click_id'].notnull()]
-
-del data
-gc.collect()
-
-
-## Make a result DataFrame
-colnames = ['model','feat','param', 'train auc','valid auc']
-result = pd.DataFrame(columns=colnames)
-
 
 ## Make a model using Logistic Regression
-def logistic(train_df, test_df, feat, c=1, result):
+def logistic(feat, c=1):
     print("When C=%.2f :" %c)    
     
     ## Divid Dataset
-    X_train, X_valid, y_train, y_valid = divid_data(train_df, feat)
+    X_train, X_valid, y_train, y_valid = divid_data(feat)
+    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
     
     ## Train the model
     log = LogisticRegression(C=c)
     log.fit(X_train, y_train)
-        
+    
     ## Evaluate the model
     p = log.predict_proba(X_train)[:,1]
     train_auc = roc_auc_score(y_train, p)
@@ -66,29 +57,17 @@ def logistic(train_df, test_df, feat, c=1, result):
     print("AUC of train data : %.5f" % train_auc)
     print("AUC od valid data : %.5f" % valid_auc)
     
-    ## Save result
-    f = ', '.join(feat)
-    r = pd.DataFrame({'model':'logistic',
-                      'param':str(c),
-                      'feat':f,
-                      'train auc':train_auc,
-                      'valid auc':valid_auc}, columns=colnames, index=0)
-    result = pd.concat([result, r], ignore_index=True)
-        
     ## Predict target variable
-    pred = log.predict_proba(test_df[feat])[:,1]      
+    pred = log.predict_proba(test[feat])[:,1]      
     
-    return pred, result
+    return pred
 
-feat = ['black_ip', 'black_app', 'black_device', 'black_os']
-pred, result = logistic(train, test, feat, result)
-submission['is_attributed'] = pred
-submission.to_csv('submission_logistic_' + str(c) + '_black.csv', index=False)
+feat = ['black_ip', 'black_app', 'black_os', 'black_channel']
+pred = logistic(feat)
 
-
-feat = ['gap_ip', 'black_ip', 'gap_app', 'black_app', 
-        'gap_device', 'black_device', 'gap_os', 'black_os']
-pred, result = logistic(train, test, feat, result)
+feat = ['black_ip', 'gap_app', 'black_app', 'gap_device',
+        'gap_os', 'black_os', 'gap_channel', 'black_channel']
+pred = logistic(feat)
 submission['is_attributed'] = pred
 submission.to_csv('submission_logistic_' + str(c) + '_gap_black.csv', index=False)
 

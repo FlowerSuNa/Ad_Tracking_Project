@@ -6,7 +6,7 @@
 
 ---
 
-## Import library and Load datasets
+## Import library and load datasets
 ```python
 import pandas as pd
 import numpy as np
@@ -28,7 +28,7 @@ gc.collect()
 #### Data Shape
 
 | Data | Col | Row |
-|------|-----|-----|
+|------|-----|----:|
 | Train | 8 | 184,903,890 |
 | Test | 7 | 18,790,469 |
 
@@ -47,7 +47,6 @@ gc.collect()
 
 #### Data Head
 
-
 <br>
 
 ## Check missing values
@@ -59,7 +58,7 @@ gc.collect()
 
 <br>
 
-## Check level size of variable
+## Check level size of feature
 
 | data | ip | app | device | os | channel |
 |------|----|-----|--------|----|---------|
@@ -73,34 +72,38 @@ gc.collect()
 ## Check download frequency
 
 | Target | Count |
-|--------|-------|
-| Not Download | 18,447,044 |
-| Download | 456,846 |
+|--------|------:|
+| Not Downloaded | 18,447,044 |
+| Downloaded | 456,846 |
 
 > Have very few downloads.
 
 <br>
 
-### Check 'click_time'
+## Check 'click_time'
 
 ##### Year
 
 | Data | Year | Count|
-|------|------|------|
+|------|------|-----:|
 | Train | 2017 | 184,903,890 |
 | Test | 2017 | 18,790,469 |
+
+<br>
 
 ##### Month
 
 | Data | Month | Count |
-|------|-------|-------|
+|------|-------|------:|
 | Train | 11 | 184,903,890 |
 | Test | 11 | 18,790,469 |
+
+<br>
 
 ##### Day
 
 | Data | Day | Count |
-|------|-----|-------|
+|------|-----|------:|
 | Train | 6 | 9,308,568 |
 | Train | 7 | 59,633,310 |
 | Train | 8 | 62,945,075 |
@@ -110,8 +113,6 @@ gc.collect()
 <br>
 
 ---
-
-<br>
 
 ## Draws a time series of train data click time
 
@@ -182,7 +183,9 @@ gc.collect()
 
 <br>
 
-## Make a derived variable : hour
+---
+
+## Makes a feature : hour
 
 ```python
 train['hour'] = np.nan
@@ -192,57 +195,6 @@ test['hour'] = np.nan
 test['hour'] = test['click_time'].dt.hour
 gc.collect()
 ```
-
-<br>
-
-## Draw hour bar graphs
-
-```python
-plt.figure(figsize=(15,10))
-
-plt.subplot(2,1,1)
-plt.title('click count per hour in train data')
-sns.countplot('hour', data=train, linewidth=0)
-
-plt.subplot(2,1,2)
-plt.title('click count per hour in test data')
-sns.countplot('hour', data=test, linewidth=0)
-
-plt.savefig('graph/hour_click_count.png')
-plt.show()
-gc.collect()
-```
-
-![png](graph/hour_click_count.png)
-
-<br>
-
-## Draw hour and download bar graphs
-```python
-plt.figure(figsize=(15,15))
-
-plt.subplot(3,1,1)
-plt.title('click count per hour in train data')
-sns.countplot('hour', data=train)
-
-plt.subplot(3,1,2)
-plt.title('download count per hour')
-sns.barplot('hour', 'is_attributed', data=train, estimator=sum, ci=None)
-
-plt.subplot(3,1,3)
-plt.title('download rate by per hour')
-sns.barplot('hour', 'is_attributed', data=train, ci=None)
-
-plt.savefig('graph/hour_download_rate.png')
-plt.show()
-gc.collect()
-```
-
-![png](graph/hour_download_rate.png)
-
-<br>
-
----
 
 <br>
 
@@ -256,35 +208,29 @@ data = pd.concat([train, test])
 del train
 del test
 gc.collect()
+
+data.to_csv('data/merge.csv', index=False)
+del data
+gc.collect()
 ```
 
 merged data shape : (203694359, 9)
 
 <br>
 
-## Separate and save each variable
-
-```python
-for feat in data.columns:
-    temp = data[feat].reset_index()
-    temp.to_csv('data/merge_' + feat + '.csv', index=False, columns=['index',feat])
-```
-
-<br>
-
 ---
-
-<br>
 
 ## Make black list
 
 ```python
 def make_black_list(v):
-    temp = data[v].value_counts().reset_index()
+    x = pd.read_csv('data/merge.csv', usecols=[v, 'is_attributed'])
+
+    temp = x[v].value_counts().reset_index()
     temp.columns = [v,'count']
     temp.sort_values(ascending=False, by='count', inplace=True)
 
-    temp2 = data.groupby(v)['is_attributed'].sum().reset_index()
+    temp2 = x.groupby(v)['is_attributed'].sum().reset_index()
     temp2.columns = [v,'download']
     temp = temp.merge(temp2, on=v, how='left')
 
@@ -330,6 +276,7 @@ def make_black_list(v):
     print(temp.tail(30))
     print('count : ', temp['black_' + v].sum())
 
+    temp.to_csv('blacklist/' + v + '_black.csv', index=False)
     return temp
 ```
 
@@ -342,167 +289,135 @@ channel = make_black_list('channel')
 hour = make_black_list('hour')
 ```
 
-| Variable | Black List Count |
-|----------|------------------|
-| ip | 132,723 |
-| app | 267 |
-| device | 544 |
-| os | 252 |
-| channel | 98 |
-| hour | 7 |
+| Feature | Level Size | Black List Count |
+|----------|-----------:|-----------------:|
+| ip | 333,168 | 132,723 |
+| app | 730 | 267 |
+| device | 3,799 | 544 |
+| os | 856 | 252 |
+| channel | 202 | 98 |
+| hour | 24 | 7 |
 
 <br>
 
 ---
-
-<br>
 
 ## Draw bar graphs
 
 ```python
-def barplot(data, v):
-    temp1 = data.head(30)
-    temp2 = data.tail(30)
-    plt.figure(figsize=(20,15))
+def bar(x, v):
+    order = x.sort_values(ascending=False, by='count')
+    order = order[v].iloc[:30].tolist()
 
-    plt.subplot(3,2,1)
-    plt.title('click count per ' + v + ' (top)')
-    sns.barplot(v, 'count', data=temp1, linewidth=0)
-    plt.xticks(rotation=90, fontsize="small")
+    sns.set(rc={'figure.figsize':(15,15)})
 
-    plt.subplot(3,2,2)
-    plt.title('(bottom)')
-    sns.barplot(v, 'count', data=temp2, linewidth=0)
-    plt.xticks(rotation=90, fontsize="small")
+    plt.subplot(3,1,1)
+    plt.title('Click Count per ' + v + ' (Top 30)')
+    sns.barplot(v, 'count', data=x, linewidth=0, order=order)
+    plt.xticks(rotation=30, fontsize="small")
+    plt.xlabel('')
 
-    plt.subplot(3,2,3)
-    plt.title('download count per ' + v + ' (top)')
-    sns.barplot(v, 'download', data=temp1, linewidth=0, estimator=sum, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
+    plt.subplot(3,1,2)
+    plt.title('Gap per ' + v + ' (Top 30)')
+    sns.barplot(v, 'gap', data=x, linewidth=0, order=order)
+    plt.xticks(rotation=30, fontsize="small")
+    plt.xlabel('')
 
-    plt.subplot(3,2,4)
-    plt.title('(bottom)')
-    sns.barplot(v, 'download', data=temp2, linewidth=0, estimator=sum, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
+    plt.subplot(3,1,3)
+    plt.title('Download per ' + v + ' (Top 30)')
+    sns.barplot(v, 'download', data=x, linewidth=0, order=order)
+    plt.xticks(rotation=30, fontsize="small")
 
-    plt.subplot(3,2,5)
-    plt.title('download rate per ' + v + ' (top)')
-    sns.barplot(v, 'rate', data=temp1, linewidth=0, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
-
-    plt.subplot(3,2,6)
-    plt.title('(bottom)')
-    sns.barplot(v, 'rate', data=temp2, linewidth=0, ci=None)
-    plt.xticks(rotation=90, fontsize="small")
-
-    plt.savefig('graph/' + v + '_download_rate.png')
+    plt.savefig('graph/bar_' + v + '.png', bbox_inches='tight')
     plt.show()
     gc.collect()
 ```
 
 ```python
-ip.sort_values(ascending=False, by='count', inplace=True)
-barplot(ip, 'ip')
+bar(ip, 'ip')
 ```
 
-![png](graph/ip_download_rate.png)
+![png](graph/bar_ip.png)
 
 ```python
-app.sort_values(ascending=False, by='count', inplace=True)
-barplot(app, 'app')
+bar(app, 'app')
 ```
 
-![png](graph/app_download_rate.png)
+![png](graph/bar_app.png)
 
 ```python
-device.sort_values(ascending=False, by='count', inplace=True)
-barplot(device, 'device')
+bar(device, 'device')
 ```
 
-![png](graph/device_download_rate.png)
+![png](graph/bar_device.png)
 
 ```python
-os.sort_values(ascending=False, by='count', inplace=True)
-barplot(os, 'os')
+bar(os, 'os')
 ```
 
-![png](graph/os_download_rate.png)
+![png](graph/bar_os.png)
 
 ```python
-channel.sort_values(ascending=False, by='count', inplace=True)
-barplot(channel, 'channel')
+bar(channel, 'channel')
 ```
 
-![png](graph/channel_download_rate.png)
+![png](graph/bar_channel.png)
+
+```python
+bar(hour, 'hour')
+```
+
+![png](graph/bar_hour)
 
 <br>
 
 ---
 
-<br>
-
-## Draw scatter plots
+## Draw distribution
 
 ```python
-def scatter_plot(feat, file_name):
-    temp = data[feat].loc[data['click_id'].isnull()]
+def dist(a):
+    df = pd.read_csv('data/train.csv', usecols=[a, 'is_attributed'])
 
-    g = sns.pairplot(temp,
-                     hue='is_attributed',
-                     palette="husl",
-                     plot_kws={'alpha':0.1})
+    g =  sns.FacetGrid(df, hue='is_attributed', height=7, palette='husl')
+    g = g.map(sns.distplot, a, hist_kws={'alpha':0.2})
 
-    for ax in g.axes.flat:
-        for label in ax.get_xticklabels():
-            label.set_rotation(90)
-
-    g.fig.set_size_inches(10,10)
-    plt.savefig('graph/'+file_name+'.png')
+    plt.xticks(rotation=30, fontsize="small")
+    plt.legend(loc='upper right').set_title('is_attributed')
+    plt.savefig('graph/dist_' + a + '.png', bbox_inches='tight')
     plt.show()
     gc.collect()
 ```
 
 ```python
-feat = ['is_attributed', 'ip']
-scatter_plot(feat, 'scatter_plot_ip')
+dist('ip')
 ```
 
-![png](graph/scatter_plot_ip.png)
+![png](graph/dist_ip.png)
 
 ```python
-feat = ['is_attributed', 'app']
-scatter_plot(feat, 'scatter_plot_app')
+dist('app')
 ```
 
-![png](graph/scatter_plot_app.png)
+![png](graph/dist_app.png)
 
 ```python
-feat = ['is_attributed', 'device']
-scatter_plot(feat, 'scatter_plot_device')
+dist('device')
 ```
 
-![png](graph/scatter_plot_device.png)
+![png](graph/dist_device.png)
 
 ```python
-feat = ['is_attributed', 'os']
-scatter_plot(feat, 'scatter_plot_os')
+dist('os')
 ```
 
-![png](graph/scatter_plot_os.png)
+![png](graph/dist_os.png)
 
 ```python
-feat = ['is_attributed', 'channel']
-scatter_plot(feat, 'scatter_plot_channel')
+dist('channel')
 ```
 
-![png](graph/scatter_plot_channel.png)
-
-```python
-feat = ['is_attributed', 'hour']
-scatter_plot(feat, 'scatter_plot_hour')
-```
-
-![png](graph/scatter_plot_hour.png)
+![png](graph/dist_channel.png)
 
 <br>
 
