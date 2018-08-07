@@ -361,6 +361,6 @@ gc.collect()
 
 ---
 
-[Contents](README.md)
-[1. EDA](01_EDA.md)
+[Contents](README.md) <br>
+[1. EDA](01_EDA.md) <br>
 [3. Sampling](03_Sampling.md)

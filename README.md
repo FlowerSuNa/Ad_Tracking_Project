@@ -23,17 +23,27 @@ observed target.
 ---
 
 ## Contents Table
-♣ : source code <br>
-★ : view
+☆ : source code <br>
+★ : markdown
 
-1. EDA [♣](01_EDA.py) [★](01_EDA.md)
-2. Preprocessing [♣](02_Preprocessing.py)
-3. Modeling [♣](03_Modeling.py)
+1. EDA [☆](01_EDA.py) [★](01_EDA.md)
+2. Preprocessing [☆](02_Preprocessing.py) [★](02_Preprocessing.md)
+3. Sampling [☆](03_Sampling.py) [★](03_Sampling.md)
+4. Modeling
+ * Logistic
+ * Decision Tree
+ * Random Forest
+ * Gradient Boosting
+ * LightGBM
 
 ---
 
 ## Summary
 - Summary : <br>
 - Evaluation : <br>
+
+---
+
+## Trial
 
 ---
