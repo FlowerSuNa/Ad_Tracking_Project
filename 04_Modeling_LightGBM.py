@@ -5,8 +5,9 @@ import pandas as pd
 import gc
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
+
+import lightgbm as lgb
 
 
 ## Load data
@@ -35,47 +36,10 @@ def divid_data(feat):
     return X_train, X_valid, y_train, y_valid
 
 
-## Make a model using Logistic Regression
-def logistic(feat, c=1):
-    print("When C=%.2f :" %c)    
-    
+##
+def lgbm(feat, categorical):
     ## Divid Dataset
     X_train, X_valid, y_train, y_valid = divid_data(feat)
-    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    
-    ## Train the model
-    log = LogisticRegression(C=c)
-    log.fit(X_train, y_train)
-    
-    ## Evaluate the model
-    p = log.predict_proba(X_train)[:,1]
-    train_auc = roc_auc_score(y_train, p)
-    
-    p = log.predict_proba(X_valid)[:,1]
-    valid_auc = roc_auc_score(y_valid, p)
-    
-    print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
-    
-    ## Predict target variable
-    pred = log.predict_proba(test[feat])[:,1]      
-    
-    return pred
-
-feat = ['black_ip', 'black_app', 'black_os', 'black_channel']
-pred = logistic(feat)
-
-feat = ['black_ip', 'gap_app', 'black_app', 'gap_device',
-        'gap_os', 'black_os', 'gap_channel', 'black_channel']
-pred = logistic(feat)
-submission['is_attributed'] = pred
-submission.to_csv('submission_logistic_' + str(c) + '_gap_black.csv', index=False)
-
-
-##
-def lgbm(train_df, test_df, feat, categorical):
-    ## Divid Dataset
-    X_train, X_valid, y_train, y_valid = divid_data(train_df, feat)
     
     train_set = lgb.Dataset(X_train.values, 
                             label=y_train.values, 
@@ -118,12 +82,18 @@ def lgbm(train_df, test_df, feat, categorical):
                     feval=None)
     
     ## Predict the target
-    is_attributed = bst.predict(test_df[feat], num_iteration=bst.best_iteration)
+    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
+    pred = bst.predict(test[feat], num_iteration=bst.best_iteration)
     
-    return is_attributed
+    return pred, bst
 
-feat = ['black_ip', 'black_app', 'black_device', 'black_os']
-categorical = []
-pred = logistic(train, test, feat, categorical)
+
+##
+feat = ['black_ip', 'gap_app', 'black_app', 'gap_device',
+        'gap_os', 'black_os', 'gap_channel', 'black_channel']
+categorical = ['black_ip', 'black_app', 'black_os', 'black_channel']
+pred, bst = lgbm(feat, categorical)
+
+bst.feature_importance()
 submission['is_attributed'] = pred
-submission.to_csv('submission_lightgbm_' + str(c) + '_black.csv', index=False)
+submission.to_csv('submission_lightgbm.csv', index=False)

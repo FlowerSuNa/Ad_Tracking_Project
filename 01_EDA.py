@@ -17,8 +17,8 @@ gc.collect()
 
 
 ## Check dataset
-print('train data shape : ', train.shape)   # (184903890, 8)
-print('test data shape : ', test.shape)     # (18790469, 7)
+print('train data shape : ', train.shape)
+print('test data shape : ', test.shape)
 
 print('train data columns : \n', train.columns)
 print('test data columns : \n', test.columns)
@@ -48,31 +48,16 @@ print('channel level size in test data : \n', len(test['channel'].value_counts()
 ## Check download frequency
 freq = train['is_attributed'].value_counts(sort=False)
 print('train data download frequency : \n', freq)
-# --- 0 : 18,447,044
-# --- 1 : 456,846
 
 
 ## Check 'click_time'
 print('year count of train data : \n', train['click_time'].dt.year.value_counts())
-# --- 2017 : 184,903,890
-
 print('momth count of train data : \n', train['click_time'].dt.month.value_counts())
-# --- 11 : 184,903,890
-
 print('day count of train data : \n', train['click_time'].dt.day.value_counts())
-# --- 6 : 9,308,568
-# --- 7 : 59,633,310
-# --- 8 : 62,945,075
-# --- 9 : 53,016,937
 
 print('year count of test data : \n', test['click_time'].dt.year.value_counts())
-# --- 2017 : 18,790,469
-
 print('momth count of test data : \n', test['click_time'].dt.month.value_counts())
-# --- 11 : 18,790,469
-
 print('day count of test data : \n', test['click_time'].dt.day.value_counts())
-# --- 10  :18,790,469
 
 
 ## Draws a time series of train data click time
@@ -142,7 +127,7 @@ del train['attributed_time']
 test['is_attributed'] = 0
 data = pd.concat([train, test])
 
-print('merged data shape : ', data.shape)       # (203694359, 9)
+print('merged data shape : ', data.shape)
 print(data.head(10))
 
 del train
@@ -211,19 +196,19 @@ def make_black_list(v):
     temp.to_csv('blacklist/' + v + '_black.csv', index=False)
     return temp
 
-ip = make_black_list('ip')              # black list count : 132,723
-app = make_black_list('app')            # black list count : 267
-device = make_black_list('device')      # black list count : 544
-os = make_black_list('os')              # black list count : 252
-channel = make_black_list('channel')    # black list count : 98
-hour = make_black_list('hour')          # black list count : 7
+ip = make_black_list('ip')
+app = make_black_list('app')
+device = make_black_list('device')
+os = make_black_list('os')
+channel = make_black_list('channel')
+hour = make_black_list('hour')
 
-print('ip levels count : ', len(ip))           # 333,168
-print('app levels count : ', len(app))         # 730
-print('device levels count : ', len(device))   # 3,799
-print('os levels count : ', len(os))           # 856
-print('channel levels count : ', len(channel)) # 202
-print('hour levels count : ', len(hour))       # 24
+print('ip levels count : ', len(ip))
+print('app levels count : ', len(app))
+print('device levels count : ', len(device))
+print('os levels count : ', len(os))
+print('channel levels count : ', len(channel))
+print('hour levels count : ', len(hour))
 
 
 ## Draw bar graphs    
