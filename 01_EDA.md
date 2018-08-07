@@ -47,12 +47,27 @@ gc.collect()
 
 #### Data Head
 
-|
-|
-|
-|
-|
-|
+Train
+
+| ip | app | device | os | channel | click_time | attributed_time | is_attributed |
+|:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
+| 83230 | 3 | 1 | 13 | 379 | 2017-11-06 14:32:21 | NaN | 0 |
+| 17357 | 3 | 1 | 19 | 379 | 2017-11-06 14:33:34 | NaN | 0 |
+| 35810 | 3 | 1 | 13 | 379 | 2017-11-06 14:34:12 | NaN | 0 |
+| 45745 | 14 | 1 | 13 | 478 | 2017-11-06 14:34:52 | NaN | 0 |
+| 161007 | 3 | 1 | 13 | 379 | 2017-11-06 14:35:08 | NaN | 0 |
+
+<br>
+
+Test
+
+| click_id | ip | app | device | os | channel | click_time |
+|:--------:|---:|:---:|:------:|:--:|:-------:|:----------:|
+| 0 | 5744 | 9 | 1 | 3 | 107 | 2017-11-10 04:00:00 |
+| 1 | 119901 | 9 | 1 | 3 | 466 | 2017-11-10 04:00:00 |
+| 2 | 72287 | 21 | 1 | 19 | 128 | 2017-11-10 04:00:00 |
+| 3 | 78477 | 15 | 1 | 13 | 111 | 2017-11-10 04:00:00 |
+| 4 | 123080 | 12 | 1 | 13 | 328 | 2017-11-10 04:00:00 |
 
 <br>
 
@@ -60,17 +75,27 @@ gc.collect()
 
 #### Train
 
+| ip | app | device | os | channel | click_time | attributed_time | is_attributed |
+|:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
+| 0 | 0 | 0 | 0 | 0 | 0 | 184,447,004 | 0 |
+
+<br>
+
 #### Test
+
+| click_id | ip | app | device | os | channel | click_time | attributed_time | is_attributed |
+|:--------:|:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 
 <br>
 
 ## Check level size of feature
 
-| data | ip | app | device | os | channel |
+| Data | ip | app | device | os | channel |
 |------|----|-----|--------|----|---------|
-| train |  |  |  |  |  |
-| test |  |  |  |  |  |
+| Train | 277,396 | 406 | 3,475 | 800 | 202 |
+| Test | 93,936 | 417 | 1,985 | 395 | 178 |
 
 > There are too many levels.
 
@@ -100,7 +125,7 @@ gc.collect()
 
 <br>
 
-##### Test
+#### Test
 
 | Year | Month | Day | Count|
 |------|-------|-----|-----:|
@@ -194,7 +219,7 @@ gc.collect()
 
 <br>
 
-## Merge trian data and test data
+## Merge train data and test data
 
 ```python
 del train['attributed_time']
@@ -210,7 +235,7 @@ del data
 gc.collect()
 ```
 
-merged data shape : (203694359, 9)
+* merged data shape : (203694359, 9)
 
 <br>
 
