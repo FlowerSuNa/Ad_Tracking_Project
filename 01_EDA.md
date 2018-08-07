@@ -28,7 +28,7 @@ gc.collect()
 #### Data Shape
 
 | Data | Col | Row |
-|------|-----|----:|
+|:----:|:---:|----:|
 | Train | 8 | 184,903,890 |
 | Test | 7 | 18,790,469 |
 
@@ -39,7 +39,7 @@ gc.collect()
 #### Data Columns
 
 | Data | Columns |
-|------|---------|
+|:----:|---------|
 | Train | ip, app, device, os, channel, click_time, attributed_time, is_attributed |
 | Test | click_id, ip, app, device, os, channel, click_time |
 
@@ -83,8 +83,8 @@ Test
 
 #### Test
 
-| click_id | ip | app | device | os | channel | click_time | attributed_time | is_attributed |
-|:--------:|:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
+| click_id | ip | app | device | os | channel | click_time |
+|:--------:|:--:|:---:|:------:|:--:|:-------:|:----------:|
 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 
@@ -93,7 +93,7 @@ Test
 ## Check level size of feature
 
 | Data | ip | app | device | os | channel |
-|------|----|-----|--------|----|---------|
+|:----:|---:|----:|-------:|---:|--------:|
 | Train | 277,396 | 406 | 3,475 | 800 | 202 |
 | Test | 93,936 | 417 | 1,985 | 395 | 178 |
 
@@ -104,7 +104,7 @@ Test
 ## Check download frequency
 
 | Target | Count |
-|--------|------:|
+|:------:|------:|
 | Not Downloaded | 18,447,044 |
 | Downloaded | 456,846 |
 
