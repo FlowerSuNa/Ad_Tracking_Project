@@ -73,7 +73,7 @@ data['click_gap'] = data['click_gap'].astype('timedelta64[s]')
 data.sort_values(by='index', ascending=True, inplace=True)
 
 temp = data['click_gap']
-temp.to_csv('data/merge_click_gap.csv', index=False)
+temp.to_csv('data/merge_click_gap.csv', index=False, header=True)
 
 del data
 del temp
@@ -95,7 +95,7 @@ for feat in ['ip','app','device','os','channel','hour', 'click_gap']:
     del temp
     gc.collect()
 
-data.to_csv('data/merge_add_features.csv')
+data.to_csv('data/merge_add_features.csv', index=False)
 ```
 
 <br>
