@@ -16,6 +16,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 import gc
+
+train_test_boundary = 184903890
 ```
 
 <br>
@@ -42,7 +44,7 @@ for feat in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
 
 <br>
 
-## Make a feature : click_gap
+## Makes a feature : click_gap
 
 ```python
 data = pd.read_csv('data/merge.csv', usecols=['ip', 'click_time'])
@@ -71,6 +73,7 @@ index = list(index)
 data.loc[index, 'click_gap'] = -1
 data['click_gap'] = data['click_gap'].astype('timedelta64[s]')
 data.sort_values(by='index', ascending=True, inplace=True)
+data = data.set_index('index')
 
 temp = data['click_gap']
 temp.to_csv('data/merge_click_gap.csv', index=False, header=True)
@@ -121,7 +124,7 @@ gc.collect()
 
 ---
 
-## Draws distribution
+## Draw distribution
 
 ```python
 def dist(a):
@@ -253,7 +256,7 @@ scatter(['gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel'])
 def bar(x):
     df = pd.read_csv('data/train_add_features.csv', usecols=[x, 'is_attributed'])
 
-    sns.set(rc={'figure.figsize':(15,5)})
+    sns.set(rc={'figure.figsize':(12,5)})
 
     temp = df.loc[df['is_attributed'] == 0]
     plt.subplot(1,2,1)
@@ -312,7 +315,6 @@ bar('black_hour')
 
 ```python
 train = pd.read_csv('data/train_add_features.csv', usecols=['click_gap', 'is_attributed'])
-train.loc[train['click_gap'].isnull(), 'click_gap'] = -1
 
 sns.set(rc={'figure.figsize':(15,10)})
 
@@ -350,7 +352,7 @@ cmap = sns.diverging_palette(220, 10, as_cmap=True)
 sns.set(rc={'figure.figsize':(20,18)})
 sns.heatmap(corr, vmin=-1, vmax=1,
             mask=mask, cmap=cmap, annot=True, linewidth=.5, cbar_kws={'shrink':.6})
-plt.savefig('graph/heatmap3.png', bbox_inches='tight')
+plt.savefig('graph/heatmap.png', bbox_inches='tight')
 plt.show()
 gc.collect()
 ```

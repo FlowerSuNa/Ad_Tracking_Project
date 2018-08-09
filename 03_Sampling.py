@@ -9,25 +9,27 @@ import matplotlib.pyplot as plt
 
 import gc
 
+train_length = 184903890
 
 
 ## Extract a sample
-import random
-
 train = pd.read_csv('data/merge_add_features.csv')
+index = train_length - 50000000
+temp = train.iloc[index:]
 
-for n in [10000000, 20000000,30000000,40000000,50000000]:
-    idx = random.sample(range(len(train)),n)
-    sample = train.iloc[idx]
+for n in [40000000,30000000,20000000,10000000]:
+    index = train_length - n
+    sample = train.iloc[index:]
+    print(sample.shape)
     gc.collect()
     
-    n = n / 1000000
-    sample.to_csv('data/train_add_features_' + str(n) + 'm.csv', index=False)
+    m = n / 1000000
+    sample.to_csv('data/train_add_features_' + str(m) + 'm.csv', index=False)
     
     del sample
     
     
-## Draw distribution
+## Draw distribution of sample
 def dist(a):
     df = pd.read_csv('data/train_add_features_20m.csv', usecols=[a, 'is_attributed'])
     
@@ -68,6 +70,7 @@ def scatter(feat):
     g = sns.pairplot(x,
                      vars=feat,
                      hue='is_attributed', 
+                     diag_kind="kde",
                      palette="husl",
                      plot_kws={'alpha':0.1})
     
@@ -76,7 +79,7 @@ def scatter(feat):
             label.set_rotation(60)
     
     g.fig.set_size_inches(20,18)
-    plt.savefig('graph/scatter.png', bbox_inches='tight')
+    plt.savefig('graph/scatter_20m.png', bbox_inches='tight')
     plt.show()
     gc.collect()
     
@@ -111,39 +114,40 @@ bar('black_channel')
 bar('black_hour')
 
 
-##
-feat = ['black_ip', 'black_app', 'black_device','black_os','black_channel','is_attributed']
-train = pd.read_csv('data/train_add_features_20m.csv', usecols=feat)
-
-train.loc[train[feat].sum(axis=1) == 5, 'is_attributed'].sum() # 5416 / 19249912
-
+## Draws a bar graph of 'click_gap' and 'is_attributed'
 train = pd.read_csv('data/train_add_features_20m.csv', usecols=['click_gap', 'is_attributed'])
-print(train.shape)  # (20000000, 2)
-print(train['is_attributed'].sum()) # 49,082
 
-temp = train.loc[train['click_gap'].isnull(), 'is_attributed']
-print(temp.shape)   # (29755, )
-print(temp.sum())   # 7,532
+sns.set(rc={'figure.figsize':(15,12)})
 
-temp = train.loc[train['click_gap'] == 0, 'is_attributed']
-print(temp.shape)   # (5210168, )
-print(temp.sum())   # 3,127
+temp = train.loc[train['is_attributed'] == 0]
+plt.subplot(2,1,1)
+plt.title('Not Downloaded')
+sns.countplot('click_gap', data=temp, linewidth=0)
+plt.xlim((-1,20))
 
-temp = train.loc[train['click_gap'] > 50, 'is_attributed']
-print(temp.shape)   # (2983405,)
-print(temp.sum())   # 18,819
+temp = train.loc[train['is_attributed'] == 1]
+plt.subplot(2,1,2)
+plt.title('Downloaded')
+sns.countplot('click_gap', data=temp, linewidth=0)
+plt.xlim((-1,20))
 
-temp = train.loc[train['click_gap'] > 100, 'is_attributed']
-print(temp.shape)   # (1997292, )
-print(temp.sum())   # 15,501
+plt.savefig('graph/bar_click_gap_20m.png', bbox_inches='tight')
+plt.show()
+gc.collect()
+    
 
-temp = train.loc[train['click_gap'] > 200, 'is_attributed']
-print(temp.shape)   # (1217415, )
-print(temp.sum())   # 12,341
+## Check correlation
+train = pd.read_csv('data/train_add_features_20m.csv')
+corr = train.corr(method='pearson')
+corr = corr.round(2)
+mask = np.zeros_like(corr, dtype=np.bool)
+mask[np.triu_indices_from(mask)] = True
+cmap = sns.diverging_palette(220, 10, as_cmap=True)
 
-
-train = pd.read_csv('data/train_add_features_50m.csv')
-train.loc[train['click_gap'].isnull(), 'click_gap'] = -1
-train.to_csv('data/train_add_features_50m.csv', index=False)
-del train
-
+sns.set(rc={'figure.figsize':(20,18)})
+sns.heatmap(corr, vmin=-1, vmax=1,
+            mask=mask, cmap=cmap, annot=True, linewidth=.5, cbar_kws={'shrink':.6})
+plt.savefig('graph/heatmap_20m.png', bbox_inches='tight')
+plt.show()
+gc.collect()
+    

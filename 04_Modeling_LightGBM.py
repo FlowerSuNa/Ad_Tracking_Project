@@ -37,18 +37,16 @@ def divid_data(feat):
 
 
 ##
-def lgbm(feat, categorical):
+def lgbm(feat):
     ## Divid Dataset
     X_train, X_valid, y_train, y_valid = divid_data(feat)
     
     train_set = lgb.Dataset(X_train.values, 
                             label=y_train.values, 
-                            feature_name=feat, 
-                            categorical_feature=categorical)
+                            feature_name=feat)
     valid_set = lgb.Dataset(X_valid.values, 
                             label=y_valid.values, 
-                            feature_name=feat, 
-                            categorical_feature=categorical)
+                            feature_name=feat)
     
     ## train a model
     params = {
@@ -91,8 +89,7 @@ def lgbm(feat, categorical):
 ##
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_device',
         'gap_os', 'black_os', 'gap_channel', 'black_channel']
-categorical = ['black_ip', 'black_app', 'black_os', 'black_channel']
-pred, bst = lgbm(feat, categorical)
+pred, bst = lgbm(feat)
 
 bst.feature_importance()
 submission['is_attributed'] = pred

@@ -28,7 +28,7 @@ for feat in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
     merge_black(feat)
 
 
-## Make a feature : click_gap
+## Makes a feature : click_gap
 data = pd.read_csv('data/merge.csv', usecols=['ip', 'click_time'])
 data = data.reset_index()
 data.sort_values(by=['ip', 'click_time'], inplace=True)
