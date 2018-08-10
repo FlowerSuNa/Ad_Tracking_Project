@@ -38,7 +38,3 @@ observed target.
 - Evaluation : <br>
 
 ---
-
-## Trial
-
----

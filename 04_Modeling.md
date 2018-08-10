@@ -1,6 +1,6 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 4. Modeling
-[source code](04_Modeling_Logistic.py)
+[source code](04_Modeling.py)
 
 <br>
 
@@ -74,7 +74,7 @@ Score
 |  |  | 5 | 0.94870 | 0.94847 | - |
 |  |  | 6 | 0.95446 | 0.95382 | - |
 |  |  | 7 | 0.95878 | 0.95779 | 0.9455029 |
-| LightGBM | skip | - | 0.97367 | 0.97143 | - |
+| LightGBM | skip | - | 0.97367 | 0.97143 | **0.9631122** |
 
 <br>
 
@@ -101,8 +101,77 @@ Feature Importance
 
 <br>
 
-#### Used Features : black_ip, gap_app, black_app, gap_device, gap_os, black_os, gap_channel, black_channel, black_hour
+#### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
 
+Score
+
+| Model | Parameter | value | Train AUC | Valid AUC | Score |
+|:-----:|:---------:|:-----:|:---------:|:---------:|:-----:|
+| Logistic Regression | C | 1 | 0.91057 | 0.90964 | 0.9008474 |
+| Decision Tree | max_depth | 3 | 0.89129 | 0.89260 | - |
+|  |  | 4 | 0.93382 | 0.93433 | - |
+|  |  | 5 | 0.93528 | 0.93575 | - |
+|  |  | 6 | 0.94879 | 0.94859 | - |
+|  |  | 7 | 0.95459 | 0.95373 | 0.9385287 |
+| LightGBM | skip | - | 0.97505 | 0.97258 | **0.9640591** |
+
+<br>
+
+Coefficient
+
+| Model | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel | black_hour | click_gap |
+|:-----:|:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|:----------:|:---------:|
+| Logistic Regression | C | 1 | -7.33339065e-08 | -3.96425129e-07 | -6.51432349e-08 | -7.63216968e-08 | -5.99720133e-08 | -2.24701394e-06 | -3.70434353e-08 | -2.96075221e-08 | 6.05839932e-05 |
+
+<br>
+
+Feature Importance
+
+| Model | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel | black_hour | click_gap |
+|:-----:|:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|:----------:|:---------:|
+| Decision Tree | max_depth | 3 | 0.46734 | 0.11181 | 0.35044 | 0 | 0 | 0 | 0 | 0 | 0.07041 |
+|  |  | 4 | 0.41448 | 0.18752 | 0.31080 | 0 | 0 | 0.00024 | 0.01545 | 0 | 0.07150 |
+|  |  | 5 | 0.38186 | 0.22978 | 0.28634 | 0.00000 | 0 | 0.00301 | 0.01682 | 0 | 0.08218 |
+|  |  | 6 | 0.35960 | 0.25318 | 0.26965 | 0.00732 | 0 | 0.00398 | 0.01780 | 0 | 0.08848 |
+|  |  | 7 | 0.34442 | 0.24543 | 0.25823 | 0.00718 | 0 | 0.03184 | 0.02312 | 0.00002 | 0.08922 |
+| LightGBM | skip | - | 0.08407 | 0.47933 | 0.34617 | 0.02043 | 0.00082 | 0.02808 | 0.02266 | 0.00047 | 0.01796 |
+
+<br>
+
+#### Used Features : black_ip, gap_app, black_app, gap_os, gap_channel, black_channel, click_gap
+
+Score
+
+| Model | Parameter | value | Train AUC | Valid AUC | Score |
+|:-----:|:---------:|:-----:|:---------:|:---------:|:-----:|
+| Logistic Regression | C | 1 | 0.91057 | 0.90964 | 0.9008474 |
+| Decision Tree | max_depth | 3 | 0.89129 | 0.89260 | - |
+|  |  | 4 | 0.93382 | 0.93433 | - |
+|  |  | 5 | 0.93528 | 0.93575 | - |
+|  |  | 6 | 0.94879 | 0.94859 | - |
+|  |  | 7 | 0.95459 | 0.95373 | 0.9385287 |
+| LightGBM | skip | - | 0.97500 | 0.97238 | **0.9641844** |
+
+<br>
+
+Coefficient
+
+| Model | Parameter | value | black_ip | gap_app | black_app | gap_os | gap_channel | black_channel | click_gap |
+|:-----:|:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
+| Logistic Regression | C | 1 | -7.33338368e-08 | -3.96425136e-07 | -6.51431731e-08 | -7.63216985e-08 | -2.24701394e-06 | -3.70434000e-08 |  6.05839333e-05 |
+
+<br>
+
+Feature Importance
+
+| Model | Parameter | value | black_ip | gap_app | black_app | gap_os | gap_channel | black_channel | click_gap |
+|:-----:|:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
+| Decision Tree | max_depth | 3 | 0.46734 | 0.11181 | 0.35044 | 0 | 0 | 0 | 0.07041 |
+|  |  | 4 | 0.41448 | 0.18752 | 0.31080 | 0 | 0.00024 | 0.01545 | 0.07150 |
+|  |  | 5 | 0.38189 | 0.22978 | 0.28634 | 0.00000 | 0.00301 | 0.01682 | 0.08218 |
+|  |  | 6 | 0.35960 | 0.25318 | 0.26964 | 0.00731 | 0.00398 | 0.01780 | 0.08848 |
+|  |  | 7 | 0.34442 | 0.24543 | 0.25823 | 0.00772 | 0.03184 | 0.02312 | 0.08924 |
+| LightGBM | skip | - | 0.06776 | 0.61353 | 0.22739 | 0.02072 | 0.02777 | 0.02243 | 0.02039 |
 
 <br>
 
@@ -203,6 +272,58 @@ Feature Importance
 
 <br>
 
+---
+
+## Train Size : All
+
+| Dataset | Not Downloaded | Downloaded | Total |
+|:-------:|---------------:|-----------:|------:|
+| Train | 147,557,584 | 365,528 | 147,923,112 |
+| Valid | 36,889,460 | 91,318 | 36,980,778 |
+
+<br>
+
+#### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
+
+Score
+
+| Model | Parameter | value | Train AUC | Valid AUC | Score |
+|:-----:|:---------:|:-----:|:---------:|:---------:|:-----:|
+| Logistic Regression | C | 1 | 0.91475 | 0.91393 | 0.9019740 |
+| Decision Tree | max_depth | 3 | 0.92462 | 0.92340 | - |
+|  |  | 4 | 0.92557 | 0.92436 | - |
+|  |  | 5 | 0.94273 | 0.94158 | - |
+|  |  | 6 | 0.94906 | 0.94806 | - |
+|  |  | 7 | 0.95536 | 0.95419 | 0.9487209 |
+| LightGBM | skip | - | 0.96537 | 0.96484 | 0.9574970 |
+
+<br>
+
+Coefficient
+
+| Model | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel |
+|:-----:|:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|
+| Logistic Regression | C | 1 | -6.58239820e-12 | -3.22938511e-07 | -5.89842323e-12 | -5.10607890e-08 | -5.04278720e-12 | -1.93026828e-06 | -4.55300256e-12 |
+
+<br>
+
+Feature Importance
+
+| Model | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel |
+|:-----:|:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|
+| Decision Tree | max_depth | 3 | 0.32144 | 0.30351 | 0.37505 | 0 | 0 | 0 | 0 |
+|  |  | 4 | 0.26417 | 0.40605 | 0.30822 | 0 | 0 | 0.00860 | 0.01296 |
+|  |  | 5 | 0.25153 | 0.40633 | 0.29348 | 0.01886 | 0 | 0.01101 | 0.01879 |
+|  |  | 6 | 0.24267 | 0.39907 | 0.28314 | 0.02098 | 0.00435 | 0.03165 | 0.01815 |
+|  |  | 7 | 0.23687 | 0.39290 | 0.27637 | 0.03302 | 0.00451 | 0.03861 | 0.01771 |
+| LightGBM | skip | - | 0.17073 | 0.39024 | 0.12195 | 0.14634 | 0.00000 | 0.12195 | 0.04878 |
+
+
+<br>
+
+---
+
+## Train Size : 10,000,000
 
 
 Score

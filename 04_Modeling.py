@@ -214,8 +214,34 @@ save(pred, 'lgb')
 ##
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
         'gap_channel', 'black_channel', 'black_hour', 'click_gap']
-pred, log_ = logistic(feat, c)
+pred, log_ = logistic(feat)
 print(log_.coef_)
-save(pred, 'log_' + str(c))
+save(pred, 'log')
+
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+
+pred, bst = lgbm(feat)
+a = bst.feature_importance('gain')
+print(a / a.sum())
+save(pred, 'lgb')
 
 
+##
+feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'gap_channel', 
+        'black_channel', 'click_gap']
+pred, log_ = logistic(feat)
+print(log_.coef_)
+save(pred, 'log')
+
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+
+pred, bst = lgbm(feat)
+a = bst.feature_importance('gain')
+print(a / a.sum())
+save(pred, 'lgb')
