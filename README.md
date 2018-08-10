@@ -29,12 +29,7 @@ observed target.
 1. EDA [☆](01_EDA.py) [★](01_EDA.md)
 2. Preprocessing [☆](02_Preprocessing.py) [★](02_Preprocessing.md)
 3. Sampling [☆](03_Sampling.py) [★](03_Sampling.md)
-4. Modeling
- * Logistic
- * Decision Tree
- * Random Forest
- * Gradient Boosting
- * LightGBM
+4. Modeling [☆](04_Modeling.py) [★](04_Modeling.md)
 
 ---
 
