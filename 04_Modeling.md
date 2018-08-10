@@ -15,7 +15,7 @@
 
 <br>
 
-#### Features : black_ip, black_app, black_os, black_channel
+#### Used Features : black_ip, black_app, black_os, black_channel
 
 Score
 
@@ -31,7 +31,7 @@ Score
 |  |  | 3 | 0.91725 | 0.91811 | - |
 |  |  | 4 | 0.91823 | 0.91906 | - |
 |  |  | 5 | 0.91823 | 0.91906 | 0.9056274 |
-| LightGBM | skip |  | 0.91823 | 0.91906 | 0.9056274 |
+| LightGBM | skip | - | 0.91823 | 0.91906 | 0.9056274 |
 
 <br>
 
@@ -56,11 +56,11 @@ Feature Importance
 |  |  | 3 | 0.49437 | 0.36096 | 0.04157 | 0.10901 |
 |  |  | 4 | 0.48144 | 0.35151 | 0.06401 | 0.10303 |
 |  |  | 5 | 0.48144 | 0.35151 | 0.06401 | 0.10303 |
-| LightGBM | skip |  | 0.13975 | 0.55410 | 0.03579 | 0.27036 |
+| LightGBM | skip | - | 0.13975 | 0.55410 | 0.03579 | 0.27036 |
 
 <br>
 
-#### Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
+#### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
 
 Score
 
@@ -73,8 +73,8 @@ Score
 |  |  | 4 | 0.93505 | 0.93548 | - |
 |  |  | 5 | 0.94870 | 0.94847 | - |
 |  |  | 6 | 0.95446 | 0.95382 | - |
-|  |  | 7 | 0.95878 | 0.95779 |  |
-| LightGBM | skip |  |  |  | - |
+|  |  | 7 | 0.95878 | 0.95779 | 0.9455029 |
+| LightGBM | skip | - | 0.97367 | 0.97143 | - |
 
 <br>
 
@@ -97,11 +97,11 @@ Feature Importance
 |  |  | 5 | 0.38732 | 0.27541 | 0.28280 | 0.00703 | 0 | 0.02476 | 0.02267 |
 |  |  | 6 | 0.37239 | 0.26694 | 0.27189 | 0.02149 | 0.00563 | 0.03721 | 0.02445 |
 |  |  | 7 | 0.36299 | 0.26704 | 0.26503 | 0.02663 | 0.00899 | 0.04477 | 0.00245 |
-| LightGBM | skip |  |  |  |  |  |
+| LightGBM | skip | - | 0.07101 | 0.62613 | 0.2255 | 0.02153 | 0.00099 | 0.03133 |
 
 <br>
 
-#### Features : black_ip, gap_app, black_app, gap_device, gap_os, black_os, gap_channel, black_channel, black_hour
+#### Used Features : black_ip, gap_app, black_app, gap_device, gap_os, black_os, gap_channel, black_channel, black_hour
 
 
 <br>
