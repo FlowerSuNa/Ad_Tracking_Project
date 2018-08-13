@@ -1,6 +1,8 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 2. Preprocessing
-[source code](02_Preprocessing.py)
+[source code](02_Preprocessing.py) <br>
+
+Make features and draw graphs.
 
 <br>
 
@@ -44,7 +46,7 @@ for feat in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
 
 <br>
 
-## Makes a feature : click_gap
+## Make a feature : click_gap
 
 ```python
 data = pd.read_csv('data/merge.csv', usecols=['ip', 'click_time'])
@@ -220,7 +222,7 @@ dist('click_gap')
 
 <br>
 
-## Draws a scatter plot
+## Draw a scatter plot
 
 ```python
 def scatter(feat):
@@ -311,7 +313,7 @@ bar('black_hour')
 
 <br>
 
-## Draws a bar graph of 'click_gap' and 'is_attributed'
+## Draw a bar graph of 'click_gap' and 'is_attributed'
 
 ```python
 train = pd.read_csv('data/train_add_features.csv', usecols=['click_gap', 'is_attributed'])

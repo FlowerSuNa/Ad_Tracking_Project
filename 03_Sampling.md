@@ -1,6 +1,8 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 3. Sampling
-[source code](03_Sampling.py)
+[source code](03_Sampling.py) <br>
+
+Extract a sample and draw graphs.
 
 <br>
 
@@ -141,7 +143,7 @@ dist('click_gap')
 
 <br>
 
-## Draws a scatter plot of sample
+## Draw a scatter plot of sample
 
 ```python
 def scatter(feat):
@@ -233,7 +235,7 @@ bar('black_hour')
 
 <br>
 
-## Draws a bar graph of 'click_gap' and 'is_attributed'
+## Draw a bar graph of 'click_gap' and 'is_attributed'
 
 ```python
 train = pd.read_csv('data/train_add_features_20m.csv', usecols=['click_gap', 'is_attributed'])

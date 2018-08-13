@@ -2,7 +2,7 @@
 # 1. EDA
 [source code](01_EDA.py) <br>
 
-Explor data.
+Explor train and test datasets.
 
 <br>
 
@@ -139,7 +139,7 @@ Test
 
 ---
 
-## Draws a time series of train data click time
+## Draw a time series of train data click time
 
 ```python
 temp = train['click_time']
@@ -161,7 +161,7 @@ gc.collect()
 
 <br>
 
-## Draws a time series of test data click time
+## Draw a time series of test data click time
 
 ```python
 temp = test['click_time']
@@ -183,7 +183,7 @@ gc.collect()
 
 <br>
 
-## Draws a time series of downloaded click time and attributed time
+## Draw a time series of downloaded click time and attributed time
 
 ```python
 temp1 = train['is_attributed']
@@ -210,7 +210,7 @@ gc.collect()
 
 ---
 
-## Makes a feature : hour
+## Make a feature : hour
 
 ```python
 train['hour'] = np.nan

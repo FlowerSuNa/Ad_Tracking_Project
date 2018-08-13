@@ -16,6 +16,8 @@ Find the important features and then, make the model using Logistic Regression, 
 
 * [LightGBM](#lightgbm)
 
+* [Trial and error](trial/Trial.md)
+
 ---
 
 ## Split Train Data
@@ -327,6 +329,10 @@ Find the important features and then, make the model using Logistic Regression, 
 
 <br>
 
+[Page Up](#4-modeling)
+
+<br>
+
 ---
 
 ## LightGBM
@@ -486,6 +492,10 @@ Find the important features and then, make the model using Logistic Regression, 
 
 <br>
 
+[Page Up](#4-modeling)
+
+<br>
+
 ---
 
 ## Random Forest
@@ -527,6 +537,7 @@ Find the important features and then, make the model using Logistic Regression, 
 |  |  | 4 |  |  | - |
 |  |  | 5 |  |  | - |
 
+<br>
 
 * Feature Importance
 
@@ -559,6 +570,10 @@ Find the important features and then, make the model using Logistic Regression, 
 |  | 100 | 3 |  |  | - |
 |  |  | 4 |  |  | - |
 |  |  | 5 |  |  | - |
+
+<br>
+
+[Page Up](#4-modeling)
 
 <br>
 
@@ -603,6 +618,7 @@ Find the important features and then, make the model using Logistic Regression, 
 |  |  | 0.01 |
 |  |  | 0.001 |
 
+<br>
 
 * Feature Importance
 
@@ -635,3 +651,15 @@ Find the important features and then, make the model using Logistic Regression, 
 |  | 70 | 0.1 |  |  | - |
 |  |  | 0.01 |
 |  |  | 0.001 |
+
+<br>
+
+[Page Up](#4-modeling)
+
+<br>
+
+---
+
+[Contents](README.md) <br>
+[3. Sampling](03_Sampling.md) <br>
+[5. Conclusion](05_Conclusion.md)
