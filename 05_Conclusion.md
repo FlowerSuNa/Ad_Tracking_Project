@@ -13,7 +13,7 @@ I thought only features related to ip, app, channel and click time were importan
 
 <br>
 
-Performance was different depending on machine learning methods and the features used. The method with the best performance is **LightGBM**.
+Performance was different depending on machine learning methods and the features used. The method with the best performance is **LightGBM**. The features used are black_ip, gap_app, black_app, gap_device, gap_os, gap_channel, black_channel, click_gap.
 
 <br>
 
