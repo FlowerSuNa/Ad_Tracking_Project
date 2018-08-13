@@ -8,14 +8,26 @@ Find the important features and then, make the model using Logistic Regression, 
 
 ---
 
+* [Logistic Regression](#Logistic-Regression)
+
+* [Decision Tree](#Decision-Tree)
+
+* [Random Forest](#Random-Forest)
+
+* [Gradient Boosting](#Gradient-Boosting)
+
+* [LightGBM](#LightGBM)
+
+---
+
 ## Split Train Data
 
 #### Train Size : 10,000,000
 
 | Dataset | Not Downloaded | Downloaded | Total |
 |:-------:|---------------:|-----------:|------:|
-| Train |
-| Valid |
+| Train | 7,982,502 | 17,498 | 8,000,000 |
+| Valid | 1,995,618 | 4,382 | 2,000,000 |
 
 <br>
 
@@ -169,7 +181,7 @@ Find the important features and then, make the model using Logistic Regression, 
 * Coefficient
 
 | C | black_ip | gap_app | black_app | gap_device | gap_os | gap_channel | black_channel | click_gap |
-|:-:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
+|:-:|:--------:|:-------:|:---------:|:----------:|:------:|:-----------:|:-------------:|:---------:|
 | 1 | -5.08335955e-12 | -2.50819503e-07 | -3.62569221e-12 | -1.26183283e-08 | -2.07392698e-08 | -1.65163236e-06 | -3.09966527e-12 |  8.14621067e-09 |
 
 <br>
@@ -318,6 +330,7 @@ Find the important features and then, make the model using Logistic Regression, 
 ## LightGBM
 
 * Parameter
+
 | Parameter | Value | Describe |
 |-----------|-------|----------|
 | boosting_type | gbdt |  |
@@ -385,7 +398,7 @@ Find the important features and then, make the model using Logistic Regression, 
 
 | Train Size | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel |
 |:----------:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|
-| 20m | 0.07101 | 0.62613 | 0.2255 | 0.02153 | 0.00099 | 0.03133 |
+| 20m | 0.07101 | 0.62613 | 0.24900 | 0.02153 | 0.00099 | 0.03133 |
 | 30m | 0.07418 | 0.62355 | 0.21729 | 0.01996 | 0.00097 | 0.03401 | 0.03003 |
 | 40m | 0.07980 | 0.62537 | 0.21135 | 0.02283 | 0.00143 | 0.02983 | 0.02940 |
 | 50m | 0.11765 | 0.29412 | 0.17647 | 0.17647 | 0 | 0.17647 | 0.05882 |
