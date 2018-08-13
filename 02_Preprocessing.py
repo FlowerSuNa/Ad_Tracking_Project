@@ -28,7 +28,7 @@ for feat in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
     merge_black(feat)
 
 
-## Makes a feature : click_gap
+## Make a feature : click_gap
 data = pd.read_csv('data/merge.csv', usecols=['ip', 'click_time'])
 data = data.reset_index()
 data.sort_values(by=['ip', 'click_time'], inplace=True)
@@ -127,7 +127,7 @@ dist('rate_hour')
 dist('click_gap')
 
 
-## Draws a scatter plot
+## Draw a scatter plot
 def scatter(feat):
     x = pd.read_csv('data/train_add_features.csv', usecols=feat+['is_attributed'])
     
@@ -178,7 +178,7 @@ bar('black_channel')
 bar('black_hour')
 
 
-## Draws a bar graph of 'click_gap' and 'is_attributed'
+## Draw a bar graph of 'click_gap' and 'is_attributed'
 train = pd.read_csv('data/train_add_features.csv', usecols=['click_gap', 'is_attributed'])
 
 sns.set(rc={'figure.figsize':(15,12)})

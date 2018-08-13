@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
 
 import lightgbm as lgb
@@ -14,7 +16,7 @@ import lightgbm as lgb
 
 ## Divid data
 def divid_data(feat):
-    train = pd.read_csv("data/train_add_features_20m.csv", usecols=feat + ['is_attributed'])
+    train = pd.read_csv("data/train_add_features_40m.csv", usecols=feat + ['is_attributed'])
     
     X_train, X_valid, y_train, y_valid = train_test_split(train[feat], train['is_attributed'], 
                                                           random_state=0, test_size=0.2)
@@ -33,7 +35,7 @@ def divid_data(feat):
     return X_train, X_valid, y_train, y_valid
 
 
-## Make a model using Logistic Regression
+## Makes a model using Logistic Regression
 def logistic(feat, c=1):
     print("When C=%.2f :" %c)    
     
@@ -61,7 +63,7 @@ def logistic(feat, c=1):
     return pred, log
 
 
-## Make a model using Decision Tree
+## Makes a model using Decision Tree
 def tree(feat, max_depth):
     print("When max_depth=%d :" % max_depth)    
     
@@ -69,14 +71,14 @@ def tree(feat, max_depth):
     X_train, X_valid, y_train, y_valid = divid_data(feat)
     
     ## Train the model
-    tree = DecisionTreeClassifier(max_depth=max_depth)
-    tree.fit(X_train, y_train)
+    tree_ = DecisionTreeClassifier(max_depth=max_depth)
+    tree_.fit(X_train, y_train)
     
     ## Evaluate the model
-    p = tree.predict_proba(X_train)[:,1]
+    p = tree_.predict_proba(X_train)[:,1]
     train_auc = roc_auc_score(y_train, p)
     
-    p = tree.predict_proba(X_valid)[:,1]
+    p = tree_.predict_proba(X_valid)[:,1]
     valid_auc = roc_auc_score(y_valid, p)
     
     print("AUC of train data : %.5f" % train_auc)
@@ -84,12 +86,12 @@ def tree(feat, max_depth):
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    pred = tree.predict_proba(test[feat])[:,1]      
+    pred = tree_.predict_proba(test[feat])[:,1]      
     
-    return pred, tree
+    return pred, tree_
 
 
-## Make a model using Random Forest
+## Makes a model using Random Forest
 def forest(feat, max_depth, n_estimators, max_features):
     print("When max_depth=%d, n_estimators=%d, max_features=%d :" % (max_depth, n_estimators, max_features))    
     
@@ -97,14 +99,14 @@ def forest(feat, max_depth, n_estimators, max_features):
     X_train, X_valid, y_train, y_valid = divid_data(feat)
     
     ## Train the model
-    forest = RandomForestClassifier(max_depth=max_depth, n_estimators=n_estimators, max_features=max_features)
-    forest.fit(X_train, y_train)
+    fst = RandomForestClassifier(max_depth=max_depth, n_estimators=n_estimators, max_features=max_features)
+    fst.fit(X_train, y_train)
     
     ## Evaluate the model
-    p = forest.predict_proba(X_train)[:,1]
+    p = fst.predict_proba(X_train)[:,1]
     train_auc = roc_auc_score(y_train, p)
     
-    p = forest.predict_proba(X_valid)[:,1]
+    p = fst.predict_proba(X_valid)[:,1]
     valid_auc = roc_auc_score(y_valid, p)
     
     print("AUC of train data : %.5f" % train_auc)
@@ -112,11 +114,41 @@ def forest(feat, max_depth, n_estimators, max_features):
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    pred = forest.predict_proba(test[feat])[:,1]      
+    pred = fst.predict_proba(test[feat])[:,1]      
     
-    return pred, forest
+    return pred, fst
 
 
+## Makes a model using Gradient Boosting
+def boost(feat, max_depth, n_estimators, learning_rate):
+    print("when max_depth=%d, n_estimators=%d, learning_rate=%.2f : " %(max_depth, n_estimators, learning_rate))
+    
+    ## Divid Dataset
+    X_train, X_valid, y_train, y_valid = divid_data(feat)
+        
+    ## Train the model
+    bst = GradientBoostingClassifier(max_depth=max_depth, n_estimators=n_estimators, learning_rate=learning_rate, 
+                                      random_state=0)
+    bst.fit(X_train,y_train)
+
+    ## Evaluate the model
+    p = bst.predict_proba(X_train)[:,1]
+    train_auc = roc_auc_score(y_train, p)
+    
+    p = bst.predict_proba(X_valid)[:,1]
+    valid_auc = roc_auc_score(y_valid, p)
+    
+    print("AUC of train data : %.5f" % train_auc)
+    print("AUC od valid data : %.5f" % valid_auc)
+    
+    ## Predict target variable
+    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
+    pred = bst.predict_proba(test[feat])[:,1]      
+    
+    return pred, bst
+
+
+## Makes a model using LightGBM
 def lgbm(feat):
     ## Divid Dataset
     X_train, X_valid, y_train, y_valid = divid_data(feat)
@@ -167,13 +199,69 @@ def lgbm(feat):
 
 
 ##
+def knn(feat, k):
+    print("When n_neighbors=%d :" %k)
+    
+    ## Divid Dataset
+    X_train, X_valid, y_train, y_valid = divid_data(feat)
+    
+    ## Train the model
+    knn_ = KNeighborsRegressor(n_neighbors=k)
+    knn_.fit(X_train,y_train)
+    
+    ## Evaluate the model
+    p = knn_.predict_proba(X_train)[:,1]
+    train_auc = roc_auc_score(y_train, p)
+    
+    p = knn_.predict_proba(X_valid)[:,1]
+    valid_auc = roc_auc_score(y_valid, p)
+    
+    print("AUC of train data : %.5f" % train_auc)
+    print("AUC od valid data : %.5f" % valid_auc)
+    
+    ## Predict target variable
+    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
+    pred = knn_.predict_proba(test[feat])[:,1]
+    
+    return pred, knn_
+
+
+##
+def svc(feat, c, gamma):
+    print("when C=%.1f , gamma=%.1f :" % (c,gamma))
+    
+    ## Divid Dataset
+    X_train, X_valid, y_train, y_valid = divid_data(feat)
+    
+    ## Train the model
+    svm = SVC(C=c, gamma=gamma, probability=True, random_state=1)
+    svm.fit(X_train,y_train)
+    
+    ## Evaluate the model
+    p = svm.predict_proba(X_train)[:,1]
+    train_auc = roc_auc_score(y_train, p)
+    
+    p = svm.predict_proba(X_valid)[:,1]
+    valid_auc = roc_auc_score(y_valid, p)
+    
+    print("AUC of train data : %.5f" % train_auc)
+    print("AUC od valid data : %.5f" % valid_auc)
+    
+    ## Predict target variable
+    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
+    pred = svm.predict_proba(test[feat])[:,1]
+    
+    return pred, svm
+
+
+## Save predicted data
 def save(predict, filename):
     submission = pd.read_csv('submission/sample_submission.csv')
     submission['is_attributed'] = pred
     submission.to_csv('submission/' + filename + '.csv', index=False)
 
 
-## 
+## Use features : black_ip, black_app, black_os, black_channel
 feat = ['black_ip', 'black_app', 'black_os', 'black_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -188,11 +276,10 @@ for d in range(1,6):
 pred, bst = lgbm(feat)
 a = bst.feature_importance('gain')
 print(a / a.sum())
-save(pred, 'lgb')
+save(pred, 'lgb_1')
 
 
-
-##
+## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
         'gap_channel', 'black_channel']
 for c in [0.1, 1, 10]:
@@ -208,10 +295,10 @@ for d in range(3,8):
 pred, bst = lgbm(feat)
 a = bst.feature_importance('gain')
 print(a / a.sum())
-save(pred, 'lgb')
+save(pred, 'lgb_2')
 
 
-##
+## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
         'gap_channel', 'black_channel', 'black_hour', 'click_gap']
 pred, log_ = logistic(feat)
@@ -226,10 +313,10 @@ for d in range(3,8):
 pred, bst = lgbm(feat)
 a = bst.feature_importance('gain')
 print(a / a.sum())
-save(pred, 'lgb')
+save(pred, 'lgb_3')
 
 
-##
+## Use features : black_ip, gap_app, black_app, gap_os, gap_channel, black_channel, click_gap
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'gap_channel', 
         'black_channel', 'click_gap']
 pred, log_ = logistic(feat)
@@ -244,10 +331,10 @@ for d in range(3,8):
 pred, bst = lgbm(feat)
 a = bst.feature_importance('gain')
 print(a / a.sum())
-save(pred, 'lgb')
+save(pred, 'lgb_4')
 
 
-##
+## Use features : black_ip, gap_app, black_app, gap_device, gap_os, gap_channel, black_channel, click_gap
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_device', 'gap_os', 
         'gap_channel', 'black_channel', 'click_gap']
 pred, log_ = logistic(feat)
@@ -262,4 +349,23 @@ for d in range(3,8):
 pred, bst = lgbm(feat)
 a = bst.feature_importance('gain')
 print(a / a.sum())
-save(pred, 'lgb')
+save(pred, 'lgb_5')
+
+for d in range(3,6):
+    for n in [50, 70, 100]:
+        for f in range(3,6):
+            pred, fst = forest(feat, d, n, f)
+            print(fst.feature_importances_)
+            save(pred, 'fst_'+'_'.join([str(d),str(n),str(f)]))
+
+for d in range(3,6):
+    for n in [30, 50, 70]:
+        for l in [0.1, 0.01, 0.001]:
+            pred, bst = bst(feat, d, n, l)
+            print(bst.feature_importances_)
+            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
+            
+pred, knn_ = knn(feat, 5)
+
+
+pred, svm = svc(feat, 1, 1)

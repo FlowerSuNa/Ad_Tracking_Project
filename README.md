@@ -30,11 +30,6 @@ observed target.
 2. Preprocessing [☆](02_Preprocessing.py) [★](02_Preprocessing.md)
 3. Sampling [☆](03_Sampling.py) [★](03_Sampling.md)
 4. Modeling [☆](04_Modeling.py) [★](04_Modeling.md)
-
----
-
-## Summary
-- Summary : <br>
-- Evaluation : <br>
+5. Conclusion [★](05_Conclusion.md)
 
 ---

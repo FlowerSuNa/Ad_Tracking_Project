@@ -74,7 +74,7 @@ plt.show()
 gc.collect()
 
 
-## Draws a time series of test data click time
+## Draw a time series of test data click time
 temp = test['click_time']
 temp.index = test['click_time']
 temp = temp.resample('10T').count()
@@ -88,7 +88,7 @@ plt.show()
 gc.collect()
 
 
-## Draws a time series of downloaded click time and attributed time
+## Draw a time series of downloaded click time and attributed time
 temp1 = train['is_attributed']
 temp1.index = train['click_time']
 temp1 = temp1.resample('10T').sum()
@@ -107,7 +107,7 @@ plt.show()
 gc.collect()
 
 
-## Makes a feature : hour
+## Make a feature : hour
 train['hour'] = np.nan
 train['hour'] = train['click_time'].dt.hour
 

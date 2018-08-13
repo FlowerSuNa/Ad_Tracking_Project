@@ -63,7 +63,7 @@ dist('rate_hour')
 dist('click_gap')
 
 
-##
+## Draw a scatter plot of sample
 def scatter(feat):
     x = pd.read_csv('data/train_add_features_20m.csv', usecols=feat+['is_attributed'])
     
@@ -86,7 +86,7 @@ def scatter(feat):
 scatter(['gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel'])
 
 
-##
+## Draw bar graphs of sample
 def bar(x):
     df = pd.read_csv('data/train_add_features_20m.csv', usecols=[x, 'is_attributed'])
     
@@ -114,7 +114,7 @@ bar('black_channel')
 bar('black_hour')
 
 
-## Draws a bar graph of 'click_gap' and 'is_attributed'
+## Draw a bar graph of 'click_gap' and 'is_attributed'
 train = pd.read_csv('data/train_add_features_20m.csv', usecols=['click_gap', 'is_attributed'])
 
 sns.set(rc={'figure.figsize':(15,12)})
@@ -136,7 +136,7 @@ plt.show()
 gc.collect()
     
 
-## Check correlation
+## Check correlation of sample
 train = pd.read_csv('data/train_add_features_20m.csv')
 corr = train.corr(method='pearson')
 corr = corr.round(2)
