@@ -6,17 +6,15 @@ Find the important features and then, make the model using Logistic Regression, 
 
 <br>
 
----
+* [Logistic Regression](#logistic-regression)
 
-* [Logistic Regression](#Logistic-Regression)
+* [Decision Tree](#decision-tree)
 
-* [Decision Tree](#Decision-Tree)
+* [Random Forest](#random-forest)
 
-* [Random Forest](#Random-Forest)
+* [Gradient Boosting](#gradient-boosting)
 
-* [Gradient Boosting](#Gradient-Boosting)
-
-* [LightGBM](#LightGBM)
+* [LightGBM](#lightgbm)
 
 ---
 
@@ -183,6 +181,10 @@ Find the important features and then, make the model using Logistic Regression, 
 | C | black_ip | gap_app | black_app | gap_device | gap_os | gap_channel | black_channel | click_gap |
 |:-:|:--------:|:-------:|:---------:|:----------:|:------:|:-----------:|:-------------:|:---------:|
 | 1 | -5.08335955e-12 | -2.50819503e-07 | -3.62569221e-12 | -1.26183283e-08 | -2.07392698e-08 | -1.65163236e-06 | -3.09966527e-12 |  8.14621067e-09 |
+
+<br>
+
+[Page Up](#4-modeling)
 
 <br>
 
