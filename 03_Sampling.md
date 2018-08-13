@@ -43,6 +43,8 @@ for n in [40000000,30000000,20000000,10000000]:
     del sample
 ```
 
+> Sampled the most recent data, because it is time series data.
+
 <br>
 
 ---
