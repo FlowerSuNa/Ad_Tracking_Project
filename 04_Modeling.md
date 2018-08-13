@@ -2,7 +2,7 @@
 # 4. Modeling
 [source code](04_Modeling.py) <br>
 
-Find the important features and then, do Modeling using Logistic Regression, Decision Tree, Random Forest, Gradient boosting and LightGBM.
+Find the important features and then, make the model using Logistic Regression, Decision Tree, Random Forest, Gradient boosting and LightGBM.
 
 <br>
 
@@ -32,8 +32,8 @@ Find the important features and then, do Modeling using Logistic Regression, Dec
 
 | Dataset | Not Downloaded | Downloaded | Total |
 |:-------:|---------------:|-----------:|------:|
-| Train |
-| Valid |
+| Train | 23,939,416 | 60,584 | 24,000,000 |
+| Valid | 5,984,690 | 15,310 | 6,000,000 |
 
 <br>
 
@@ -96,7 +96,7 @@ Find the important features and then, do Modeling using Logistic Regression, Dec
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -106,7 +106,7 @@ Score
 
 <br>
 
-Coefficient
+* Coefficient
 
 | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|
@@ -118,7 +118,7 @@ Coefficient
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -126,7 +126,7 @@ Score
 
 <br>
 
-Coefficient
+* Coefficient
 
 | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel | black_hour | click_gap |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|:----------:|:---------:|
@@ -136,7 +136,7 @@ Coefficient
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, gap_channel, black_channel, click_gap
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -144,7 +144,7 @@ Score
 
 <br>
 
-Coefficient
+* Coefficient
 
 | Parameter | value | black_ip | gap_app | black_app | gap_os | gap_channel | black_channel | click_gap |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
@@ -154,7 +154,7 @@ Coefficient
 
 #### Used Features : black_ip, gap_app, black_app, gap_device, gap_os, gap_channel, black_channel, click_gap
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -162,7 +162,7 @@ Score
 
 <br>
 
-Coefficient
+* Coefficient
 
 | Parameter | value | black_ip | gap_app | black_app | gap_device | gap_os | gap_channel | black_channel | click_gap |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
@@ -176,7 +176,7 @@ Coefficient
 
 #### Used Features : black_ip, black_app, black_os, black_channel
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -188,7 +188,7 @@ Score
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Parameter | value | black_ip | black_app | black_os | black_channel |
 |:---------:|:-----:|:--------:|:---------:|:--------:|:-------------:|
@@ -202,7 +202,7 @@ Feature Importance
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -214,7 +214,7 @@ Score
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|
@@ -228,7 +228,7 @@ Feature Importance
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -240,7 +240,7 @@ Score
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Parameter | value | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel | black_hour | click_gap |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|:----------:|:---------:|
@@ -254,7 +254,7 @@ Feature Importance
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, gap_channel, black_channel, click_gap
 
-Score
+* Score
 
 | Parameter | value | Train AUC | Valid AUC | Score |
 |:---------:|:-----:|:---------:|:---------:|:-----:|
@@ -266,7 +266,7 @@ Score
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Parameter | value | black_ip | gap_app | black_app | gap_os | gap_channel | black_channel | click_gap |
 |:---------:|:-----:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
@@ -314,85 +314,85 @@ Feature Importance
 
 #### Used Features : black_ip, black_app, black_os, black_channel
 
-Score
+* Score
 
 | Train Size | Train AUC | Valid AUC | Score |
 |:----------:|:---------:|:---------:|:-----:|
 | 20m | 0.91823 | 0.91906 | 0.9056274 |
-| 30m |
+| 30m | 0.91139 | 0.91109 | - |
 | 40m |
 | 50m |
-| All |
+| All | 0.90933 | 0.90831 | - |
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Train Size | black_ip | black_app | black_os | black_channel |
 |:----------:|:--------:|:---------:|:--------:|:-------------:|
 | 20m | 0.13975 | 0.55410 | 0.03579 | 0.27036 |
-| 30m |
+| 30m | 0.13559 | 0.54250 | 0.03857 | 0.28334 |
 | 40m |
 | 50m |
-| All |
+| All | 0.23077 | 0.23077 | 0.3077 | 0.23077 |
 
 <br>
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
 
-Score
+* Score
 
 | Train Size | Train AUC | Valid AUC | Score |
 |:----------:|:---------:|:---------:|:-----:|
 | 20m | 0.97367 | 0.97143 | **0.9631122** |
-| 30m |
+| 30m | 0.96925 | 0.96665 | - |
 | 40m |
 | 50m |
-| All |
+| All | 0.95741 | 0.95687 | - |
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Train Size | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel |
 |:----------:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|
 | 20m | 0.07101 | 0.62613 | 0.2255 | 0.02153 | 0.00099 | 0.03133 |
-| 30m |
+| 30m | 0.07418 | 0.62355 | 0.21729 | 0.01996 | 0.00097 | 0.03401 | 0.03003 |
 | 40m |
 | 50m |
-| All |
+| All | 0.08181 | 0.45946 | 0.10811 | 0.18919 | 0.00000 | 0.10811 | 0.05405 |
 
 <br>
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
 
-Score
+* Score
 
 | Train Size | Train AUC | Valid AUC | Score |
 |:----------:|:---------:|:---------:|:-----:|
 | 20m | 0.97505 | 0.97258 | **0.9640591** |
-| 30m |
+| 30m | 0.97099 | 0.967802 | - |
 | 40m |
 | 50m |
-| All |
+| All | 0.96926 | 0.96839 | - |
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Train Size | black_ip | gap_app | black_app | gap_os | black_os | gap_channel | black_channel | black_hour | click_gap |
 |:----------:|:--------:|:-------:|:---------:|:------:|:--------:|:-----------:|:-------------:|:----------:|:---------:|
 | 20m | 0.08407 | 0.47933 | 0.34617 | 0.02043 | 0.00082 | 0.02808 | 0.02266 | 0.00047 | 0.01796 |
-| 30m |
+| 30m | 0.08624 | 0.47479 | 0.33419 | 0.02038 | 0.00097 | 0.03233 | 0.02859 | 0.00059 | 0.02193 |
 | 40m |
 | 50m |
-| All |
+| All | 0.44000 | 0.12000 | 0.16000 | 0.16000 | 0.00000 | 0.12000 | 0.00000 | 0.00000 | 0.00000 |
 
 <br>
 
 #### Used Features : black_ip, gap_app, black_app, gap_os, gap_channel, black_channel, click_gap
 
-Score
+* Score
 
 | Train Size | Train AUC | Valid AUC | Score |
 |:----------:|:---------:|:---------:|:-----:|
@@ -404,7 +404,7 @@ Score
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Train Size | black_ip | gap_app | black_app | gap_os | gap_channel | black_channel | click_gap |
 |:----------:|:--------:|:-------:|:---------:|:------:|:-----------:|:-------------:|:---------:|
@@ -418,7 +418,7 @@ Feature Importance
 
 #### Used Features : black_ip, gap_app, black_app, gap_device, gap_os, gap_channel, black_channel, click_gap
 
-Score
+* Score
 
 | Train Size | Train AUC | Valid AUC | Score |
 |:----------:|:---------:|:---------:|:-----:|
@@ -426,11 +426,11 @@ Score
 | 30m |
 | 40m |
 | 50m |
-| All | 0.95467 | 0.95406 |
+| All | 0.95467 | 0.95406 | - |
 
 <br>
 
-Feature Importance
+* Feature Importance
 
 | Train Size | black_ip | gap_app | black_app | gap_device | gap_os | black_os | gap_channel | black_channel |
 |:----------:|:--------:|:-------:|:---------:|:----------:|:------:|:--------:|:-----------:|:-------------:|
@@ -444,10 +444,9 @@ Feature Importance
 
 ---
 
-## Train Size : 10,000,000
+## Random Forest
 
-
-Score
+* Score
 
 | Model | Parameter | value | Train AUC | Valid AUC | Score |
 |:-----:|:---------:|:-----:|:---------:|:---------:|:-----:|

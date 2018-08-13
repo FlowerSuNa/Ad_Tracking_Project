@@ -1,6 +1,8 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 1. EDA
-[source code](01_EDA.py)
+[source code](01_EDA.py) <br>
+
+Explor data.
 
 <br>
 
@@ -78,6 +80,8 @@ Test
 | ip | app | device | os | channel | click_time | attributed_time | is_attributed |
 |:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
 | 0 | 0 | 0 | 0 | 0 | 0 | 184,447,004 | 0 |
+
+> attributed_time value is NaN if is_attributed value is 0.
 
 <br>
 
