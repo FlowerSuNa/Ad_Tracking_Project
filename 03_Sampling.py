@@ -12,7 +12,7 @@ import gc
 train_length = 184903890
 
 
-## Extract a sample
+## Extract samples
 train = pd.read_csv('data/merge_add_features.csv')
 index = train_length - 50000000
 temp = train.iloc[index:]

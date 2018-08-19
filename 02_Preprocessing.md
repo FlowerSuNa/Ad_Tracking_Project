@@ -24,7 +24,7 @@ train_test_boundary = 184903890
 
 <br>
 
-## Make features : gap, black and rate per (ip, app, device, os, channel, hour)
+## Make features : gap, black and rate (per ip, app, device, os, channel, hour)
 
 ```python
 def merge_black(feat):
@@ -43,6 +43,11 @@ def merge_black(feat):
 for feat in ['ip', 'app', 'device', 'os', 'channel', 'hour']:
     merge_black(feat)
 ```
+
+> Make features that can represent the characteristics of those factors because factor levels are too large. <br>
+> gap : Click Count - Download Count <br>
+> rate : Download Count / Click Count <br>
+> black : 1 if gap is big and rate is low
 
 <br>
 
@@ -84,6 +89,8 @@ del data
 del temp
 gc.collect()
 ```
+
+> click_gap : The gap of next click per ip
 
 <br>
 

@@ -201,8 +201,9 @@ def save(predict, filename):
     submission = pd.read_csv('submission/sample_submission.csv')
     submission['is_attributed'] = pred
     submission.to_csv('submission/' + filename + '.csv', index=False)
-    
+  
 
+## -------------------------------------------------------------------------------------
 ## Used features : rate_ip, rate_app, rate_os, rate_device, rate_channel, rate_hour
 feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
 for c in [0.01, 0.1, 1, 10, 100]:
@@ -214,10 +215,24 @@ for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))
+    
+
+## Used features : rate_app, rate_os, rate_device, rate_channel, rate_hour
+feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+    
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
 
 
-## Use features : black_ip, black_app, black_os, black_channel
-feat = ['black_ip', 'black_app', 'black_os', 'black_channel']
+## -------------------------------------------------------------------------------------
+## Use features : black_ip, black_app, black_device, black_os, black_channel
+feat = ['black_ip', 'black_app', 'black_device', 'black_os', 'black_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)

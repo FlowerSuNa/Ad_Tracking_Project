@@ -24,7 +24,7 @@ train_length = 184903890
 
 <br>
 
-## Extract a sample
+## Extract samples
 
 ```python
 train = pd.read_csv('data/merge_add_features.csv')
@@ -43,7 +43,7 @@ for n in [40000000,30000000,20000000,10000000]:
     del sample
 ```
 
-> Sampled the most recent data, because it is time series data.
+> Extract the most recent data because it is time series data.
 
 <br>
 

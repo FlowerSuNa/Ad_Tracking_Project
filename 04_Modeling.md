@@ -78,7 +78,9 @@ Find the important features and then, make the model using Logistic Regression, 
 
 ---
 
-> ### Hypothesis : Decide whether to download based on the download rate.
+> Hypothesis : Decide whether to download based on the download rate.
+
+<br>
 
 ## Used features : rate_ip, rate_app, rate_os, rate_device, rate_channel, rate_hour
 
@@ -108,7 +110,7 @@ Find the important features and then, make the model using Logistic Regression, 
 
 <br>
 
-## Decision Tree
+#### Decision Tree
 
 * Score
 
@@ -118,7 +120,7 @@ Find the important features and then, make the model using Logistic Regression, 
 | 4 | 0.90263 | 0.90310 | - |
 | 5 | 0.90376 | 0.90446 | - |
 | 6 | 0.93409 | 0.93380 | - |
-| 7 | 0.93491 | 0.93425 | 0.8832672 |
+| 7 | 0.93491 | 0.93425 | **0.8832672** |
 
 <br>
 
@@ -126,13 +128,73 @@ Find the important features and then, make the model using Logistic Regression, 
 
 | max_depth | rate_ip | rate_app | rate_os | rate_device | rate_channel | rate_hour |
 |:---------:|:-------:|:--------:|:-------:|:-----------:|:------------:|:---------:|
-| 3 | 0.76824 | 0.23098 | 0 | 0 | 0.00078 | 0 |
-| 4 | 0.64219 | 0.28548 | 0 | 0.03179 | 0.0405 | 0 |
-| 5 | 0.62294 | 0.27737 | 0.02594 | 0.02986 | 0.04208 | 0.00180 |
-| 6 | 0.62014 | 0.27690 | 0.02580 | 0.02943 | 0.04564 | 0.00208 |
-| 7 | 0.62073 | 0.26729 | 0.02743 | 0.02946 | 0.05227 | 0.00282 |
+| 3 | **0.76824** | 0.23098 | 0 | 0 | 0.00078 | 0 |
+| 4 | **0.64219** | 0.28548 | 0 | 0.03179 | 0.04054 | 0 |
+| 5 | **0.62294** | 0.27737 | 0.02594 | 0.02986 | 0.04208 | 0.00180 |
+| 6 | **0.62014** | 0.27690 | 0.02580 | 0.02943 | 0.04564 | 0.00208 |
+| 7 | **0.62073** | 0.26729 | 0.02743 | 0.02946 | 0.05227 | 0.00282 |
+
+<br>
+
+> Overfitting occurred, removed feature 'rate_ip' and make models.
+
+## Used features : rate_app, rate_os, rate_device, rate_channel, rate_hour
+
+#### Logistic Regression
+
+* Score
+
+| C | Train AUC | Valid AUC | Score |
+|:-:|:---------:|:---------:|:-----:|
+| 0.01 | 0.95613 | 0.95553 | **0.9472774** |
+| 0.1 | 0.95529 | 0.95471 | - |
+| 1 | 0.95504 | 0.95448 | - |
+| 10 | 0.95467 | 0.95404 | - |
+| 100 | 0.95466 | 0.95403 | - |
+
+<br>
+
+* Coefficient
+
+| C | rate_app | rate_os | rate_device | rate_channel | rate_hour |
+|:-:|:--------:|:-------:|:-----------:|:------------:|:---------:|
+| 0.01 | 9.07053 | 7.80990 | 7.42953 | 0.10734 | -0.00269 |
+| 0.1 | 9.72578 | 12.53654 | 8.94837 | 12.08472 | 0.04231 |
+| 1 | 9.76096 | 14.40439 | 8.25626 | 12.17003 | 0.99752 |
+| 10 | 9.76358 | 14.68323 | 8.11816 | 12.17405 | 8.16964 |
+| 100 | 9.76751 | 14.67653 | 8.12769 | 12.17345 | 8.24220 |
+
+<br>
+
+#### Decision Tree
+
+* Score
+
+| max_depth | Train AUC | Valid AUC | Score |
+|:---------:|:---------:|:---------:|:-----:|
+| 3 | 0.92675 | 0.92646 | - |
+| 4 | 0.92967 | 0.92910 | - |
+| 5 | 0.95296 | 0.95193 | 0.9363925 |
+| 6 | 0.96002 | 0.95906 | 0.9439176 |
+| 7 | 0.96137 | 0.96012 | 0.9413582 |
+
+<br>
+
+* Feature Importance
+
+| max_depth | rate_app | rate_os | rate_device | rate_channel | rate_hour |
+|:---------:|:--------:|:-------:|:-----------:|:------------:|:---------:|
+| 3 | 0.70852 | 0.00429 | 0 | 0.28719 | 0 |       
+| 4 | 0.52808 | 0.20342 | 0.00282 | 0.26568 | 0 |
+| 5 | 0.47189 | 0.18632 | 0.00249 | 0.33659 | 0.00270 |
+| 6 | 0.46533 | 0.19361 | 0.00983 | 0.32733 | 0.00389 |
+| 7 | 0.46043 | 0.19400 | 0.01416 | 0.32401 | 0.00740 |
+
+<br>
 
 ---
+
+>
 
 ## Logistic Regression
 
