@@ -238,17 +238,27 @@ for c in [0.01, 0.1, 1, 10, 100]:
     print(log_.coef_)
     save(pred, 'log_' + str(c))
     
-for d in range(1,6):
+for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))
     
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb_1')
 
+## -------------------------------------------------------------------------------------
+## Use features : gap_ip, gap_app, gap_device, gap_os, gap_channel
+feat = ['gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel']
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+    
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+    
 
+## -------------------------------------------------------------------------------------
 ## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
         'gap_channel', 'black_channel']

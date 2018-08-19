@@ -6,9 +6,13 @@ s nationwide. They handle 3 billion clicks per day, of which 90% are potentially
 competition is <U><b>to create an algorithm that predicts whether a user will download an app after clicking a
 mobile app ad</b></U>.
 
+<br>
+
 ### Evalution
 Submissions are evaluated on <U><b>area under the ROC curve</b></U> between the predicted probability and the
 observed target.
+
+<br>
 
 ### Variable
 * ip : ip address of click
@@ -19,6 +23,12 @@ observed target.
 * click_time : timestamp of click (UTC)
 * attributed_time : if user download the app for after clicking an ad, this is the time of the app download
 * is_attributed : the target that is to be predicted, indicating the app was download
+
+---
+
+## Summary
+
+[Summary](Summary.md)
 
 ---
 

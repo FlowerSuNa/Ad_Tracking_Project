@@ -1,17 +1,15 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
-# Summery
+# Summary
 
 * [EDA](#EDA)
 
-* [Decision Tree](#decision-tree)
+* [Preprocessing](#decision-tree)
 
-* [Random Forest](#random-forest)
+* [Sampling](#random-forest)
 
-* [Gradient Boosting](#gradient-boosting)
+* [Modeling](#gradient-boosting)
 
-* [LightGBM](#lightgbm)
-
-* [Trial and error](trial/Trial.md)
+* [Conclusion](#lightgbm)
 
 ---
 
@@ -70,8 +68,8 @@
 
 <br>
 
-[Page Up](#Summery) <br>
-[more details](01_EDA.md) <br>
+[Page Up](#Summary) <br>
+[More Details](01_EDA.md) <br>
 [Contents](README.md) <br>
 
 ---
@@ -86,12 +84,12 @@
 
 * black : 1 if gap is big and rate is low (per ip, app, device, os, channel, hour)
 
-* click_gap : The gap of next click per ip
+* click_gap : Click Gap per ip
 
 <br>
 
-[Page Up](#Summery) <br>
-[more details](02_Preprocessing.md) <br>
+[Page Up](#Summary) <br>
+[More Details](02_Preprocessing.md) <br>
 [Contents](README.md) <br>
 
 ---
@@ -102,20 +100,20 @@ Extract the most recent data because it is time series data.
 
 <br>
 
-[Page Up](#Summery) <br>
-[more details](03_Sampling.md) <br>
+[Page Up](#Summary) <br>
+[More Details](03_Sampling.md) <br>
 [Contents](README.md) <br>
 
 ---
 
 ## Modeling
 
-Extract the most recent data because it is time series data.
+
 
 <br>
 
-[Page Up](#Summery) <br>
-[more details](04_Modeling.md) <br>
+[Page Up](#Summary) <br>
+[More Details](04_Modeling.md) <br>
 [Contents](README.md) <br>
 
 ---

@@ -90,7 +90,7 @@ del temp
 gc.collect()
 ```
 
-> click_gap : The gap of next click per ip
+> click_gap : Click Gap per ip
 
 <br>
 
