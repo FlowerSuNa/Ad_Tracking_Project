@@ -7,8 +7,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
 
 import lightgbm as lgb
@@ -16,7 +14,7 @@ import lightgbm as lgb
 
 ## Divid data
 def divid_data(feat):
-    train = pd.read_csv("data/train_add_features_40m.csv", usecols=feat + ['is_attributed'])
+    train = pd.read_csv("data/train_add_features_20m.csv", usecols=feat + ['is_attributed'])
     
     X_train, X_valid, y_train, y_valid = train_test_split(train[feat], train['is_attributed'], 
                                                           random_state=0, test_size=0.2)
@@ -54,7 +52,7 @@ def logistic(feat, c=1):
     valid_auc = roc_auc_score(y_valid, p)
     
     print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
+    print("AUC of valid data : %.5f" % valid_auc)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
@@ -82,7 +80,7 @@ def tree(feat, max_depth):
     valid_auc = roc_auc_score(y_valid, p)
     
     print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
+    print("AUC of valid data : %.5f" % valid_auc)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
@@ -110,7 +108,7 @@ def forest(feat, max_depth, n_estimators, max_features):
     valid_auc = roc_auc_score(y_valid, p)
     
     print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
+    print("AUC of valid data : %.5f" % valid_auc)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
@@ -139,7 +137,7 @@ def boost(feat, max_depth, n_estimators, learning_rate):
     valid_auc = roc_auc_score(y_valid, p)
     
     print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
+    print("AUC of valid data : %.5f" % valid_auc)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
@@ -198,67 +196,24 @@ def lgbm(feat):
     return pred, bst
 
 
-##
-def knn(feat, k):
-    print("When n_neighbors=%d :" %k)
-    
-    ## Divid Dataset
-    X_train, X_valid, y_train, y_valid = divid_data(feat)
-    
-    ## Train the model
-    knn_ = KNeighborsRegressor(n_neighbors=k)
-    knn_.fit(X_train,y_train)
-    
-    ## Evaluate the model
-    p = knn_.predict_proba(X_train)[:,1]
-    train_auc = roc_auc_score(y_train, p)
-    
-    p = knn_.predict_proba(X_valid)[:,1]
-    valid_auc = roc_auc_score(y_valid, p)
-    
-    print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
-    
-    ## Predict target variable
-    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    pred = knn_.predict_proba(test[feat])[:,1]
-    
-    return pred, knn_
-
-
-##
-def svc(feat, c, gamma):
-    print("when C=%.1f , gamma=%.1f :" % (c,gamma))
-    
-    ## Divid Dataset
-    X_train, X_valid, y_train, y_valid = divid_data(feat)
-    
-    ## Train the model
-    svm = SVC(C=c, gamma=gamma, probability=True, random_state=1)
-    svm.fit(X_train,y_train)
-    
-    ## Evaluate the model
-    p = svm.predict_proba(X_train)[:,1]
-    train_auc = roc_auc_score(y_train, p)
-    
-    p = svm.predict_proba(X_valid)[:,1]
-    valid_auc = roc_auc_score(y_valid, p)
-    
-    print("AUC of train data : %.5f" % train_auc)
-    print("AUC od valid data : %.5f" % valid_auc)
-    
-    ## Predict target variable
-    test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    pred = svm.predict_proba(test[feat])[:,1]
-    
-    return pred, svm
-
-
 ## Save predicted data
 def save(predict, filename):
     submission = pd.read_csv('submission/sample_submission.csv')
     submission['is_attributed'] = pred
     submission.to_csv('submission/' + filename + '.csv', index=False)
+    
+
+## Used features : rate_ip, rate_app, rate_os, rate_device, rate_channel, rate_hour
+feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+    
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
 
 
 ## Use features : black_ip, black_app, black_os, black_channel
@@ -361,7 +316,7 @@ for d in range(3,6):
 for d in range(3,6):
     for n in [30, 50, 70]:
         for l in [0.1, 0.01, 0.001]:
-            pred, bst = bst(feat, d, n, l)
+            pred, bst = boost(feat, d, n, l)
             print(bst.feature_importances_)
             save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
             
