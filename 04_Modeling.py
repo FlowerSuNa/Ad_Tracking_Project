@@ -90,14 +90,14 @@ def tree(feat, max_depth):
 
 
 ## Makes a model using Random Forest
-def forest(feat, max_depth, n_estimators, max_features):
-    print("When max_depth=%d, n_estimators=%d, max_features=%d :" % (max_depth, n_estimators, max_features))    
+def forest(feat, max_depth, n_estimators):
+    print("When max_depth=%d, n_estimators=%d :" % (max_depth, n_estimators))    
     
     ## Divid Dataset
     X_train, X_valid, y_train, y_valid = divid_data(feat)
     
     ## Train the model
-    fst = RandomForestClassifier(max_depth=max_depth, n_estimators=n_estimators, max_features=max_features)
+    fst = RandomForestClassifier(max_depth=max_depth, n_estimators=n_estimators)
     fst.fit(X_train, y_train)
     
     ## Evaluate the model
@@ -162,22 +162,22 @@ def lgbm(feat):
     params = {
         'boosting_type': 'gbdt',
         'objective': 'binary',
-        'min_split_gain': 0,    # lambda_l1, lambda_l2 and min_gain_to_split to regularization
-        'reg_alpha': 0,         # L1 regularization term on weights
-        'reg_lambda': 0,        # L2 regularization term on weights
+        'min_split_gain': 0, 
+        'reg_alpha': 0,
+        'reg_lambda': 0, 
         'nthread': 4,
         'verbose': 0,
         'metric':'auc',     
      
         'learning_rate': 0.15,
-        'num_leaves': 7,        # 2^max_depth - 1
-        'max_depth': 3,         # -1 means no limit
-        'min_child_samples': 100,  # Minimum number of data need in a child(min_data_in_leaf)
-        'max_bin': 100,         # Number of bucketed bin for feature values
-        'subsample': 0.7,       # Subsample ratio of the training instance.
-        'subsample_freq': 1,    # frequence of subsample, <=0 means no enable
-        'colsample_bytree': 0.9,  # Subsample ratio of columns when constructing each tree.
-        'min_child_weight': 0,  # Minimum sum of instance weight(hessian) needed in a child(leaf)
+        'num_leaves': 7,
+        'max_depth': 3,      
+        'min_child_samples': 100,  
+        'max_bin': 100,     
+        'subsample': 0.7,  
+        'subsample_freq': 1, 
+        'colsample_bytree': 0.9, 
+        'min_child_weight': 0, 
         'scale_pos_weight':99
     }
     
@@ -228,11 +228,10 @@ for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))
+    
 
-
-## -------------------------------------------------------------------------------------
-## Use features : black_ip, black_app, black_device, black_os, black_channel
-feat = ['black_ip', 'black_app', 'black_device', 'black_os', 'black_channel']
+## Used features : rate_os, rate_device, rate_channel, rate_hour
+feat = ['rate_app','rate_os', 'rate_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -258,11 +257,53 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
     
 
+## Use features : gap_app, gap_device, gap_os, gap_channel
+feat = ['gap_app', 'gap_device', 'gap_os', 'gap_channel']
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+    
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+    
+
+## Use features : gap_ip, gap_app, gap_os, gap_channel
+feat = ['gap_ip', 'gap_app', 'gap_os', 'gap_channel']
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+    
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+
+
+## -------------------------------------------------------------------------------------
+## Use features : black_ip, black_app, black_device, black_os, black_channel
+feat = ['black_ip', 'black_app', 'black_device', 'black_os', 'black_channel']
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+    
+for d in range(3,6):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+    
+
 ## -------------------------------------------------------------------------------------
 ## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
-feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
-        'gap_channel', 'black_channel']
-for c in [0.1, 1, 10]:
+feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 
+        'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel',
+        'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel',
+        'black_hour', 'click_gap']
+for c in [0.001, 0.01, 0.1, 1, 10]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
     save(pred, 'log_' + str(c))
@@ -278,6 +319,28 @@ print(a / a.sum())
 save(pred, 'lgb_2')
 
 
+## -------------------------------------------------------------------------------------
+feat = ['rate_app', 'rate_os', 'rate_channel', 
+        'black_ip', 'black_app', 'black_channel',
+        'black_hour', 'click_gap']
+for c in [0.1, 1, 10]:
+    pred, log_ = logistic(feat, c)
+    print(log_.coef_)
+    save(pred, 'log_' + str(c))
+
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+    
+for d in range(3,6):
+    for n in [50, 70, 100]:
+        pred, fst = forest(feat, d, n, f)
+        print(fst.feature_importances_)
+        save(pred, 'fst_'+'_'.join([str(d),str(n),str(f)]))
+
+
+## -------------------------------------------------------------------------------------
 ## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
 feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
         'gap_channel', 'black_channel', 'black_hour', 'click_gap']
@@ -344,8 +407,3 @@ for d in range(3,6):
             pred, bst = boost(feat, d, n, l)
             print(bst.feature_importances_)
             save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
-            
-pred, knn_ = knn(feat, 5)
-
-
-pred, svm = svc(feat, 1, 1)
