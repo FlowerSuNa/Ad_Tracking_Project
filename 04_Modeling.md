@@ -66,13 +66,15 @@ Find the important features and then, make the model using Logistic Regression, 
 
 ---
 
-> Hypothesis : Decide whether to download based on the download rate.
+## Used features : rate_ip, rate_app, rate_os, rate_device, rate_channel, rate_hour
+
+* Hypothesis : Decide whether to download based on the download rate.
 
 <br>
 
-## Used features : rate_ip, rate_app, rate_os, rate_device, rate_channel, rate_hour
-
 #### Logistic Regression
+
+* Train Size : 20,000,000
 
 * Score
 
@@ -100,6 +102,8 @@ Find the important features and then, make the model using Logistic Regression, 
 
 #### Decision Tree
 
+* Train Size : 20,000,000
+
 * Score
 
 | max_depth | Train AUC | Valid AUC | Score |
@@ -108,7 +112,9 @@ Find the important features and then, make the model using Logistic Regression, 
 | 4 | 0.90263 | 0.90310 | - |
 | 5 | 0.90376 | 0.90446 | - |
 | 6 | 0.93409 | 0.93380 | - |
-| 7 | 0.93491 | 0.93425 | **0.8832672** |
+| 7 | **0.93491** | **0.93425** | **0.8832672** |
+
+> OVERFITTING
 
 <br>
 
@@ -124,11 +130,11 @@ Find the important features and then, make the model using Logistic Regression, 
 
 <br>
 
+## Used features : rate_app, rate_os, rate_device, rate_channel, rate_hour
+
 > Overfitting occurred, removed feature 'rate_ip' and make models.
 
 <br>
-
-## Used features : rate_app, rate_os, rate_device, rate_channel, rate_hour
 
 #### Logistic Regression
 
