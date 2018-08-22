@@ -123,12 +123,11 @@ def boost(feat, max_depth, n_estimators, learning_rate):
     
     ## Divid Dataset
     X_train, X_valid, y_train, y_valid = divid_data(feat)
-        
+    
     ## Train the model
-    bst = GradientBoostingClassifier(max_depth=max_depth, n_estimators=n_estimators, learning_rate=learning_rate, 
-                                      random_state=0)
+    bst = GradientBoostingClassifier(max_depth=max_depth, n_estimators=n_estimators, learning_rate=learning_rate, random_state=0)
     bst.fit(X_train,y_train)
-
+    
     ## Evaluate the model
     p = bst.predict_proba(X_train)[:,1]
     train_auc = roc_auc_score(y_train, p)
@@ -230,7 +229,7 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
     
 
-## Used features : rate_os, rate_device, rate_channel, rate_hour
+## Used features : rate_app, rate_os, rate_channel
 feat = ['rate_app','rate_os', 'rate_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -241,6 +240,19 @@ for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))
+    
+for d in range(3,8):
+    for n in [50, 70, 100]:
+        pred, fst = forest(feat, d, n)
+        print(fst.feature_importances_)
+        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        
+for d in range(5,8):
+    for n in [50, 70]:
+        for l in [0.001, 0.01, 0.1]:
+            pred, bst = boost(feat, d, n, l)
+            print(bst.feature_importances_)
+            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
     
 
 ## -------------------------------------------------------------------------------------
@@ -254,21 +266,7 @@ for c in [0.01, 0.1, 1, 10, 100]:
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
-
-## Use features : gap_app, gap_device, gap_os, gap_channel
-feat = ['gap_app', 'gap_device', 'gap_os', 'gap_channel']
-for c in [0.01, 0.1, 1, 10, 100]:
-    pred, log_ = logistic(feat, c)
-    print(log_.coef_)
-    save(pred, 'log_' + str(c))
-    
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
+    save(pred, 'tree_' + str(d))    
 
 ## Use features : gap_ip, gap_app, gap_os, gap_channel
 feat = ['gap_ip', 'gap_app', 'gap_os', 'gap_channel']
@@ -333,11 +331,18 @@ for d in range(3,8):
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))
     
-for d in range(3,6):
+for d in range(3,8):
     for n in [50, 70, 100]:
-        pred, fst = forest(feat, d, n, f)
+        pred, fst = forest(feat, d, n)
         print(fst.feature_importances_)
-        save(pred, 'fst_'+'_'.join([str(d),str(n),str(f)]))
+        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        
+for d in range(3,8):
+    for n in [30, 50, 70]:
+        for l in [0.1, 0.01, 0.001]:
+            pred, bst = boost(feat, d, n, l)
+            print(bst.feature_importances_)
+            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
 
 
 ## -------------------------------------------------------------------------------------
