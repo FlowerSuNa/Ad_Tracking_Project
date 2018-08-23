@@ -167,13 +167,12 @@ def lgbm(feat):
         'nthread': 4,
         'verbose': 0,
         'metric':'auc',     
-     
-        'learning_rate': 0.15,
-        'num_leaves': 7,
-        'max_depth': 3,      
+        
+        'learning_rate': 0.01,  
+        'max_depth': 7,      # 'num_leaves': 15, 
         'min_child_samples': 100,  
-        'max_bin': 100,     
-        'subsample': 0.7,  
+        'max_bin': 100, 
+        'subsample': 0.7, 
         'subsample_freq': 1, 
         'colsample_bytree': 0.9, 
         'min_child_weight': 0, 
@@ -200,6 +199,11 @@ def save(predict, filename):
     submission = pd.read_csv('submission/sample_submission.csv')
     submission['is_attributed'] = pred
     submission.to_csv('submission/' + filename + '.csv', index=False)
+    
+def save(predict, filename):
+    submission = pd.read_csv('submission/sample_submission.csv')
+    submission['is_attributed'] = pred
+    submission.to_csv(filename + '.csv', index=False)
   
 
 ## -------------------------------------------------------------------------------------
@@ -293,32 +297,10 @@ for d in range(3,6):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))
-    
-
-## -------------------------------------------------------------------------------------
-## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel
-feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 
-        'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel',
-        'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel',
-        'black_hour', 'click_gap']
-for c in [0.001, 0.01, 0.1, 1, 10]:
-    pred, log_ = logistic(feat, c)
-    print(log_.coef_)
-    save(pred, 'log_' + str(c))
-
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb_2')
 
 
 ## -------------------------------------------------------------------------------------
-feat = ['rate_app', 'rate_os', 'rate_channel', 
+feat = ['rate_app', 'rate_os', 'rate_channel',
         'black_ip', 'black_app', 'black_channel',
         'black_hour', 'click_gap']
 for c in [0.1, 1, 10]:
@@ -337,9 +319,9 @@ for d in range(3,8):
         print(fst.feature_importances_)
         save(pred, 'fst_'+'_'.join([str(d),str(n)]))
         
-for d in range(3,8):
-    for n in [30, 50, 70]:
-        for l in [0.1, 0.01, 0.001]:
+for d in range(5,8):
+    for n in [50, 70]:
+        for l in [0.001, 0.01, 0.1]:
             pred, bst = boost(feat, d, n, l)
             print(bst.feature_importances_)
             save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
