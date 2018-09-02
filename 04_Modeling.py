@@ -207,7 +207,7 @@ def save(predict, filename):
   
 
 ## -------------------------------------------------------------------------------------
-## Used features : rate_ip, rate_app, rate_os, rate_device, rate_channel, rate_hour
+## rate
 feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -220,7 +220,7 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
     
 
-## Used features : rate_app, rate_os, rate_device, rate_channel, rate_hour
+## 
 feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -233,7 +233,7 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
     
 
-## Used features : rate_app, rate_os, rate_channel
+## 
 feat = ['rate_app','rate_os', 'rate_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -262,11 +262,11 @@ for d in range(3,8):
     pred, bst = lgbm(feat, d, 0.05)
     a = bst.feature_importance('gain')
     print(a / a.sum())
-    save(pred, 'lgb_rate_'+str(d))
+    save(pred, 'lgb_'+str(d))
     
 
 ## -------------------------------------------------------------------------------------
-## Use features : gap_ip, gap_app, gap_device, gap_os, gap_channel
+## gap
 feat = ['gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -278,7 +278,8 @@ for d in range(3,8):
     print(tree_.feature_importances_)
     save(pred, 'tree_' + str(d))    
 
-## Use features : gap_ip, gap_app, gap_channel
+
+##
 feat = ['gap_ip', 'gap_app', 'gap_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -292,7 +293,7 @@ for d in range(3,8):
 
 
 ## -------------------------------------------------------------------------------------
-## Use features : black_ip, black_app, black_device, black_os, black_channel
+## black
 feat = ['black_ip', 'black_app', 'black_device', 'black_os', 'black_channel']
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
@@ -306,39 +307,7 @@ for d in range(3,6):
 
 
 ## -------------------------------------------------------------------------------------
-feat = ['rate_app', 'rate_os', 'rate_channel',
-        'black_ip', 'black_app', 'black_channel',
-        'black_hour', 'click_gap']
-for c in [0.01, 0.1, 1]:
-    pred, log_ = logistic(feat, c)
-    print(log_.coef_)
-    save(pred, 'log_' + str(c))
-
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
-for d in range(3,8):
-    for n in [50, 70, 100]:
-        pred, fst = forest(feat, d, n)
-        print(fst.feature_importances_)
-        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
-        
-for d in range(5,8):
-    for n in [50, 70]:
-        for l in [0.001, 0.01, 0.1]:
-            pred, bst = boost(feat, d, n, l)
-            print(bst.feature_importances_)
-            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
-            
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb')
-
-
-## -------------------------------------------------------------------------------------
+##
 feat = ['rate_ip', 'rate_app', 'rate_device', 'rate_os', 'rate_channel', 'rate_hour',
         'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel', 'gap_hour',
         'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel', 'black_hour',
@@ -349,6 +318,7 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
     
 
+##
 feat = ['rate_app', 'rate_device', 'rate_os', 'rate_channel', 'rate_hour',
         'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel', 'gap_hour',
         'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel', 'black_hour',
@@ -359,6 +329,7 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
     
 
+##
 feat = ['rate_app', 'rate_device', 'rate_os', 'rate_channel', 'rate_hour',
         'gap_app', 'gap_device', 'gap_os', 'gap_channel', 'gap_hour',
         'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel', 'black_hour',
@@ -401,42 +372,9 @@ for d in range(3,8):
     save(pred, 'lgb_'+str(d))
     
 
-feat = ['rate_app', 'rate_channel', 'rate_hour',
+##
+feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel',
         'gap_app', 'gap_device', 'gap_os', 'gap_channel', 
-        'black_ip', 'click_gap']
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
-for d in range(3,8):
-    for n in [50, 70, 100]:
-        pred, fst = forest(feat, d, n)
-        print(fst.feature_importances_)
-        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
-        
-for d in [6]:
-    for n in [100]:
-        pred, fst = forest(feat, d, n)
-        print(fst.feature_importances_)
-        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
-        
-for d in range(5,8):
-    for l in [0.001, 0.01, 0.1]:
-        for n in [50, 70]:
-            pred, bst = boost(feat, d, n, l)
-            print(bst.feature_importances_)
-            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
-    
-for d in range(3,8):
-    pred, bst = lgbm(feat, d, 0.05)
-    a = bst.feature_importance('gain')
-    print(a / a.sum())
-    save(pred, 'lgb_'+str(d))   
-        
-
-feat = ['rate_app', 'rate_device', 'rate_channel', 
-        'gap_app', 'gap_os', 'gap_channel',
         'black_ip', 'black_app', 'black_os', 'black_channel', 'click_gap']
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
@@ -455,36 +393,45 @@ for d in range(5,8):
             pred, bst = boost(feat, d, n, l)
             print(bst.feature_importances_)
             save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
-        
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb')
-    
-    
-feat = ['rate_app', 'rate_device', 'rate_channel', 'rate_hour',
-        'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel', 
-        'black_ip', 'black_app', 'black_channel',
-        'click_gap']
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
-feat = ['rate_app', 'rate_os', 'rate_channel', 
-        'gap_app', 'gap_device', 'gap_os', 'gap_channel',
-        'black_ip', 'black_app', 'black_channel', 'black_hour',
-        'click_gap']
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
 
-feat = ['rate_app', 'rate_device', 'rate_channel', 'rate_hour',
-        'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel', 
-        'black_ip', 'black_app', 'black_channel',
-        'click_gap']
+
+##    
+feat = ['rate_app', 'rate_channel', 'rate_hour', 
+        'gap_app', 'gap_device', 'gap_os', 'gap_channel',
+        'black_ip', 'click_gap']
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+    
+for d in range(3,8):
+    pred, tree_ = tree(feat, d)
+    print(tree_.feature_importances_)
+    save(pred, 'tree_' + str(d))
+    
+for d in range(3,8):
+    for n in [50, 70, 100]:
+        pred, fst = forest(feat, d, n)
+        print(fst.feature_importances_)
+        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        
+for d in range(5,8):
+    for l in [0.001, 0.01, 0.1]:
+        for n in [50, 70]:
+            pred, bst = boost(feat, d, n, l)
+            print(bst.feature_importances_)
+            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
+
+for d in range(3,8):
+    pred, bst = lgbm(feat, d, 0.05)
+    a = bst.feature_importance('gain')
+    print(a / a.sum())
+    save(pred, 'lgb_'+str(d))
+
+
+##
+feat = ['rate_app', 'rate_os', 'rate_channel', 'gap_app', 'gap_channel', 
+        'black_ip', 'black_device', 'click_gap']
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -503,76 +450,9 @@ for d in range(5,8):
             print(bst.feature_importances_)
             save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
             
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb')
-
-
-## -------------------------------------------------------------------------------------
-## Use features : black_ip, gap_app, black_app, gap_os, black_os, gap_channel, black_channel, black_hour, click_gap
-feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'black_os', 
-        'gap_channel', 'black_channel', 'black_hour', 'click_gap']
-pred, log_ = logistic(feat)
-print(log_.coef_)
-save(pred, 'log')
-
 for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
+    pred, bst = lgbm(feat, d, 0.05)
+    a = bst.feature_importance('gain')
+    print(a / a.sum())
+    save(pred, 'lgb_'+str(d))
 
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb_3')
-
-
-## Use features : black_ip, gap_app, black_app, gap_os, gap_channel, black_channel, click_gap
-feat = ['black_ip', 'gap_app', 'black_app', 'gap_os', 'gap_channel', 
-        'black_channel', 'click_gap']
-pred, log_ = logistic(feat)
-print(log_.coef_)
-save(pred, 'log')
-
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb_4')
-
-
-## Use features : black_ip, gap_app, black_app, gap_device, gap_os, gap_channel, black_channel, click_gap
-feat = ['black_ip', 'gap_app', 'black_app', 'gap_device', 'gap_os', 
-        'gap_channel', 'black_channel', 'click_gap']
-pred, log_ = logistic(feat)
-print(log_.coef_)
-save(pred, 'log')
-
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-
-pred, bst = lgbm(feat)
-a = bst.feature_importance('gain')
-print(a / a.sum())
-save(pred, 'lgb_5')
-
-for d in range(3,6):
-    for n in [50, 70, 100]:
-        for f in range(3,6):
-            pred, fst = forest(feat, d, n, f)
-            print(fst.feature_importances_)
-            save(pred, 'fst_'+'_'.join([str(d),str(n),str(f)]))
-
-for d in range(3,6):
-    for n in [30, 50, 70]:
-        for l in [0.1, 0.01, 0.001]:
-            pred, bst = boost(feat, d, n, l)
-            print(bst.feature_importances_)
-            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))

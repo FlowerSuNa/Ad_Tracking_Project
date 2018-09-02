@@ -139,7 +139,7 @@ gc.collect()
 
 ![png](graph/dist_gap_ip.png)
 
->  Depending on the download gap per ip type, the degree of download is not much difference.
+>  Depending on the download gap per ip type, the degree of download is not a great difference.
 
 <br>
 
@@ -212,7 +212,7 @@ gc.collect()
 
 ![png](graph/dist_rate_channel.png)
 
-> Depending on the download rate per channel type, the degree of download is a few difference.
+> Depending on the download rate per channel type, the degree of download is a difference.
 
 <br>
 
