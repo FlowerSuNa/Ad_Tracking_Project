@@ -139,7 +139,7 @@ gc.collect()
 
 ![png](graph/dist_gap_ip.png)
 
->  Depending on the gap per ip type, the degree of download is not much difference.
+>  Depending on the download gap per ip type, the degree of download is not much difference.
 
 <br>
 
@@ -147,7 +147,7 @@ gc.collect()
 
 ![png](graph/dist_rate_ip.png)
 
-> Depending on the rate per ip type, the degree of download is a few difference.
+> Depending on the download rate per ip type, the degree of download is a few difference.
 
 <br>
 
@@ -155,7 +155,7 @@ gc.collect()
 
 ![png](graph/dist_gap_app.png)
 
-> Depending on the gap per app type, the degree of download is a few difference.
+> Depending on the download gap per app type, the degree of download is a few difference.
 
 <br>
 
@@ -163,7 +163,7 @@ gc.collect()
 
 ![png](graph/dist_rate_app.png)
 
-> Depending on the rate per app type, the degree of download is noticeable. <br>
+> Depending on the download rate per app type, the degree of download is noticeable. <br>
 > Thus, it is a very **important feature**.
 
 <br>
@@ -172,7 +172,7 @@ gc.collect()
 
 ![png](graph/dist_gap_device.png)
 
-> Depending on the gap per device type, the degree of download is indistinguishable.
+> Depending on the download gap per device type, the degree of download is indistinguishable.
 
 <br>
 
@@ -180,7 +180,7 @@ gc.collect()
 
 ![png](graph/dist_rate_device.png)
 
-> Depending on the rate per device type, the degree of download is indistinguishable.
+> Depending on the download rate per device type, the degree of download is indistinguishable.
 
 <br>
 
@@ -188,7 +188,7 @@ gc.collect()
 
 ![png](graph/dist_gap_os.png)
 
-> Depending on the gap per os type, the degree of download is indistinguishable.
+> Depending on the download gap per os type, the degree of download is indistinguishable.
 
 <br>
 
@@ -196,7 +196,7 @@ gc.collect()
 
 ![png](graph/dist_rate_os.png)
 
-> Depending on the rate per os type, the degree of download is a few difference.
+> Depending on the download rate per os type, the degree of download is a few difference.
 
 <br>
 
@@ -204,7 +204,7 @@ gc.collect()
 
 ![png](graph/dist_gap_channel.png)
 
-> Depending on the gap per channel type, the degree of download is a difference.
+> Depending on the download gap per channel type, the degree of download is a difference.
 
 <br>
 
@@ -212,7 +212,7 @@ gc.collect()
 
 ![png](graph/dist_rate_channel.png)
 
-> Depending on the rate per channel type, the degree of download is a few difference.
+> Depending on the download rate per channel type, the degree of download is a few difference.
 
 <br>
 
@@ -220,7 +220,7 @@ gc.collect()
 
 ![png](graph/dist_gap_hour.png)
 
-> Depending on the gap per hour type, the degree of download is indistinguishable.
+> Depending on the download gap per hour type, the degree of download is indistinguishable.
 
 <br>
 
@@ -228,7 +228,7 @@ gc.collect()
 
 ![png](graph/dist_rate_hour.png)
 
-> Depending on the rate per hour type, the degree of download is indistinguishable.
+> Depending on the download rate per hour type, the degree of download is indistinguishable.
 
 <br>
 
@@ -306,7 +306,7 @@ gc.collect()
 
 ![png](graph/bar_click_gap.png)
 
-> Depending on click gap, the degree of download is a few difference.
+> Depending on the click gap, the degree of download is a few difference.
 
 <br>
 

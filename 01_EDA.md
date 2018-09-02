@@ -335,6 +335,7 @@ def make_black_list(v):
 > Depending on the type of app, the degree of download is noticeable. <br>
 > Thus, it is a very **important feature**.
 
+<br>
 
 * device
 

@@ -26,12 +26,6 @@ observed target.
 
 ---
 
-## Summary
-
-[Summary](Summary.md)
-
----
-
 ## Contents Table
 ☆ : source code <br>
 ★ : markdown
