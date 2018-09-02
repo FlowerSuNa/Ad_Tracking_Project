@@ -13,7 +13,6 @@ import gc
 ## Load datasets
 train = pd.read_csv("data/train.csv", parse_dates=['click_time', 'attributed_time'])
 test = pd.read_csv('data/test.csv', parse_dates=['click_time'])
-gc.collect()
 
 
 ## Check dataset
@@ -60,7 +59,7 @@ print('momth count of test data : \n', test['click_time'].dt.month.value_counts(
 print('day count of test data : \n', test['click_time'].dt.day.value_counts())
 
 
-## Draws a time series of train data click time
+## Draws a time series of click time in train data
 temp = train['click_time']
 temp.index = train['click_time']
 temp = temp.resample('10T').count()
@@ -74,7 +73,7 @@ plt.show()
 gc.collect()
 
 
-## Draw a time series of test data click time
+## Draw a time series of click time in test data
 temp = test['click_time']
 temp.index = test['click_time']
 temp = temp.resample('10T').count()
@@ -88,7 +87,7 @@ plt.show()
 gc.collect()
 
 
-## Draw a time series of downloaded click time and attributed time
+## Draw a time series of click time and attributed time
 temp1 = train['is_attributed']
 temp1.index = train['click_time']
 temp1 = temp1.resample('10T').sum()
@@ -139,7 +138,7 @@ del data
 gc.collect()
     
 
-## Make black list
+## Make count, gap, rate and black list per feature
 def make_black_list(v):
     x = pd.read_csv('data/merge.csv', usecols=[v, 'is_attributed'])
     

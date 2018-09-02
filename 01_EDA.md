@@ -49,7 +49,7 @@ gc.collect()
 
 #### Data Head
 
-Train
+* Train
 
 | ip | app | device | os | channel | click_time | attributed_time | is_attributed |
 |:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
@@ -61,7 +61,7 @@ Train
 
 <br>
 
-Test
+* Test
 
 | click_id | ip | app | device | os | channel | click_time |
 |:--------:|:--:|:---:|:------:|:--:|:-------:|:----------:|
@@ -75,7 +75,7 @@ Test
 
 ## Check missing values
 
-#### Train
+* Train
 
 | ip | app | device | os | channel | click_time | attributed_time | is_attributed |
 |:--:|:---:|:------:|:--:|:-------:|:----------:|:---------------:|:-------------:|
@@ -85,7 +85,7 @@ Test
 
 <br>
 
-#### Test
+* Test
 
 | click_id | ip | app | device | os | channel | click_time |
 |:--------:|:--:|:---:|:------:|:--:|:-------:|:----------:|
@@ -94,7 +94,7 @@ Test
 
 <br>
 
-## Check level size of feature
+## Check level size of factors
 
 | Data | ip | app | device | os | channel |
 |:----:|---:|----:|-------:|---:|--------:|
@@ -118,7 +118,7 @@ Test
 
 ## Check 'click_time'
 
-#### Train
+* Train
 
 | Year | Month | Day | Count|
 |:----:|:-----:|:---:|-----:|
@@ -129,7 +129,7 @@ Test
 
 <br>
 
-#### Test
+* Test
 
 | Year | Month | Day | Count|
 |:----:|:-----:|:---:|-----:|
@@ -139,7 +139,7 @@ Test
 
 ---
 
-## Draw a time series of train data click time
+## Draw a time series of click time in train data
 
 ```python
 temp = train['click_time']
@@ -161,7 +161,7 @@ gc.collect()
 
 <br>
 
-## Draw a time series of test data click time
+## Draw a time series of click time in test data
 
 ```python
 temp = test['click_time']
@@ -183,7 +183,7 @@ gc.collect()
 
 <br>
 
-## Draw a time series of downloaded click time and attributed time
+## Draw a time series of click time and attributed time
 
 ```python
 temp1 = train['is_attributed']
@@ -245,7 +245,7 @@ gc.collect()
 
 ---
 
-## Make black list
+## Make count, gap, rate and black list per feature (ip, app, device, os, channel, hour)
 
 ```python
 def make_black_list(v):
@@ -305,15 +305,6 @@ def make_black_list(v):
     return temp
 ```
 
-```python
-ip = make_black_list('ip')
-app = make_black_list('app')
-device = make_black_list('device')
-os = make_black_list('os')
-channel = make_black_list('channel')
-hour = make_black_list('hour')
-```
-
 | Feature | Level Size | Black List Count |
 |---------|-----------:|-----------------:|
 | ip | 333,168 | 132,723 |
@@ -329,120 +320,55 @@ hour = make_black_list('hour')
 
 ## Draw bar graphs
 
-```python
-def bar(x, v):
-    order = x.sort_values(ascending=False, by='count')
-    order = order[v].iloc[:30].tolist()
-
-    sns.set(rc={'figure.figsize':(15,15)})
-
-    plt.subplot(3,1,1)
-    plt.title('Click Count per ' + v + ' (Top 30)')
-    sns.barplot(v, 'count', data=x, linewidth=0, order=order)
-    plt.xticks(rotation=30, fontsize="small")
-    plt.xlabel('')
-
-    plt.subplot(3,1,2)
-    plt.title('Gap per ' + v + ' (Top 30)')
-    sns.barplot(v, 'gap', data=x, linewidth=0, order=order)
-    plt.xticks(rotation=30, fontsize="small")
-    plt.xlabel('')
-
-    plt.subplot(3,1,3)
-    plt.title('Download per ' + v + ' (Top 30)')
-    sns.barplot(v, 'download', data=x, linewidth=0, order=order)
-    plt.xticks(rotation=30, fontsize="small")
-
-    plt.savefig('graph/bar_' + v + '.png', bbox_inches='tight')
-    plt.show()
-    gc.collect()
-```
-
-```python
-bar(ip, 'ip')
-```
+* ip
 
 ![png](graph/bar_ip.png)
 
-```python
-bar(app, 'app')
-```
-
-![png](graph/bar_app.png)
-
-```python
-bar(device, 'device')
-```
-
-![png](graph/bar_device.png)
-
-```python
-bar(os, 'os')
-```
-
-![png](graph/bar_os.png)
-
-```python
-bar(channel, 'channel')
-```
-
-![png](graph/bar_channel.png)
-
-```python
-bar(hour, 'hour')
-```
-
-![png](graph/bar_hour.png)
+> Depending on the type of ip, the degree of download is a few difference.
 
 <br>
 
----
+* app
 
-## Draw distribution
+![png](graph/bar_app.png)
 
-```python
-def dist(a):
-    df = pd.read_csv('data/train.csv', usecols=[a, 'is_attributed'])
+> Depending on the type of app, the degree of download is noticeable. <br>
+> Thus, it is a very **important feature**.
 
-    g =  sns.FacetGrid(df, hue='is_attributed', height=7, palette='husl')
-    g = g.map(sns.distplot, a, hist_kws={'alpha':0.2})
 
-    plt.xticks(rotation=30, fontsize="small")
-    plt.legend(loc='upper right').set_title('is_attributed')
-    plt.savefig('graph/dist_' + a + '.png', bbox_inches='tight')
-    plt.show()
-    gc.collect()
-```
+* device
 
-```python
-dist('ip')
-```
+![png](graph/bar_device.png)
 
-![png](graph/dist_ip.png)
+> The type of device with many clicks is one-sided. <br>
+> Thus, it is not an important feature.
 
-```python
-dist('app')
-```
+<br>
 
-![png](graph/dist_app.png)
+* os
 
-```python
-dist('device')
-```
+![png](graph/bar_os.png)
 
-![png](graph/dist_device.png)
+>  Depending on the type of os, the degree of download is not a great difference. <br>
+> Thus, it is not an important feature.
 
-```python
-dist('os')
-```
+<br>
 
-![png](graph/dist_os.png)
+* channel
 
-```python
-dist('channel')
-```
+![png](graph/bar_channel.png)
 
-![png](graph/dist_channel.png)
+> Depending on the type of channel, the degree of download is noticeable. <br>
+> Thus, it is a very **important feature**.
+
+<br>
+
+* hour
+
+![png](graph/bar_hour.png)
+
+>  Depending on the type of hour, the degree of download is not a great difference. <br>
+> Thus, it is not an important feature.
 
 <br>
 

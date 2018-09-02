@@ -178,7 +178,7 @@ bar('black_channel')
 bar('black_hour')
 
 
-## Draw a bar graph of 'click_gap' and 'is_attributed'
+## Draw a bar graph of feature 'click_gap'
 train = pd.read_csv('data/train_add_features.csv', usecols=['click_gap', 'is_attributed'])
 
 sns.set(rc={'figure.figsize':(15,12)})

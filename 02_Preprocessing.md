@@ -24,7 +24,7 @@ train_test_boundary = 184903890
 
 <br>
 
-## Make features : gap, black and rate (per ip, app, device, os, channel, hour)
+## Make features : gap, black and rate per feature (ip, app, device, os, channel, hour)
 
 ```python
 def merge_black(feat):
@@ -135,192 +135,152 @@ gc.collect()
 
 ## Draw distribution
 
-```python
-def dist(a):
-    df = pd.read_csv('data/train_add_features.csv', usecols=[a, 'is_attributed'])
-
-    g =  sns.FacetGrid(df, hue='is_attributed', size=7, palette='husl')
-    g = g.map(sns.distplot, a, hist_kws={'alpha':0.2})
-
-    plt.xticks(rotation=30, fontsize="small")
-    plt.legend(loc='upper right').set_title('is_attributed')
-    plt.savefig('graph/dist_' + a + '.png', bbox_inches='tight')
-    plt.show()
-    gc.collect()
-```
-
-```python
-dist('gap_ip')
-```
+* gap_ip
 
 ![png](graph/dist_gap_ip.png)
 
-```python
-dist('rate_ip')
-```
-
-![png](graph/dist_rate_ip.png)
-
-```python
-dist('gap_app')
-```
-
-![png](graph/dist_gap_app.png)
-
-```python
-dist('rate_app')
-```
-
-![png](graph/dist_rate_app.png)
-
-```python
-dist('gap_device')
-```
-
-![png](graph/dist_gap_device.png)
-
-```python
-dist('rate_device')
-```
-
-![png](graph/dist_rate_device.png)
-
-```python
-dist('gap_os')
-```
-
-![png](graph/dist_gap_os.png)
-
-```python
-dist('rate_os')
-```
-
-![png](graph/dist_rate_os.png)
-
-```python
-dist('gap_channel')
-```
-
-![png](graph/dist_gap_channel.png)
-
-```python
-dist('rate_channel')
-```
-
-![png](graph/dist_rate_channel.png)
-
-```python
-dist('gap_hour')
-```
-
-![png](graph/dist_gap_hour.png)
-
-```python
-dist('rate_hour')
-```
-
-![png](graph/dist_rate_hour.png)
-
-```python
-dist('click_gap')
-```
-
-![png](graph/dist_click_gap.png)
+>  Depending on the gap per ip type, the degree of download is not much difference.
 
 <br>
 
-## Draw a scatter plot
+* rate_ip
 
-```python
-def scatter(feat):
-    x = pd.read_csv('data/train_add_features.csv', usecols=feat+['is_attributed'])
+![png](graph/dist_rate_ip.png)
 
-    g = sns.pairplot(x,
-                     vars=feat,
-                     hue='is_attributed',
-                     palette="husl",
-                     plot_kws={'alpha':0.1})
+> Depending on the rate per ip type, the degree of download is a few difference.
 
-    for ax in g.axes.flat:
-        for label in ax.get_xticklabels():
-            label.set_rotation(60)
+<br>
 
-    g.fig.set_size_inches(20,18)
-    plt.savefig('graph/scatter.png', bbox_inches='tight')
-    plt.show()
-    gc.collect()
-```
+* gap_app
 
-```python
-scatter(['gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel'])
-```
+![png](graph/dist_gap_app.png)
 
-![png](graph/scatter.png)
+> Depending on the gap per app type, the degree of download is a few difference.
+
+<br>
+
+* rate_app
+
+![png](graph/dist_rate_app.png)
+
+> Depending on the rate per app type, the degree of download is noticeable. <br>
+> Thus, it is a very **important feature**.
+
+<br>
+
+* gap_device
+
+![png](graph/dist_gap_device.png)
+
+> Depending on the gap per device type, the degree of download is indistinguishable.
+
+<br>
+
+* rate_device
+
+![png](graph/dist_rate_device.png)
+
+> Depending on the rate per device type, the degree of download is indistinguishable.
+
+<br>
+
+* gap_os
+
+![png](graph/dist_gap_os.png)
+
+> Depending on the gap per os type, the degree of download is indistinguishable.
+
+<br>
+
+* rate_os
+
+![png](graph/dist_rate_os.png)
+
+> Depending on the rate per os type, the degree of download is a few difference.
+
+<br>
+
+* gap_channel
+
+![png](graph/dist_gap_channel.png)
+
+> Depending on the gap per channel type, the degree of download is a difference.
+
+<br>
+
+* rate_channel
+
+![png](graph/dist_rate_channel.png)
+
+> Depending on the rate per channel type, the degree of download is a few difference.
+
+<br>
+
+* gap_hour
+
+![png](graph/dist_gap_hour.png)
+
+> Depending on the gap per hour type, the degree of download is indistinguishable.
+
+<br>
+
+* rate_hour
+
+![png](graph/dist_rate_hour.png)
+
+> Depending on the rate per hour type, the degree of download is indistinguishable.
 
 <br>
 
 ## Draw bar graphs
 
-```python
-def bar(x):
-    df = pd.read_csv('data/train_add_features.csv', usecols=[x, 'is_attributed'])
-
-    sns.set(rc={'figure.figsize':(12,5)})
-
-    temp = df.loc[df['is_attributed'] == 0]
-    plt.subplot(1,2,1)
-    plt.title('Not Downloaded')
-    sns.countplot(x, data=temp, linewidth=0, palette='husl')
-
-    temp = df.loc[df['is_attributed'] == 1]
-    plt.subplot(1,2,2)
-    plt.title('Downloaded')
-    sns.countplot(x, data=temp, linewidth=0, palette='husl')
-
-    plt.savefig('graph/bar_' + x + '.png', bbox_inches='tight')
-    plt.show()
-    gc.collect()
-```
-
-```python
-bar('black_ip')
-```
+* black_ip
 
 ![png](graph/bar_black_ip.png)
 
-```python
-bar('black_app')
-```
-
-![png](graph/bar_black_app.png)
-
-```python
-bar('black_device')
-```
-
-![png](graph/bar_black_device.png)
-
-```python
-bar('black_os')
-```
-
-![png](graph/bar_black_os.png)
-
-```python
-bar('black_channel')
-```
-
-![png](graph/bar_black_channel.png)
-
-```python
-bar('black_hour')
-```
-
-![png](graph/bar_black_hour.png)
+> Depending on feature 'black_ip', the degree of download is a few difference.
 
 <br>
 
-## Draw a bar graph of 'click_gap' and 'is_attributed'
+* black_app
+
+![png](graph/bar_black_app.png)
+
+> Depending on feature 'black_app', the degree of download is a few difference.
+
+<br>
+
+* black_device
+
+![png](graph/bar_black_device.png)
+
+> Depending on feature 'black_device', the degree of download is a few difference.
+
+<br>
+
+* black_os
+
+![png](graph/bar_black_os.png)
+
+> Depending on feature 'black_os', the degree of download is a few difference.
+
+* black_channel
+
+![png](graph/bar_black_channel.png)
+
+> Depending on feature 'black_channel', the degree of download is a few difference.
+
+<br>
+
+* black_hour
+
+![png](graph/bar_black_hour.png)
+
+> Depending on feature 'black_hour', the degree of download is indistinguishable.
+
+<br>
+
+## Draw a bar graph of feature 'click_gap'
 
 ```python
 train = pd.read_csv('data/train_add_features.csv', usecols=['click_gap', 'is_attributed'])
@@ -345,6 +305,8 @@ gc.collect()
 ```
 
 ![png](graph/bar_click_gap.png)
+
+> Depending on click gap, the degree of download is a few difference.
 
 <br>
 
