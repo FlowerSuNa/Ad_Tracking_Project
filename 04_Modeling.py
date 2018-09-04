@@ -441,15 +441,8 @@ for d in range(3,8):
     for n in [50, 70, 100]:
         pred, fst = forest(feat, d, n)
         print(fst.feature_importances_)
-        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        save(pred, 'last_fst_'+'_'.join([str(d),str(n)]))
         
-for d in range(5,8):
-    for n in [50, 70]:
-        for l in [0.001, 0.01, 0.1]:
-            pred, bst = boost(feat, d, n, l)
-            print(bst.feature_importances_)
-            save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
-            
 for d in range(3,8):
     pred, bst = lgbm(feat, d, 0.05)
     a = bst.feature_importance('gain')
