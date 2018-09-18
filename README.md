@@ -37,3 +37,8 @@ observed target.
 5. Conclusion [★](05_Conclusion.md)
 
 ---
+
+![best score](lgb_40m_7.png) <br>
+![best score](lgb_40m_7_2.png)
+
+---

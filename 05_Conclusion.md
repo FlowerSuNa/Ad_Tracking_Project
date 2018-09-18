@@ -17,14 +17,12 @@ Performance was different depending on machine learning methods and the used fea
 
 <br>
 
-![best score](lgb_40m_7.png)
-
-<br>
-
-[Excel](performance.xlsx)
+![best score](lgb_40m_7.png) <br>
+![best score](lgb_40m_7_2.png)
 
 <br>
 
 ---
 
 [Contents](README.md) <br>
+[Excel](performance.xlsx)

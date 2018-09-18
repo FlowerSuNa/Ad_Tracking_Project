@@ -95,11 +95,13 @@ Draw graphs to see if the sample data and the all data distribution are similar.
 <br>
 
 * black_device
+
 ![png](graph/bar_black_device_20m.png)
 
 <br>
 
 * black_os
+
 ![png](graph/bar_black_os_20m.png)
 
 <br>
