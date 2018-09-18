@@ -9,11 +9,19 @@ To slove this problem, I've made blacklist of ip, app, os, device, channel, hour
 
 <br>
 
-I thought only features related to ip, app, channel and click time were important, but the performance of the model with features related to device and os was better.
+I thought only features related to ip, app, channel and click time were important, but the performance of the added model with features related to device and os was better.
 
 <br>
 
-Performance was different depending on machine learning methods and the features used. The method with the best performance is **LightGBM**. The features used are rate_app, rate_os, rate_channel, gap_app, gap_channel, black_ip, black_device, click_gap.
+Performance was different depending on machine learning methods and the used features. The machine learning method provided the best performance is **LightGBM**. The used features are **rate_app, rate_channel, rate_hour, gap_app, gap_device, gap_os, gap_channel, black_ip, click_gap**. The Train size provided the best performance is **40,000,000**.
+
+<br>
+
+![best score](lgb_40m_7.png)
+
+<br>
+
+[Excel](performance.xlsx)
 
 <br>
 

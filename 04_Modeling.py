@@ -197,18 +197,14 @@ def lgbm(feat, max_depth, learning_rate):
 ## Save predicted data
 def save(predict, filename):
     submission = pd.read_csv('submission/sample_submission.csv')
-    submission['is_attributed'] = pred
+    submission['is_attributed'] = predict
     submission.to_csv('submission/' + filename + '.csv', index=False)
-    
-def save(predict, filename):
-    submission = pd.read_csv('submission/sample_submission.csv')
-    submission['is_attributed'] = pred
-    submission.to_csv(filename + '.csv', index=False)
   
 
-## -------------------------------------------------------------------------------------
-## rate
+## ------------------------------------------- rate -------------------------------------------
+##
 feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
+
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -222,6 +218,7 @@ for d in range(3,8):
 
 ## 
 feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
+
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -235,6 +232,7 @@ for d in range(3,8):
 
 ## 
 feat = ['rate_app','rate_os', 'rate_channel']
+
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -265,9 +263,10 @@ for d in range(3,8):
     save(pred, 'lgb_'+str(d))
     
 
-## -------------------------------------------------------------------------------------
-## gap
+## ------------------------------------------- gap -------------------------------------------
+##
 feat = ['gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel']
+
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -281,6 +280,7 @@ for d in range(3,8):
 
 ##
 feat = ['gap_ip', 'gap_app', 'gap_channel']
+
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -292,9 +292,10 @@ for d in range(3,8):
     save(pred, 'tree_' + str(d))
 
 
-## -------------------------------------------------------------------------------------
-## black
+## ------------------------------------------- black -------------------------------------------
+##
 feat = ['black_ip', 'black_app', 'black_device', 'black_os', 'black_channel']
+
 for c in [0.01, 0.1, 1, 10, 100]:
     pred, log_ = logistic(feat, c)
     print(log_.coef_)
@@ -306,12 +307,13 @@ for d in range(3,6):
     save(pred, 'tree_' + str(d))
 
 
-## -------------------------------------------------------------------------------------
+## ------------------------------------------- all -------------------------------------------
 ##
 feat = ['rate_ip', 'rate_app', 'rate_device', 'rate_os', 'rate_channel', 'rate_hour',
         'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel', 'gap_hour',
         'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel', 'black_hour',
         'click_gap']
+
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -323,6 +325,7 @@ feat = ['rate_app', 'rate_device', 'rate_os', 'rate_channel', 'rate_hour',
         'gap_ip', 'gap_app', 'gap_device', 'gap_os', 'gap_channel', 'gap_hour',
         'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel', 'black_hour',
         'click_gap']
+
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -334,6 +337,7 @@ feat = ['rate_app', 'rate_device', 'rate_os', 'rate_channel', 'rate_hour',
         'gap_app', 'gap_device', 'gap_os', 'gap_channel', 'gap_hour',
         'black_ip', 'black_app', 'black_device', 'black_os', 'black_channel', 'black_hour',
         'click_gap']
+
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -351,12 +355,6 @@ for d in range(5,8):
             pred, bst = boost(feat, d, n, l)
             print(bst.feature_importances_)
             save(pred, 'bst_'+'_'.join([str(d),str(n),str(l)]))
-            
-
-for n in [50, 70]:
-    pred, bst = boost(feat, 6, n, 0.1)
-    print(bst.feature_importances_)
-    save(pred, 'bst_'+'_'.join([str(6),str(n),str(0.1)]))
     
 for d in range(7,8):
     for l in [0.001, 0.01, 0.1]:
@@ -376,6 +374,7 @@ for d in range(3,8):
 feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel',
         'gap_app', 'gap_device', 'gap_os', 'gap_channel', 
         'black_ip', 'black_app', 'black_os', 'black_channel', 'click_gap']
+
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -399,6 +398,7 @@ for d in range(5,8):
 feat = ['rate_app', 'rate_channel', 'rate_hour', 
         'gap_app', 'gap_device', 'gap_os', 'gap_channel',
         'black_ip', 'click_gap']
+
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -432,6 +432,7 @@ for d in range(3,8):
 ##
 feat = ['rate_app', 'rate_os', 'rate_channel', 'gap_app', 'gap_channel', 
         'black_ip', 'black_device', 'click_gap']
+
 for d in range(3,8):
     pred, tree_ = tree(feat, d)
     print(tree_.feature_importances_)
@@ -449,3 +450,30 @@ for d in range(3,8):
     print(a / a.sum())
     save(pred, 'lgb_'+str(d))
 
+
+## ------------------------------------------- stacking -------------------------------------------
+import pandas as pd
+import numpy as np    
+
+result1 = pd.read_csv('submission/lgb_40m_3.csv', usecols=['is_attributed'])
+result2 = pd.read_csv('submission/lgb_40m_4.csv', usecols=['is_attributed']) 
+result3 = pd.read_csv('submission/lgb_40m_5.csv', usecols=['is_attributed']) 
+result4 = pd.read_csv('submission/lgb_40m_6.csv', usecols=['is_attributed']) 
+result5 = pd.read_csv('submission/lgb_40m_7.csv', usecols=['is_attributed'])
+
+result = pd.concat([result1, result2, result3, result4, result5], axis=1)
+result.columns = [3, 4, 5, 6, 7]
+print(result.head())
+print(result.tail())
+
+result['mean'] = result.mean(axis=1)
+print(result.head())
+print(result.tail())
+save(result['mean'], 'scp_mean')
+    
+for i in np.linspace(0.1, 1, 10):
+    result['min_max_' +str(i)] = result.apply(lambda x:np.min(x) if x['mean'] < i else np.max(x), axis=1)
+
+
+    c.to_csv('method3_'+str(i)+'.csv', index=False)
+    is_attributed, test_result = examine_outlier(c.is_attributed)
