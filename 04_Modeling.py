@@ -469,11 +469,21 @@ print(result.tail())
 result['mean'] = result.mean(axis=1)
 print(result.head())
 print(result.tail())
-save(result['mean'], 'scp_mean')
+save(result['mean'], 'stk_mean')
     
-for i in np.linspace(0.1, 1, 10):
-    result['min_max_' +str(i)] = result.apply(lambda x:np.min(x) if x['mean'] < i else np.max(x), axis=1)
+for i in np.linspace(0, 1, 11):
+    feat = 'min_max_' +str(round(i,1))
+    result[feat] = result[[3, 4, 5, 6, 7]].min(axis=1)
+    
+    result.loc[result['mean'] > i, feat] = result.loc[result['mean'] > i, [3, 4, 5, 6, 7]].max(axis=1)
+    result[feat] = result.apply(lambda x:np.min(x) if x['mean'] < i else np.max(x), axis=1)
+    save(result[feat], 'stk_' + feat)
+    
+print(result.head())
+print(result.tail())
+result.to_csv('stacking.csv', index=False)
 
 
-    c.to_csv('method3_'+str(i)+'.csv', index=False)
-    is_attributed, test_result = examine_outlier(c.is_attributed)
+result['min'] = result[[3, 4, 5, 6, 7]].min(axis=1)
+result.loc[result['mean'] > 0.5, 'min'] = result.loc[result['mean'] > 0.5, [3, 4, 5, 6, 7]].max(axis=1)
+result.loc[result['mean'] > 0.5].head()
