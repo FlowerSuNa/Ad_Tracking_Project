@@ -51,14 +51,18 @@ def logistic(feat, c=1):
     p = log.predict_proba(X_valid)[:,1]
     valid_auc = roc_auc_score(y_valid, p)
     
+    importances = log.feature_importances_
+    result_data = [c, train_auc, valid_auc] + list(importances)
+    
     print("AUC of train data : %.5f" % train_auc)
     print("AUC of valid data : %.5f" % valid_auc)
+    print(importances)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
     pred = log.predict_proba(test[feat])[:,1]      
     
-    return pred, log
+    return pred, result_data
 
 
 ## Makes a model using Decision Tree
@@ -69,24 +73,28 @@ def tree(feat, max_depth):
     X_train, X_valid, y_train, y_valid = divid_data(feat)
     
     ## Train the model
-    tree_ = DecisionTreeClassifier(max_depth=max_depth)
-    tree_.fit(X_train, y_train)
+    tree = DecisionTreeClassifier(max_depth=max_depth)
+    tree.fit(X_train, y_train)
     
     ## Evaluate the model
-    p = tree_.predict_proba(X_train)[:,1]
+    p = tree.predict_proba(X_train)[:,1]
     train_auc = roc_auc_score(y_train, p)
     
-    p = tree_.predict_proba(X_valid)[:,1]
+    p = tree.predict_proba(X_valid)[:,1]
     valid_auc = roc_auc_score(y_valid, p)
+    
+    importances = tree.feature_importances_
+    result_data = [max_depth, train_auc, valid_auc] + list(importances)
     
     print("AUC of train data : %.5f" % train_auc)
     print("AUC of valid data : %.5f" % valid_auc)
+    print(importances)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    pred = tree_.predict_proba(test[feat])[:,1]      
+    pred = tree.predict_proba(test[feat])[:,1]      
     
-    return pred, tree_
+    return pred, result_data
 
 
 ## Makes a model using Random Forest
@@ -107,14 +115,18 @@ def forest(feat, max_depth, n_estimators):
     p = fst.predict_proba(X_valid)[:,1]
     valid_auc = roc_auc_score(y_valid, p)
     
+    importances = fst.feature_importances_
+    result_data = [max_depth, n_estimators, train_auc, valid_auc] + list(importances)
+    
     print("AUC of train data : %.5f" % train_auc)
     print("AUC of valid data : %.5f" % valid_auc)
+    print(importances)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
-    pred = fst.predict_proba(test[feat])[:,1]      
+    pred = fst.predict_proba(test[feat])[:,1]     
     
-    return pred, fst
+    return pred, result_data
 
 
 ## Makes a model using Gradient Boosting
@@ -135,14 +147,18 @@ def boost(feat, max_depth, n_estimators, learning_rate):
     p = bst.predict_proba(X_valid)[:,1]
     valid_auc = roc_auc_score(y_valid, p)
     
+    importances = bst.feature_importances_
+    result_data = [max_depth, n_estimators, learning_rate, train_auc, valid_auc] + list(importances)
+    
     print("AUC of train data : %.5f" % train_auc)
     print("AUC of valid data : %.5f" % valid_auc)
+    print(importances)
     
     ## Predict target variable
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
     pred = bst.predict_proba(test[feat])[:,1]      
     
-    return pred, bst
+    return pred, result_data
 
 
 ## Makes a model using LightGBM
@@ -187,11 +203,17 @@ def lgbm(feat, max_depth, learning_rate):
                     verbose_eval=100,
                     feval=None)
     
+    ## Evaluate the model    
+    # importances = bst.feature_importance()
+    result_data = [max_depth, learning_rate, train_auc, valid_auc] + list(importances)
+    
+    print(importances)
+    
     ## Predict the target
     test = pd.read_csv("data/test_add_features.csv", usecols=feat + ['is_attributed'])
     pred = bst.predict(test[feat], num_iteration=bst.best_iteration)
     
-    return pred, bst
+    return pred, result_data
 
 
 ## Save predicted data
@@ -202,53 +224,119 @@ def save(predict, filename):
   
 
 ## ------------------------------------------- rate -------------------------------------------
-##
+## 1
 feat = ['rate_ip', 'rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
 
-for c in [0.01, 0.1, 1, 10, 100]:
-    pred, log_ = logistic(feat, c)
-    print(log_.coef_)
-    save(pred, 'log_' + str(c))
-    
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
-    
-
-## 
-feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
+# Logistic Regression
+col = ['C','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)  
 
 for c in [0.01, 0.1, 1, 10, 100]:
-    pred, log_ = logistic(feat, c)
-    print(log_.coef_)
+    pred, result_data = logistic(feat, c)
     save(pred, 'log_' + str(c))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('log_result.csv', index=False)
+
+# Decision Tree
+col = ['max_depth','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)  
     
 for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
+    pred, result_data = tree(feat, d)
     save(pred, 'tree_' + str(d))
-    
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('tree_result.csv', index=False)
 
-## 
-feat = ['rate_app','rate_os', 'rate_channel']
-
-for c in [0.01, 0.1, 1, 10, 100]:
-    pred, log_ = logistic(feat, c)
-    print(log_.coef_)
-    save(pred, 'log_' + str(c))
-    
-for d in range(3,8):
-    pred, tree_ = tree(feat, d)
-    print(tree_.feature_importances_)
-    save(pred, 'tree_' + str(d))
+# Random Forest
+col = ['max_depth','n_estimators','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)   
     
 for d in range(3,8):
     for n in [50, 70, 100]:
-        pred, fst = forest(feat, d, n)
-        print(fst.feature_importances_)
+        pred, result_data = forest(feat, d, n)
         save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        result_data = pd.DataFrame([result_data], columns=col)
+        result = pd.concat([result, result_data])
+        result.to_csv('fst_result.csv', index=False)
+         
+
+## 2
+feat = ['rate_app', 'rate_os', 'rate_device', 'rate_channel', 'rate_hour']
+
+# Logistic Regression
+col = ['C','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)  
+
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, result_data = logistic(feat, c)
+    save(pred, 'log_' + str(c))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('log_result.csv', index=False)
+
+# Decision Tree
+col = ['max_depth','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)  
+    
+for d in range(3,8):
+    pred, result_data = tree(feat, d)
+    save(pred, 'tree_' + str(d))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('tree_result.csv', index=False)
+
+# Random Forest
+col = ['max_depth','n_estimators','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)   
+    
+for d in range(3,8):
+    for n in [50, 70, 100]:
+        pred, result_data = forest(feat, d, n)
+        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        result_data = pd.DataFrame([result_data], columns=col)
+        result = pd.concat([result, result_data])
+        result.to_csv('fst_result.csv', index=False)
+    
+## 3
+feat = ['rate_app','rate_os', 'rate_channel']
+
+# Logistic Regression
+col = ['C','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)  
+
+for c in [0.01, 0.1, 1, 10, 100]:
+    pred, result_data = logistic(feat, c)
+    save(pred, 'log_' + str(c))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('log_result.csv', index=False)
+
+# Decision Tree
+col = ['max_depth','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)  
+    
+for d in range(3,8):
+    pred, result_data = tree(feat, d)
+    save(pred, 'tree_' + str(d))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('tree_result.csv', index=False)
+
+# Random Forest
+col = ['max_depth','n_estimators','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)   
+    
+for d in range(3,8):
+    for n in [50, 70, 100]:
+        pred, result_data = forest(feat, d, n)
+        save(pred, 'fst_'+'_'.join([str(d),str(n)]))
+        result_data = pd.DataFrame([result_data], columns=col)
+        result = pd.concat([result, result_data])
+        result.to_csv('fst_result.csv', index=False)
         
+# Gradient Boosting        
 for d in range(5,8):
     for n in [50, 70]:
         for l in [0.001, 0.01, 0.1]:
@@ -474,9 +562,7 @@ save(result['mean'], 'stk_mean')
 for i in np.linspace(0, 1, 11):
     feat = 'min_max_' +str(round(i,1))
     result[feat] = result[[3, 4, 5, 6, 7]].min(axis=1)
-    
     result.loc[result['mean'] > i, feat] = result.loc[result['mean'] > i, [3, 4, 5, 6, 7]].max(axis=1)
-    result[feat] = result.apply(lambda x:np.min(x) if x['mean'] < i else np.max(x), axis=1)
     save(result[feat], 'stk_' + feat)
     
 print(result.head())
@@ -484,6 +570,3 @@ print(result.tail())
 result.to_csv('stacking.csv', index=False)
 
 
-result['min'] = result[[3, 4, 5, 6, 7]].min(axis=1)
-result.loc[result['mean'] > 0.5, 'min'] = result.loc[result['mean'] > 0.5, [3, 4, 5, 6, 7]].max(axis=1)
-result.loc[result['mean'] > 0.5].head()
