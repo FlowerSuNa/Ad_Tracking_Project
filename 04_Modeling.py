@@ -203,8 +203,15 @@ def lgbm(feat, max_depth, learning_rate):
                     verbose_eval=100,
                     feval=None)
     
-    ## Evaluate the model    
-    score = bst.best_score()
+    ## Evaluate the model
+    
+    p = bst.predict(X_train[feat], num_iteration=bst.best_iteration)
+    train_auc = roc_auc_score(y_train, p)
+    
+    p = bst.predict(X_valid[feat], num_iteration=bst.best_iteration)
+    valid_auc = roc_auc_score(y_valid, p)
+    
+    iteration = bst.best_iteration
     
     import_split = bst.feature_importance()
     import_split = import_split / import_split.sum()
@@ -212,9 +219,8 @@ def lgbm(feat, max_depth, learning_rate):
     import_gain = bst.feature_importance('gain')
     import_gain = import_gain / import_gain.sum()
     
-    result_data = [max_depth, learning_rate] + list(score) + list(import_gain)
+    result_data = [max_depth, learning_rate, iteration, train_auc, valid_auc] + list(import_gain)
     
-    print(score)
     print(import_split)
     print(import_gain)
     
@@ -358,10 +364,16 @@ for d in range(5,8):
             result = pd.concat([result, result_data])
             result.to_csv('bst_result.csv', index=False)
 
-## LightGBM   
+# LightGBM   
+col = ['max_depth','learning_rate','iteration','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)
+
 for d in range(3,8):
     pred, result_data = lgbm(feat, 3, 0.05)
     save(pred, 'lgb_'+str(d))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('lgb_result.csv', index=False)
     
 
 ## ------------------------------------------- gap -------------------------------------------
@@ -523,11 +535,16 @@ for d in range(5,8):
             result = pd.concat([result, result_data])
             result.to_csv('bst_result.csv', index=False)
             
+# LightGBM   
+col = ['max_depth','learning_rate','iteration','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)
+
 for d in range(3,8):
-    pred, bst = lgbm(feat, d, 0.01)
-    a = bst.feature_importance('gain')
-    print(a / a.sum())
+    pred, result_data = lgbm(feat, 3, 0.05)
     save(pred, 'lgb_'+str(d))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('lgb_result.csv', index=False)
     
 
 ## 4
@@ -613,11 +630,16 @@ for d in range(5,8):
             result = pd.concat([result, result_data])
             result.to_csv('bst_result.csv', index=False)
 
+# LightGBM   
+col = ['max_depth','learning_rate','iteration','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)
+
 for d in range(3,8):
-    pred, bst = lgbm(feat, d, 0.05)
-    a = bst.feature_importance('gain')
-    print(a / a.sum())
+    pred, result_data = lgbm(feat, 3, 0.05)
     save(pred, 'lgb_'+str(d))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('lgb_result.csv', index=False)
 
 
 ## 6
@@ -647,12 +669,17 @@ for d in range(3,8):
         result = pd.concat([result, result_data])
         result.to_csv('fst_result.csv', index=False)
         
-for d in range(3,8):
-    pred, bst = lgbm(feat, d, 0.05)
-    a = bst.feature_importance('gain')
-    print(a / a.sum())
-    save(pred, 'lgb_'+str(d))
+# LightGBM   
+col = ['max_depth','learning_rate','iteration','Train AUC','Valid AUC'] + feat
+result = pd.DataFrame(columns=col)
 
+for d in range(3,8):
+    pred, result_data = lgbm(feat, 3, 0.05)
+    save(pred, 'lgb_'+str(d))
+    result_data = pd.DataFrame([result_data], columns=col)
+    result = pd.concat([result, result_data])
+    result.to_csv('lgb_result.csv', index=False)
+    
 
 ## ------------------------------------------- stacking -------------------------------------------
 import pandas as pd
