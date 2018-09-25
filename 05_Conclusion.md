@@ -1,7 +1,7 @@
 ##### TalkingData AdTracking Fraud Detection Challenge
 # 5. Conclusion
 
-At first, I thought I could tell whether or not this is a fraudulent click by ip, app and channel. So, I made the download rate per features(ip, app, device, os, channel and hour) and then, made models with this features. But it bacame **overfitting** by the download rate per ip.
+At first, I thought I could tell whether or not this is a fraudulent click by ip, app and channel. But factor levels are too large. So I made the download rate per features(ip, app, device, os, channel and hour) to represent the characteristics of those factors and then, made models with this features. But it bacame **overfitting** by the download rate per ip.
 
 <br>
 
