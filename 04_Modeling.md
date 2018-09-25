@@ -2,6 +2,7 @@
 # 4. Modeling
 [source code](04_Modeling.py) <br>
 [Excel](performance.xlsx) <br>
+[various attempts](trial/README.md) <br>
 
 Find the important features and then, make the model using Logistic Regression, Decision Tree, Random Forest, Gradient boosting and LightGBM.
 
