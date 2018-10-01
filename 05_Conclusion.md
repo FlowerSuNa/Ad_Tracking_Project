@@ -9,7 +9,7 @@ To slove this problem, I've made blacklist of ip, app, os, device, channel, hour
 
 <br>
 
-I thought only features related to ip, app, channel and click time were important, but the performance of the model made with features related to device and os was better. Performance was better when sampling recent data than random sampling. Also, there was **less overfitting** when sampling recent data.
+I thought only features related to ip, app, channel and click time were important, but the performance of the model made by adding features related to device and os was better. Performance was better when sampling recent data than random sampling. Also, there was **less overfitting** when sampling recent data.
 
 <br>
 
